@@ -3,10 +3,10 @@ using System.Drawing;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
-using DynaStudios.DynaLogger;
 
 using Logger = DynaStudios.DynaLogger.Logger;
 using DynaStudios.DynaLogger.Appender;
+using DynaStudios.Blocks;
 
 namespace DynaStudios
 {
@@ -14,6 +14,8 @@ namespace DynaStudios
     {
 
         private Logger _logger;
+
+        private IDrawable cube1 = new Cube(0, 0, 0);
 
         public Engine() : base(800, 600, new GraphicsMode(32, 0, 0, 4))
         {
@@ -25,27 +27,38 @@ namespace DynaStudios
         protected override void OnLoad(EventArgs e)
         {
             _logger.Debug("Called OnLoad();");
+            base.Title = "DynaEngine Sample Game";
             GL.ClearColor(Color.Gray);
+
+            glControl_Resize(null, EventArgs.Empty);
         }
 
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            GL.Clear(ClearBufferMask.ColorBufferBit);
+            Matrix4 lookat = Matrix4.LookAt(0, 5, 5, 0, 0, 0, 0, 1, 0);
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadMatrix(ref lookat);
 
-            GL.Begin(BeginMode.Triangles);
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            GL.Color3(Color.MidnightBlue);
-            GL.Vertex2(-1.0f, 1.0f);
-            GL.Color3(Color.SpringGreen);
-            GL.Vertex2(0.0f, -1.0f);
-            GL.Color3(Color.Ivory);
-            GL.Vertex2(1.0f, 1.0f);
-
-            GL.End();
+            cube1.Render();
 
             this.SwapBuffers();
         }
+
+
+
+        void glControl_Resize(object sender, EventArgs e)
+        {
+            GL.Viewport(0, 0, 800, 600);
+
+            float aspect_ratio = Width / (float)Height;
+            Matrix4 perpective = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspect_ratio, 1, 64);
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadMatrix(ref perpective);
+        }
+
 
     }
 }
