@@ -3,19 +3,28 @@ using System.Drawing;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using DynaStudios.DynaLogger;
+
+using Logger = DynaStudios.DynaLogger.Logger;
+using DynaStudios.DynaLogger.Appender;
 
 namespace DynaStudios
 {
     public class Engine : GameWindow
     {
 
+        private Logger _logger;
+
         public Engine() : base(800, 600, new GraphicsMode(32, 0, 0, 4))
         {
-            //todo: Set Keyboard Input Bindings here
+            _logger = new Logger();
+            _logger.Register(new ConsoleLogger());
+            _logger.Debug("Init Game.");
         }
 
         protected override void OnLoad(EventArgs e)
         {
+            _logger.Debug("Called OnLoad();");
             GL.ClearColor(Color.Gray);
         }
 
