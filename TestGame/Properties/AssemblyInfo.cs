@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TestGame")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("DynaEngine TestGame")]
+[assembly: AssemblyDescription("Simple Test Game to test DynaEngine")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("TestGame")]
+[assembly: AssemblyCompany("DynaStudios")]
+[assembly: AssemblyProduct("DynaEngine Sample Game")]
 [assembly: AssemblyCopyright("Copyright ©  2012")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

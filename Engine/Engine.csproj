@@ -6,7 +6,7 @@
     <ProjectGuid>{AFB32E60-B73C-4AD6-9074-8EE29710E933}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Engine</RootNamespace>
+    <RootNamespace>DynaStudios</RootNamespace>
     <AssemblyName>Engine</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

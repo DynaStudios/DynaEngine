@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("DynaLogger")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Logger for DynaEngine and Games")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("DynaStudios")]
 [assembly: AssemblyProduct("DynaLogger")]
 [assembly: AssemblyCopyright("Copyright ©  2012")]
 [assembly: AssemblyTrademark("")]

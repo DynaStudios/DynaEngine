@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>9afe84a3-ba94-4266-b18f-fd666b709b05</ProjectGuid>
+    <ProjectGuid>{A7F05535-0D45-4698-AC43-FFEAE3766045}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DynaLogger</RootNamespace>
+    <RootNamespace>DynaStudios.Logger</RootNamespace>
     <AssemblyName>DynaLogger</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

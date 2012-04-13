@@ -3,12 +3,24 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 11
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "Engine\Engine.csproj", "{AFB32E60-B73C-4AD6-9074-8EE29710E933}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynaLogger", "DynaLogger\DynaLogger.csproj", "{A7F05535-0D45-4698-AC43-FFEAE3766045}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGame", "TestGame\TestGame.csproj", "{9CCEBEA0-ADE0-4884-91D7-3DBD280C51AD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9CCEBEA0-ADE0-4884-91D7-3DBD280C51AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CCEBEA0-ADE0-4884-91D7-3DBD280C51AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CCEBEA0-ADE0-4884-91D7-3DBD280C51AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CCEBEA0-ADE0-4884-91D7-3DBD280C51AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7F05535-0D45-4698-AC43-FFEAE3766045}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7F05535-0D45-4698-AC43-FFEAE3766045}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7F05535-0D45-4698-AC43-FFEAE3766045}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7F05535-0D45-4698-AC43-FFEAE3766045}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AFB32E60-B73C-4AD6-9074-8EE29710E933}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AFB32E60-B73C-4AD6-9074-8EE29710E933}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFB32E60-B73C-4AD6-9074-8EE29710E933}.Release|Any CPU.ActiveCfg = Release|Any CPU
