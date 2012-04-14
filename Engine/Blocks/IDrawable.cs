@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DynaStudios.Blocks
 {
-    public interface IDrawable
+    public interface IDrawable : WorldObject
     {
 
         void Render();

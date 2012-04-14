@@ -7,7 +7,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace DynaStudios.Blocks
 {
-    public class Cube : WorldObject, IDrawable
+    public class Cube : IDrawable
     {
         public WorldPosition Position { get; set; }
 
