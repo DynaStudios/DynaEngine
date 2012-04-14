@@ -48,6 +48,7 @@
     <Compile Include="Blocks\WorldPosition.cs" />
     <Compile Include="Blocks\IWorldObject.cs" />
     <Compile Include="Engine.cs" />
+    <Compile Include="IO\InputDevice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

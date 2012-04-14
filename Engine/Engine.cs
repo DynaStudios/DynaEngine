@@ -7,6 +7,7 @@ using OpenTK.Graphics.OpenGL;
 using Logger = DynaStudios.DynaLogger.Logger;
 using DynaStudios.DynaLogger.Appender;
 using DynaStudios.Blocks;
+using DynaStudios.IO;
 
 namespace DynaStudios
 {
@@ -34,6 +35,9 @@ namespace DynaStudios
             _logger.Debug("Called OnLoad();");
             base.Title = "DynaEngine Sample Game";
             GL.ClearColor(Color.Gray);
+
+            //Hier kommt dann denke ich mal die Kamera hin?!
+            InputDevice inputDevice = new InputDevice(Mouse, Keyboard);
 
             resize(null, EventArgs.Empty);
         }
