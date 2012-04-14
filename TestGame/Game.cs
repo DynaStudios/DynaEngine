@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
 using DynaStudios;
 
 namespace TestGame
@@ -9,18 +10,23 @@ namespace TestGame
     public class Game
     {
 
-        public Engine Engine;
+        public Engine engine;
 
         public Game()
         {
-            this.Engine = new Engine();
+            engine = new Engine();
+        }
+
+        public void run()
+        {
+            engine.Run();
         }
 
         static void Main(string[] args)
         {
 
             Game game = new Game();
-            game.Engine.Run();
+            game.run();
 
 
         }
