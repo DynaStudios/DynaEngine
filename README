@@ -1,0 +1,7 @@
+DynaEngine
+========
+DynaEngine ist eine von DynaStudios in Entwicklung befindende Spielengine, welche auf OpenGL baut und unter Windows / Linux / Mac lauffähig ist.
+
+Code Conventions
+--------
+Da die Entwicklung derzeit überwiegend vom DynaStudios Team durchgeführt wird, wird auf eine C# Code Convention verzichtet. Stattdessen gelten die gängigen JAVA Code Conventions.
