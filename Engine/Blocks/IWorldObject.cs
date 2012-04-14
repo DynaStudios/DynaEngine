@@ -1,6 +1,6 @@
 ﻿namespace DynaStudios.Blocks
 {
-    public interface WorldObject
+    public interface IWorldObject
     {
         WorldPosition Position { get; set; }
     }
