@@ -35,13 +35,13 @@ namespace DynaStudios
             base.Title = "DynaEngine Sample Game";
             GL.ClearColor(Color.Gray);
 
-            glControl_Resize(null, EventArgs.Empty);
+            resize(null, EventArgs.Empty);
         }
 
         protected override void OnResize(EventArgs e)
         {
             _logger.Debug("OnResize called. New Width: " + base.Width + "px | New Height: " + base.Height + "px");
-            glControl_Resize(null, EventArgs.Empty);
+            resize(null, EventArgs.Empty);
         }
 
         protected override void OnClosed(EventArgs e)
@@ -66,7 +66,7 @@ namespace DynaStudios
             this.SwapBuffers();
         }
         
-        void glControl_Resize(object sender, EventArgs e)
+        void resize(object sender, EventArgs e)
         {
             GL.Viewport(0, 0, base.Width, base.Height);
 
