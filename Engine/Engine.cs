@@ -66,6 +66,11 @@ namespace DynaStudios
             this.SwapBuffers();
         }
         
+        /// <summary>
+        /// Recalculates Viewport
+        /// </summary>
+        /// <param name="sender">Not used.</param>
+        /// <param name="e">Not used.</param>
         void resize(object sender, EventArgs e)
         {
             GL.Viewport(0, 0, base.Width, base.Height);
