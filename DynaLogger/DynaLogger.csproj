@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Appender\ConsoleLogger.cs" />
+    <Compile Include="Appender\FileSystemLogger.cs" />
     <Compile Include="Appender\LoggingAppender.cs" />
     <Compile Include="LogEvent.cs" />
     <Compile Include="Logger.cs" />
