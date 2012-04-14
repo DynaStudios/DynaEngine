@@ -7,8 +7,6 @@ namespace DynaStudios.Blocks
 {
     public interface IDrawable : IWorldObject
     {
-
         void Render();
-
     }
 }
