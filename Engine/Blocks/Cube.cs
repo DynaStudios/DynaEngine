@@ -9,6 +9,7 @@ namespace DynaStudios.Blocks
 {
     public class Cube : WorldObject, IDrawable
     {
+        public WorldPosition Position { get; set; }
 
         /// <summary>
         /// Creates a cube at given world position
@@ -16,11 +17,9 @@ namespace DynaStudios.Blocks
         /// <param name="worldX">World X Coordinate</param>
         /// <param name="worldZ">World Z Coordinate</param>
         /// <param name="worldY">World Y Coordinate</param>
-        public Cube(int worldX, int worldZ, int worldY)
+        public Cube(double worldX, double worldZ, double worldY)
         {
-            WorldX = worldX;
-            WorldY = worldY;
-            WorldZ = worldZ;
+            Position = new WorldPosition(worldX, worldY, worldZ);
         }
 
         public void Render()
@@ -30,9 +29,9 @@ namespace DynaStudios.Blocks
             const float sizey = 0.5f;
             const float sizez = 0.5f;
 
-            var x = WorldX;
-            var y = WorldY;
-            var z = WorldZ;
+            var x = Position.x;
+            var y = Position.y;
+            var z = Position.z;
 
             GL.Translate(-x, -y, -z);
 
