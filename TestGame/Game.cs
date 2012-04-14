@@ -7,28 +7,15 @@ using DynaStudios;
 
 namespace TestGame
 {
-    public class Game
+    public class Game : Engine
     {
-
-        public Engine engine;
-
-        public Game()
-        {
-            engine = new Engine();
-        }
-
-        public void run()
-        {
-            engine.Run();
-        }
+        public Game() : base()
+        {}
 
         static void Main(string[] args)
         {
-
             Game game = new Game();
-            game.run();
-
-
+            game.Run();
         }
     }
 }
