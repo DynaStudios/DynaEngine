@@ -25,6 +25,7 @@ namespace DynaStudios
         {
             _logger = new Logger();
             _logger.Register(new ConsoleLogger());
+            _logger.Register(new FileSystemLogger());
             _logger.Debug("Init Game.");
         }
 
