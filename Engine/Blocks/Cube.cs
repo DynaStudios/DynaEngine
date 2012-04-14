@@ -7,7 +7,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace DynaStudios.Blocks
 {
-    public class Cube : IDrawable
+    public class Cube : WorldObject, IDrawable
     {
 
         /// <summary>
@@ -18,52 +18,71 @@ namespace DynaStudios.Blocks
         /// <param name="worldY">World Y Coordinate</param>
         public Cube(int worldX, int worldZ, int worldY)
         {
-
+            WorldX = worldX;
+            WorldY = worldY;
+            WorldZ = worldZ;
         }
 
         public void Render()
         {
 
+            const float sizex = 0.5f;
+            const float sizey = 0.5f;
+            const float sizez = 0.5f;
+
+            var x = WorldX;
+            var y = WorldY;
+            var z = WorldZ;
+
+            GL.Translate(-x, -y, -z);
+
             GL.Begin(BeginMode.Quads);
 
-            GL.Color3(Color.Silver);
-            GL.Vertex3(-1.0f, -1.0f, -1.0f);
-            GL.Vertex3(-1.0f, 1.0f, -1.0f);
-            GL.Vertex3(1.0f, 1.0f, -1.0f);
-            GL.Vertex3(1.0f, -1.0f, -1.0f);
+            GL.Color3(Color.Honeydew);
+
+            // FRONT
+            GL.Vertex3(-sizex, -sizey, sizez);
+            GL.Vertex3(sizex, -sizey, sizez);
+            GL.Vertex3(sizex, sizey, sizez);
+            GL.Vertex3(-sizex, sizey, sizez);
+
+            // BACK
+            GL.Vertex3(-sizex, -sizey, -sizez);
+            GL.Vertex3(-sizex, sizey, -sizez);
+            GL.Vertex3(sizex, sizey, -sizez);
+            GL.Vertex3(sizex, -sizey, -sizez);
 
             GL.Color3(Color.Honeydew);
-            GL.Vertex3(-1.0f, -1.0f, -1.0f);
-            GL.Vertex3(1.0f, -1.0f, -1.0f);
-            GL.Vertex3(1.0f, -1.0f, 1.0f);
-            GL.Vertex3(-1.0f, -1.0f, 1.0f);
 
-            GL.Color3(Color.Moccasin);
+            // LEFT
+            GL.Vertex3(-sizex, -sizey, sizez);
+            GL.Vertex3(-sizex, sizey, sizez);
+            GL.Vertex3(-sizex, sizey, -sizez);
+            GL.Vertex3(-sizex, -sizey, -sizez);
 
-            GL.Vertex3(-1.0f, -1.0f, -1.0f);
-            GL.Vertex3(-1.0f, -1.0f, 1.0f);
-            GL.Vertex3(-1.0f, 1.0f, 1.0f);
-            GL.Vertex3(-1.0f, 1.0f, -1.0f);
+            // RIGHT
+            GL.Vertex3(sizex, -sizey, -sizez);
+            GL.Vertex3(sizex, sizey, -sizez);
+            GL.Vertex3(sizex, sizey, sizez);
+            GL.Vertex3(sizex, -sizey, sizez);
 
-            GL.Color3(Color.IndianRed);
-            GL.Vertex3(-1.0f, -1.0f, 1.0f);
-            GL.Vertex3(1.0f, -1.0f, 1.0f);
-            GL.Vertex3(1.0f, 1.0f, 1.0f);
-            GL.Vertex3(-1.0f, 1.0f, 1.0f);
+            GL.Color3(Color.Honeydew);
 
-            GL.Color3(Color.PaleVioletRed);
-            GL.Vertex3(-1.0f, 1.0f, -1.0f);
-            GL.Vertex3(-1.0f, 1.0f, 1.0f);
-            GL.Vertex3(1.0f, 1.0f, 1.0f);
-            GL.Vertex3(1.0f, 1.0f, -1.0f);
+            // TOP
+            GL.Vertex3(-sizex, sizey, sizez);
+            GL.Vertex3(sizex, sizey, sizez);
+            GL.Vertex3(sizex, sizey, -sizez);
+            GL.Vertex3(-sizex, sizey, -sizez);
 
-            GL.Color3(Color.ForestGreen);
-            GL.Vertex3(1.0f, -1.0f, -1.0f);
-            GL.Vertex3(1.0f, 1.0f, -1.0f);
-            GL.Vertex3(1.0f, 1.0f, 1.0f);
-            GL.Vertex3(1.0f, -1.0f, 1.0f);
+            // BOTTOM
+            GL.Vertex3(-sizex, -sizey, sizez);
+            GL.Vertex3(-sizex, -sizey, -sizez);
+            GL.Vertex3(sizex, -sizey, -sizez);
+            GL.Vertex3(sizex, -sizey, sizez);
 
             GL.End();
+
+            GL.Translate(x, y, z);
         }
     }
 }
