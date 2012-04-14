@@ -6,7 +6,7 @@ using DynaStudios;
 
 namespace TestGame
 {
-    public class Game : Engine
+    public class Game
     {
 
         public Engine Engine;
