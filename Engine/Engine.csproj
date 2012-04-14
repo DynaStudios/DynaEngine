@@ -46,7 +46,7 @@
     <Compile Include="Blocks\Cube.cs" />
     <Compile Include="Blocks\IDrawable.cs" />
     <Compile Include="Blocks\WorldPosition.cs" />
-    <Compile Include="Blocks\WorldObject.cs" />
+    <Compile Include="Blocks\IWorldObject.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
