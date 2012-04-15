@@ -2,6 +2,8 @@
 using DynaStudios.UI.Controls;
 using DynaStudios.IO;
 using OpenTK.Graphics.OpenGL;
+using System;
+using OpenTK.Input;
 
 namespace DynaStudios.UI
 {
@@ -11,10 +13,37 @@ namespace DynaStudios.UI
         private List<UIPanel> _panels;
         private Engine _engine;
 
+        public bool IsVisible { get; set; }
+
         public GUIController(Engine engine)
         {
             this._engine = engine;
             this._panels = new List<UIPanel>();
+
+            //GUI should be visible by default
+            IsVisible = true;
+
+            //Register Keyboard and Mouse Events
+            _engine.InputDevice.Keyboard.KeyUp += Keyboard_KeyUp;
+        }
+
+        private void Keyboard_KeyUp(object sender, KeyboardKeyEventArgs e)
+        {
+            //Check if F7 were pressed to Enable / Disable GUI Rendering
+            _engine.Logger.Debug("Received KeyUP Event. Key is: " + e.Key);
+            if (e.Key == Key.F7)
+            {
+                if (IsVisible)
+                {
+                    _engine.Logger.Debug("Disable GUI Rendering");
+                    IsVisible = false;
+                }
+                else
+                {
+                    _engine.Logger.Debug("Enable GUI Rendering");
+                    IsVisible = true;
+                }
+            }
         }
 
         /// <summary>
@@ -30,16 +59,24 @@ namespace DynaStudios.UI
 
         public void render()
         {
-            switchToOrthoRendering();
-
-            foreach (UIPanel panel in _panels)
+            if (IsVisible)
             {
-                panel.render();
-            }
+                //Disable Depth Rendering to draw 2D UIs
+                switchToOrthoRendering();
 
-            switchBackToFrustrumRendering();
+                foreach (UIPanel panel in _panels)
+                {
+                    panel.render();
+                }
+
+                //Enable Depth Rendering again
+                switchBackToFrustrumRendering();
+            }
         }
 
+        /// <summary>
+        /// Disable Depth Rendering to draw 2D UIs
+        /// </summary>
         private void switchToOrthoRendering()
         {
             GL.Disable(EnableCap.DepthTest);
@@ -51,6 +88,9 @@ namespace DynaStudios.UI
             GL.LoadIdentity();
         }
 
+        /// <summary>
+        /// Enable Depth Rendering again
+        /// </summary>
         private void switchBackToFrustrumRendering()
         {
             GL.Enable(EnableCap.DepthTest);
