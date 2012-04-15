@@ -22,6 +22,11 @@ namespace DynaStudios
         private IDrawable cube3 = new Cube(1, 0, 0);
         private IDrawable cube4 = new Cube(0, 1, 0);
 
+        /// <summary>
+        /// You can add your GUI Elements to the UIController and also let them register to Mouse and Keyboard Events.
+        /// 
+        /// Add new UIPanels using UIController.register(UIPanel yourPanel);
+        /// </summary>
         public GUIController UiController { get; set; }
 
         public Engine()
