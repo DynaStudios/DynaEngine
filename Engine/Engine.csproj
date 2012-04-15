@@ -49,7 +49,10 @@
     <Compile Include="Blocks\WorldPosition.cs" />
     <Compile Include="Blocks\IWorldObject.cs" />
     <Compile Include="Engine.cs" />
+    <Compile Include="IO\InputDevice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\Controls\UIPanel.cs" />
+    <Compile Include="UI\GUIController.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DynaLogger\DynaLogger.csproj">
@@ -60,6 +63,7 @@
   <ItemGroup>
     <Content Include="Libs\OpenTK.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

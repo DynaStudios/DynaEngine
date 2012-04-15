@@ -7,6 +7,8 @@ using OpenTK.Graphics.OpenGL;
 using Logger = DynaStudios.DynaLogger.Logger;
 using DynaStudios.DynaLogger.Appender;
 using DynaStudios.Blocks;
+using DynaStudios.IO;
+using DynaStudios.UI;
 
 namespace DynaStudios
 {
@@ -19,6 +21,13 @@ namespace DynaStudios
         private IDrawable cube2 = new Cube(0, 0, 1);
         private IDrawable cube3 = new Cube(1, 0, 0);
         private IDrawable cube4 = new Cube(0, 1, 0);
+
+        /// <summary>
+        /// You can add your GUI Elements to the UIController and also let them register to Mouse and Keyboard Events.
+        /// 
+        /// Add new UIPanels using UIController.register(UIPanel yourPanel);
+        /// </summary>
+        public GUIController UiController { get; set; }
 
         public Engine()
             : base(1024, 768, new GraphicsMode(32, 0, 0, 4))
@@ -34,6 +43,13 @@ namespace DynaStudios
             _logger.Debug("Called OnLoad();");
             base.Title = "DynaEngine Sample Game";
             GL.ClearColor(Color.Gray);
+
+            //Hier kommt dann denke ich mal die Kamera hin?!
+            InputDevice inputDevice = new InputDevice(Mouse, Keyboard);
+
+            //Init User Interface Controller
+            _logger.Debug("Register GUI Controller");
+            UiController = new GUIController(inputDevice);
 
             resize(null, EventArgs.Empty);
         }
@@ -58,10 +74,14 @@ namespace DynaStudios
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
+            //Render World Objects
             cube1.Render();
             cube2.Render();
             cube3.Render();
             cube4.Render();
+
+            //Start GUI/HUD Rendering here
+            UiController.render();
 
             this.SwapBuffers();
         }

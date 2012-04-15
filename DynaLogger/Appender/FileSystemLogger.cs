@@ -49,7 +49,7 @@ namespace DynaStudios.DynaLogger.Appender
 
         public void Debug(string msg)
         {
-            _writer.WriteLine(Convert.ToString(System.DateTime.Now) + "[WARN] " + msg);
+            _writer.WriteLine(Convert.ToString(System.DateTime.Now) + "[DEBUG] " + msg);
         }
 
         public void Info(string msg)
