@@ -15,7 +15,7 @@ namespace DynaStudios
     public class Engine : GameWindow
     {
 
-        private Logger _logger;
+        public Logger Logger;
 
         private IDrawable cube1 = new Cube(0, 0, 0);
         private IDrawable cube2 = new Cube(0, 0, 1);
@@ -32,15 +32,15 @@ namespace DynaStudios
         public Engine()
             : base(1024, 768, new GraphicsMode(32, 0, 0, 4))
         {
-            _logger = new Logger();
-            _logger.Register(new ConsoleLogger());
-            _logger.Register(new FileSystemLogger());
-            _logger.Debug("Init Game.");
+            Logger = new Logger();
+            Logger.Register(new ConsoleLogger());
+            Logger.Register(new FileSystemLogger());
+            Logger.Debug("Init Game.");
         }
 
         protected override void OnLoad(EventArgs e)
         {
-            _logger.Debug("Called OnLoad();");
+            Logger.Debug("Called OnLoad();");
             base.Title = "DynaEngine Sample Game";
             GL.ClearColor(Color.Gray);
 
@@ -48,7 +48,7 @@ namespace DynaStudios
             InputDevice inputDevice = new InputDevice(Mouse, Keyboard);
 
             //Init User Interface Controller
-            _logger.Debug("Register GUI Controller");
+            Logger.Debug("Register GUI Controller");
             UiController = new GUIController(inputDevice);
 
             resize(null, EventArgs.Empty);
@@ -56,14 +56,14 @@ namespace DynaStudios
 
         protected override void OnResize(EventArgs e)
         {
-            _logger.Debug("OnResize called. New Width: " + base.Width + "px | New Height: " + base.Height + "px");
+            Logger.Debug("OnResize called. New Width: " + base.Width + "px | New Height: " + base.Height + "px");
             resize(null, EventArgs.Empty);
         }
 
         protected override void OnClosed(EventArgs e)
         {
             //Unload Libs etc. here
-            _logger.Debug("Closing Application");
+            Logger.Debug("Closing Application");
         }
 
         protected override void OnRenderFrame(FrameEventArgs e)
