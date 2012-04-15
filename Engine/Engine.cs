@@ -44,10 +44,22 @@ namespace DynaStudios
                     Position.z -= 0.5;
                     break;
                 case (Key.Left):
-                    Direction.y -= 16.0;
+                    Direction.Y -= 9.0;
                     break;
                 case (Key.Right):
-                    Direction.y += 16.0;
+                    Direction.Y += 9.0;
+                    break;
+                case (Key.Up):
+                    Direction.X -= 9.0;
+                    break;
+                case (Key.Down):
+                    Direction.X += 9.0;
+                    break;
+                case (Key.Q):
+                    Direction.Rotation -= 9.0;
+                    break;
+                case (Key.E):
+                    Direction.Rotation += 9.0;
                     break;
             }
         }
@@ -88,10 +100,10 @@ namespace DynaStudios
             cube2.color = Color.White;
             cube3.color = Color.Red;
             cube4.color = Color.Brown;
-            worldObjects.Add(cube1);
-            worldObjects.Add(cube2);
             worldObjects.Add(cube3);
+            worldObjects.Add(cube1);
             worldObjects.Add(cube4);
+            worldObjects.Add(cube2);
         }
 
         protected override void OnLoad(EventArgs e)

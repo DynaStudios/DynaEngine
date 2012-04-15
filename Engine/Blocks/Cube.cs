@@ -11,8 +11,8 @@ namespace DynaStudios.Blocks
     {
         public Color color = Color.AliceBlue;
 
-        public Direction Direction { get; set; }
-        public WorldPosition Position { get; set; }
+        public override Direction Direction { get; set; }
+        public override WorldPosition Position { get; set; }
 
         /// <summary>
         /// Creates a cube at given world position
