@@ -8,6 +8,7 @@ using Logger = DynaStudios.DynaLogger.Logger;
 using DynaStudios.DynaLogger.Appender;
 using DynaStudios.Blocks;
 using DynaStudios.IO;
+using DynaStudios.UI;
 
 namespace DynaStudios
 {
@@ -20,6 +21,8 @@ namespace DynaStudios
         private IDrawable cube2 = new Cube(0, 0, 1);
         private IDrawable cube3 = new Cube(1, 0, 0);
         private IDrawable cube4 = new Cube(0, 1, 0);
+
+        private GUIController _uiController;
 
         public Engine()
             : base(1024, 768, new GraphicsMode(32, 0, 0, 4))
@@ -38,6 +41,9 @@ namespace DynaStudios
 
             //Hier kommt dann denke ich mal die Kamera hin?!
             InputDevice inputDevice = new InputDevice(Mouse, Keyboard);
+
+            //Init User Interface Controller
+            _uiController = new GUIController(inputDevice);
 
             resize(null, EventArgs.Empty);
         }
@@ -62,10 +68,14 @@ namespace DynaStudios
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
+            //Render World Objects
             cube1.Render();
             cube2.Render();
             cube3.Render();
             cube4.Render();
+
+            //Start GUI/HUD Rendering here
+            _uiController.render();
 
             this.SwapBuffers();
         }
