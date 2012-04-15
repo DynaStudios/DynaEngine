@@ -6,8 +6,12 @@ using OpenTK.Input;
 
 namespace DynaStudios.UI.Controls
 {
+    public delegate void ClickedEventHandler();
+
     public class UIButton : IUIControl
     {
+
+        public event ClickedEventHandler OnClicked;
 
         public String Text { get; set; }
         public UIPosition Position { get; set; }
@@ -19,7 +23,8 @@ namespace DynaStudios.UI.Controls
 
         public void onClicked(MouseButtonEventArgs arg)
         {
-            
+            if (OnClicked != null)
+                OnClicked();
         }
 
         public void onKeyPressed(KeyboardKeyEventArgs arg)

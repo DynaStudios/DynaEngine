@@ -26,7 +26,10 @@ namespace TestGame
             //Create Container for 2 TestButtons
             UIVerticalContainer vContainer = new UIVerticalContainer();
             vContainer.add(new UIButton() { Text = "Hallo Welt", Position = UIPosition.Center });
-            vContainer.add(new UIButton() { Text = "Exit Game", Position = UIPosition.Center });
+
+            UIButton exitButton = new UIButton() { Text = "Exit Game", Position = UIPosition.Center };
+            exitButton.OnClicked += new ClickedEventHandler(OnExitGameClick);
+            vContainer.add(exitButton);
 
             panel.setContainingPanel(vContainer);
 
