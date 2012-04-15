@@ -21,12 +21,15 @@ namespace TestGame
 
             Logger.Debug("Create GUI Elements");
             //Create Test User Interface
-            UIPanel panel = new UIPanel();
+            UIPanel panel = new UIPanel() { VerticalPosition = UIVerticalPosition.Bottom, Height = 400 };
 
             //Create Container for 2 TestButtons
-            UIVerticalContainer vContainer = new UIVerticalContainer();
-            vContainer.add(new UIButton() { Text = "Hallo Welt", Position = UIPosition.Center });
-            vContainer.add(new UIButton() { Text = "Exit Game", Position = UIPosition.Center });
+            UIVerticalContainer vContainer = new UIVerticalContainer() { HorizontalPosition = UIHorizontalPosition.Left, VerticalPosition = UIVerticalPosition.Top };
+            vContainer.add(new UIButton() { Text = "Hallo Welt", HorizontalPosition = UIHorizontalPosition.Center });
+
+            UIButton exitButton = new UIButton() { Text = "Exit Game", HorizontalPosition = UIHorizontalPosition.Center };
+            exitButton.OnClicked += new ClickedEventHandler(OnExitGameClick);
+            vContainer.add(exitButton);
 
             panel.setContainingPanel(vContainer);
 

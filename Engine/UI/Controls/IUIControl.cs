@@ -6,12 +6,18 @@ using OpenTK.Input;
 
 namespace DynaStudios.UI.Controls
 {
-    public interface IUIControl
+    public interface IUIControl : IUIPlacable
     {
+
         /// <summary>
         /// Renders the UIControl
         /// </summary>
         void render();
+
+        /// <summary>
+        /// Recalculates Width and Height Dimensions
+        /// </summary>
+        void resize();
 
         /// <summary>
         /// Called when the UIControl got clicked

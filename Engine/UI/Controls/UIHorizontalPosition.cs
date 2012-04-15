@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DynaStudios.UI.Controls
 {
-    public enum UIPosition
+    public enum UIHorizontalPosition
     {
         Left, Center, Right
     }

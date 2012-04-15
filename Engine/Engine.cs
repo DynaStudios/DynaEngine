@@ -43,6 +43,7 @@ namespace DynaStudios
         /// Add new UIPanels using UIController.register(UIPanel yourPanel);
         /// </summary>
         public GUIController UiController { get; set; }
+        public InputDevice InputDevice { get; set; }
 
         public Engine()
             : base(1024, 768, new GraphicsMode(32, 0, 0, 4))
@@ -67,11 +68,11 @@ namespace DynaStudios
             GL.ClearColor(Color.Gray);
 
             //Hier kommt dann denke ich mal die Kamera hin?!
-            InputDevice inputDevice = new InputDevice(Mouse, Keyboard);
 
             //Init User Interface Controller
             Logger.Debug("Register GUI Controller");
-            UiController = new GUIController(inputDevice);
+            InputDevice = new InputDevice(Mouse, Keyboard);
+            UiController = new GUIController(this);
 
             resize(null, EventArgs.Empty);
         }
@@ -80,6 +81,7 @@ namespace DynaStudios
         {
             Logger.Debug("OnResize called. New Width: " + base.Width + "px | New Height: " + base.Height + "px");
             resize(null, EventArgs.Empty);
+            UiController.resizeGui();
         }
 
         protected override void OnClosed(EventArgs e)
