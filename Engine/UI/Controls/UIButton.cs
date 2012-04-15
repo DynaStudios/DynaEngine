@@ -9,7 +9,8 @@ namespace DynaStudios.UI.Controls
     public class UIButton : IUIControl
     {
 
-        public string Text { get; set; }
+        public String Text { get; set; }
+        public UIPosition Position { get; set; }
 
         public void render()
         {

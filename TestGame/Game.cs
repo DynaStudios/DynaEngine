@@ -24,8 +24,8 @@ namespace TestGame
 
             //Create Container for 2 TestButtons
             UIVerticalContainer vContainer = new UIVerticalContainer();
-            vContainer.add(new UIButton() { Text = "Hallo Welt" });
-            vContainer.add(new UIButton() { Text = "Ich bin der Zweite" });
+            vContainer.add(new UIButton() { Text = "Hallo Welt", Position = UIPosition.Center });
+            vContainer.add(new UIButton() { Text = "Ich bin der Zweite", Position = UIPosition.Center });
 
             panel.setContainingPanel(vContainer);
 

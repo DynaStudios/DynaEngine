@@ -54,6 +54,7 @@
     <Compile Include="UI\Controls\IUIControl.cs" />
     <Compile Include="UI\Controls\UIButton.cs" />
     <Compile Include="UI\Controls\UIPanel.cs" />
+    <Compile Include="UI\Controls\UIPosition.cs" />
     <Compile Include="UI\Controls\UIVerticalContainer.cs" />
     <Compile Include="UI\GUIController.cs" />
   </ItemGroup>
