@@ -7,11 +7,18 @@ namespace DynaStudios.UI.Controls
 {
     public class UIPanel
     {
-        private List<IUIControl> _uiControls;
+        private IUIControl _uiControl;
 
-        public UIPanel()
+        public UIPanel() { }
+
+        public UIPanel(IUIControl control)
         {
-            this._uiControls = new List<IUIControl>();
+            setContainingPanel(control);
+        }
+
+        public void setContainingPanel(IUIControl control)
+        {
+            this._uiControl = control;
         }
 
         /// <summary>
@@ -19,9 +26,9 @@ namespace DynaStudios.UI.Controls
         /// </summary>
         public void render()
         {
-            foreach (IUIControl control in _uiControls)
+            if (_uiControl != null)
             {
-                control.render();
+                _uiControl.render();
             }
         }
 

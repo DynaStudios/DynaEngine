@@ -24,5 +24,15 @@ namespace DynaStudios.UI.Controls
         /// </summary>
         /// <param name="arg"></param>
         void onKeyPressed(KeyboardKeyEventArgs arg);
+
+        /// <summary>
+        /// Called when Mouse Enters UIControl area
+        /// </summary>
+        void onHoverEnter();
+
+        /// <summary>
+        /// Called when Mouse Leaves UIControl area
+        /// </summary>
+        void onHoverExit();
     }
 }
