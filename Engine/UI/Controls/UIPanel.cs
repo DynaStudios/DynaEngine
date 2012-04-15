@@ -5,9 +5,15 @@ using System.Text;
 
 namespace DynaStudios.UI.Controls
 {
-    public class UIPanel
+    public class UIPanel : IUIPlacable
     {
         private IUIControl _uiControl;
+
+        public int Height { get; set; }
+        public int Width { get; set; }
+
+        public UIHorizontalPosition HorizontalPosition { get; set; }
+        public UIVerticalPosition VerticalPosition { get; set; }
 
         /// <summary>
         /// Creates new UIPanel. UIPanel won't be rendered until you set an UIControl with setContainingPanel(IUIControl);

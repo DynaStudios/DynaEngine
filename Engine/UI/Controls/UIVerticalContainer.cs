@@ -11,6 +11,12 @@ namespace DynaStudios.UI.Controls
 
         private List<IUIControl> _controls;
 
+        public int Height { get; set; }
+        public int Width { get; set; }
+
+        public UIHorizontalPosition HorizontalPosition { get; set; }
+        public UIVerticalPosition VerticalPosition { get; set; }
+
         public UIVerticalContainer()
         {
             _controls = new List<IUIControl>();

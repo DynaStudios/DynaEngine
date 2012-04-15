@@ -51,10 +51,12 @@
     <Compile Include="Engine.cs" />
     <Compile Include="IO\InputDevice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\Controls\UIVerticalPosition.cs" />
     <Compile Include="UI\Controls\IUIControl.cs" />
+    <Compile Include="UI\Controls\IUIPlacable.cs" />
     <Compile Include="UI\Controls\UIButton.cs" />
     <Compile Include="UI\Controls\UIPanel.cs" />
-    <Compile Include="UI\Controls\UIPosition.cs" />
+    <Compile Include="UI\Controls\UIHorizontalPosition.cs" />
     <Compile Include="UI\Controls\UIVerticalContainer.cs" />
     <Compile Include="UI\GUIController.cs" />
   </ItemGroup>

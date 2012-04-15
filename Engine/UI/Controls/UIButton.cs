@@ -13,8 +13,20 @@ namespace DynaStudios.UI.Controls
 
         public event ClickedEventHandler OnClicked;
 
+        public int Height { get; set; }
+        public int Width { get; set; }
+
+        public UIHorizontalPosition HorizontalPosition { get; set; }
+        public UIVerticalPosition VerticalPosition { get; set; }
+
         public String Text { get; set; }
-        public UIPosition Position { get; set; }
+
+        private IUIControl _parentControl;
+
+        public UIButton(IUIControl parentControl)
+        {
+            this._parentControl = parentControl;
+        }
 
         public void render()
         {
@@ -41,6 +53,6 @@ namespace DynaStudios.UI.Controls
         {
             
         }
-        
+
     }
 }

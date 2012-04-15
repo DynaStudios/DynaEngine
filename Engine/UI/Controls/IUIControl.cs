@@ -6,8 +6,9 @@ using OpenTK.Input;
 
 namespace DynaStudios.UI.Controls
 {
-    public interface IUIControl
+    public interface IUIControl : IUIPlacable
     {
+
         /// <summary>
         /// Renders the UIControl
         /// </summary>
