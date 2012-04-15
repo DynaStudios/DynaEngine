@@ -25,9 +25,9 @@ namespace DynaStudios.UI
             IsVisible = true;
 
             //Register Keyboard and Mouse Events
-            _engine.InputDevice.Keyboard.KeyUp += Keyboard_KeyUp;
-            _engine.InputDevice.Mouse.ButtonUp += Mouse_ButtonUp;
-            _engine.InputDevice.Mouse.Move += Mouse_Move;
+            _engine.InputDevice.Keyboard.KeyUp += keyboard_KeyUp;
+            _engine.InputDevice.Mouse.ButtonUp += mouse_ButtonUp;
+            _engine.InputDevice.Mouse.Move += mouse_Move;
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace DynaStudios.UI
         /// </summary>
         /// <param name="sender">not used</param>
         /// <param name="e">Pressed Key</param>
-        private void Keyboard_KeyUp(object sender, KeyboardKeyEventArgs e)
+        private void keyboard_KeyUp(object sender, KeyboardKeyEventArgs e)
         {
             _engine.Logger.Debug("Received KeyUP Event. Key is: " + e.Key);
 
@@ -67,7 +67,7 @@ namespace DynaStudios.UI
         /// </summary>
         /// <param name="sender">not used</param>
         /// <param name="e">Pressed MouseButton</param>
-        private void Mouse_ButtonUp(object sender, MouseButtonEventArgs e)
+        private void mouse_ButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (IsVisible)
             {
@@ -80,7 +80,7 @@ namespace DynaStudios.UI
         /// </summary>
         /// <param name="sender">not used</param>
         /// <param name="e">Mouse Position</param>
-        private void Mouse_Move(object sender, MouseMoveEventArgs e)
+        private void mouse_Move(object sender, MouseMoveEventArgs e)
         {
             if (IsVisible)
             {

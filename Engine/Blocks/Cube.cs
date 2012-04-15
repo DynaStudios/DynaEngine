@@ -7,7 +7,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace DynaStudios.Blocks
 {
-    public class Cube : IDrawable
+    public class Cube : AbstractDrawable
     {
         public Color color = Color.AliceBlue;
 
@@ -25,18 +25,12 @@ namespace DynaStudios.Blocks
             Position = new WorldPosition(worldX, worldY, worldZ);
         }
 
-        public void Render()
+        public override void render()
         {
 
             const float sizex = 0.5f;
             const float sizey = 0.5f;
             const float sizez = 0.5f;
-
-            var x = Position.x;
-            var y = Position.y;
-            var z = Position.z;
-
-            GL.Translate(-x, -y, -z);
 
             GL.Begin(BeginMode.Quads);
 
@@ -83,8 +77,6 @@ namespace DynaStudios.Blocks
             GL.Vertex3(sizex, -sizey, sizez);
 
             GL.End();
-
-            GL.Translate(x, y, z);
         }
     }
 }

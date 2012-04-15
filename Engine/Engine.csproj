@@ -46,7 +46,7 @@
     <Compile Include="Blocks\Cammera.cs" />
     <Compile Include="Blocks\Cube.cs" />
     <Compile Include="Blocks\Direction.cs" />
-    <Compile Include="Blocks\IDrawable.cs" />
+    <Compile Include="Blocks\AbstractDrawable.cs" />
     <Compile Include="Blocks\WorldPosition.cs" />
     <Compile Include="Blocks\IWorldObject.cs" />
     <Compile Include="Engine.cs" />

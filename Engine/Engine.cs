@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using OpenTK;
+using OpenTK.Input;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
@@ -15,10 +17,39 @@ namespace DynaStudios
     class CammeraMan : IWorldObject {
         public Direction Direction { get; set; }
         public WorldPosition Position { get; set; }
+        private InputDevice input;
 
-        public CammeraMan () {
+        public CammeraMan (InputDevice input) {
+            this.input = input;
             Direction = new Direction();
             Position = new WorldPosition();
+            input.Keyboard.KeyDown += Keyboard_KeyDown;
+        }
+
+        void Keyboard_KeyDown(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
+        {
+            // TODO: movement must be relative to the direction
+            switch (e.Key)
+            {
+                case (Key.A):
+                    Position.x += 0.5;
+                    break;
+                case (Key.D):
+                    Position.x -= 0.5;
+                    break;
+                case (Key.W):
+                    Position.z += 0.5;
+                    break;
+                case (Key.S):
+                    Position.z -= 0.5;
+                    break;
+                case (Key.Left):
+                    Direction.y -= 16.0;
+                    break;
+                case (Key.Right):
+                    Direction.y += 16.0;
+                    break;
+            }
         }
     }
 
@@ -31,10 +62,7 @@ namespace DynaStudios
             get { return cammera; }
         }
 
-        private Cube cube1 = new Cube(0, 0, 0);
-        private Cube cube2 = new Cube(0, 0, 1);
-        private Cube cube3 = new Cube(1, 0, 0);
-        private Cube cube4 = new Cube(0, 1, 0);
+        private List<AbstractDrawable> worldObjects = new List<AbstractDrawable>();
         private CammeraMan cammerMan;
 
         /// <summary>
@@ -52,13 +80,18 @@ namespace DynaStudios
             Logger.Register(new ConsoleLogger());
             Logger.Register(new FileSystemLogger());
             Logger.Debug("Init Game.");
-            cammerMan = new CammeraMan();
-            cammerMan.Position.z = -3.0;
-            Cammera.WorldObject = cammerMan;
+            Cube cube1 = new Cube(0, 0, 0);
+            Cube cube2 = new Cube(0, 0, 2);
+            Cube cube3 = new Cube(2, 0, 0);
+            Cube cube4 = new Cube(0, 2, 0);
             cube1.color = Color.AliceBlue;
             cube2.color = Color.White;
             cube3.color = Color.Red;
             cube4.color = Color.Brown;
+            worldObjects.Add(cube1);
+            worldObjects.Add(cube2);
+            worldObjects.Add(cube3);
+            worldObjects.Add(cube4);
         }
 
         protected override void OnLoad(EventArgs e)
@@ -67,12 +100,14 @@ namespace DynaStudios
             base.Title = "DynaEngine Sample Game";
             GL.ClearColor(Color.Gray);
 
-            //Hier kommt dann denke ich mal die Kamera hin?!
-
             //Init User Interface Controller
             Logger.Debug("Register GUI Controller");
             InputDevice = new InputDevice(Mouse, Keyboard);
             UiController = new GUIController(this);
+
+            cammerMan = new CammeraMan(InputDevice);
+            cammerMan.Position.z = -3.0;
+            Cammera.WorldObject = cammerMan;
 
             resize(null, EventArgs.Empty);
         }
@@ -92,8 +127,6 @@ namespace DynaStudios
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            //cammerMan.Direction.y -= 0.004;
-            //cammerMan.Position.z -= 0.0001;
             //Matrix4 lookat = Matrix4.LookAt(0, 5, 5, 0, 0, 0, 0, 1, 0);
             GL.MatrixMode(MatrixMode.Modelview);
             //GL.LoadMatrix(ref lookat);
@@ -106,13 +139,14 @@ namespace DynaStudios
             cammera.move();
 
             //Render World Objects
-            cube1.Render();
-            cube2.Render();
-            cube3.Render();
-            cube4.Render();
+            foreach (AbstractDrawable worldObject in worldObjects)
+            {
+                // TODO: only one cube is visible right now but it should be 4!!!
+                worldObject.doRender();
+            }
 
             // unmoves the cammera for the next frame
-            cammera.unmove();
+            cammera.moveBack();
 
             //Start GUI/HUD Rendering here
             UiController.render();
