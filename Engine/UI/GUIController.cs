@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using DynaStudios.UI.Controls;
 using DynaStudios.IO;
+using OpenTK.Graphics.OpenGL;
 
 namespace DynaStudios.UI
 {
@@ -8,11 +9,11 @@ namespace DynaStudios.UI
     {
 
         private List<UIPanel> _panels;
-        private InputDevice _inputDevice;
+        private Engine _engine;
 
-        public GUIController(InputDevice inputDevice)
+        public GUIController(Engine engine)
         {
-            this._inputDevice = inputDevice;
+            this._engine = engine;
             this._panels = new List<UIPanel>();
         }
 
@@ -29,10 +30,33 @@ namespace DynaStudios.UI
 
         public void render()
         {
+            switchToOrthoRendering();
+
             foreach (UIPanel panel in _panels)
             {
                 panel.render();
             }
+
+            switchBackToFrustrumRendering();
+        }
+
+        private void switchToOrthoRendering()
+        {
+            GL.Disable(EnableCap.DepthTest);
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.PushMatrix();
+            GL.LoadIdentity();
+            GL.Ortho(0, _engine.Width, 0, _engine.Height, -5, 1);
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.LoadIdentity();
+        }
+
+        private void switchBackToFrustrumRendering()
+        {
+            GL.Enable(EnableCap.DepthTest);
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.PopMatrix();
+            GL.MatrixMode(MatrixMode.Modelview);
         }
 
     }
