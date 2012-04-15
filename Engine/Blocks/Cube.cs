@@ -9,6 +9,8 @@ namespace DynaStudios.Blocks
 {
     public class Cube : IDrawable
     {
+        public Color color = Color.AliceBlue;
+
         public Direction Direction { get; set; }
         public WorldPosition Position { get; set; }
 
@@ -38,7 +40,7 @@ namespace DynaStudios.Blocks
 
             GL.Begin(BeginMode.Quads);
 
-            GL.Color3(Color.Honeydew);
+            GL.Color3(color);
 
             // FRONT
             GL.Vertex3(-sizex, -sizey, sizez);
@@ -52,7 +54,7 @@ namespace DynaStudios.Blocks
             GL.Vertex3(sizex, sizey, -sizez);
             GL.Vertex3(sizex, -sizey, -sizez);
 
-            GL.Color3(Color.Honeydew);
+            GL.Color3(color);
 
             // LEFT
             GL.Vertex3(-sizex, -sizey, sizez);
@@ -66,7 +68,7 @@ namespace DynaStudios.Blocks
             GL.Vertex3(sizex, sizey, sizez);
             GL.Vertex3(sizex, -sizey, sizez);
 
-            GL.Color3(Color.Honeydew);
+            GL.Color3(color);
 
             // TOP
             GL.Vertex3(-sizex, sizey, sizez);

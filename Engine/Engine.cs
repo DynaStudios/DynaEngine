@@ -12,15 +12,30 @@ using DynaStudios.UI;
 
 namespace DynaStudios
 {
+    class CammeraMan : IWorldObject {
+        public Direction Direction { get; set; }
+        public WorldPosition Position { get; set; }
+
+        public CammeraMan () {
+            Direction = new Direction();
+            Position = new WorldPosition();
+        }
+    }
+
     public class Engine : GameWindow
     {
-
         public Logger Logger;
 
-        private IDrawable cube1 = new Cube(0, 0, 0);
-        private IDrawable cube2 = new Cube(0, 0, 1);
-        private IDrawable cube3 = new Cube(1, 0, 0);
-        private IDrawable cube4 = new Cube(0, 1, 0);
+        private Cammera cammera = new Cammera();
+        public Cammera Cammera {
+            get { return cammera; }
+        }
+
+        private Cube cube1 = new Cube(0, 0, 0);
+        private Cube cube2 = new Cube(0, 0, 1);
+        private Cube cube3 = new Cube(1, 0, 0);
+        private Cube cube4 = new Cube(0, 1, 0);
+        private CammeraMan cammerMan;
 
         /// <summary>
         /// You can add your GUI Elements to the UIController and also let them register to Mouse and Keyboard Events.
@@ -36,6 +51,13 @@ namespace DynaStudios
             Logger.Register(new ConsoleLogger());
             Logger.Register(new FileSystemLogger());
             Logger.Debug("Init Game.");
+            cammerMan = new CammeraMan();
+            cammerMan.Position.z = -3.0;
+            Cammera.WorldObject = cammerMan;
+            cube1.color = Color.AliceBlue;
+            cube2.color = Color.White;
+            cube3.color = Color.Red;
+            cube4.color = Color.Brown;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -68,17 +90,27 @@ namespace DynaStudios
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            Matrix4 lookat = Matrix4.LookAt(0, 5, 5, 0, 0, 0, 0, 1, 0);
+            //cammerMan.Direction.y -= 0.004;
+            //cammerMan.Position.z -= 0.0001;
+            //Matrix4 lookat = Matrix4.LookAt(0, 5, 5, 0, 0, 0, 0, 1, 0);
             GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadMatrix(ref lookat);
+            //GL.LoadMatrix(ref lookat);
+
+            GL.Enable(EnableCap.DepthTest);
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
+            //moves the cammera
+            cammera.move();
 
             //Render World Objects
             cube1.Render();
             cube2.Render();
             cube3.Render();
             cube4.Render();
+
+            // unmoves the cammera for the next frame
+            cammera.unmove();
 
             //Start GUI/HUD Rendering here
             UiController.render();
