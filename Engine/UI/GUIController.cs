@@ -25,7 +25,9 @@ namespace DynaStudios.UI
 
             //Register Keyboard and Mouse Events
             _engine.InputDevice.Keyboard.KeyUp += Keyboard_KeyUp;
-        }
+            _engine.InputDevice.Mouse.ButtonUp += Mouse_ButtonUp;
+            _engine.InputDevice.Mouse.Move += Mouse_Move;
+        }      
 
         /// <summary>
         /// Handles User Keyboard KeyUps
@@ -34,6 +36,7 @@ namespace DynaStudios.UI
         /// <param name="e">Pressed Key</param>
         private void Keyboard_KeyUp(object sender, KeyboardKeyEventArgs e)
         {
+            #region Handle Internal GUI Controller KeyBindings
             //Check if F7 were pressed to Enable / Disable GUI Rendering
             _engine.Logger.Debug("Received KeyUP Event. Key is: " + e.Key);
             if (e.Key == Key.F7)
@@ -49,9 +52,39 @@ namespace DynaStudios.UI
                     IsVisible = true;
                 }
             }
+            #endregion
 
-            //TODO: Check if any UIControls registered for Keyboard Input. (Example: Chat Input Bar)
+            if (IsVisible)
+            {
+                //TODO: Check if any UIControls registered for Keyboard Input. (Example: Chat Input Bar)
+            }
         }
+
+        /// <summary>
+        /// Handles User MouseButton Clicks
+        /// </summary>
+        /// <param name="sender">not used</param>
+        /// <param name="e">Pressed MouseButton</param>
+        private void Mouse_ButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (IsVisible)
+            {
+                //TODO: Check if any UIControls were clicked (Example: Button)
+            }
+        }
+
+        /// <summary>
+        /// Handles Users Mouse Movement
+        /// </summary>
+        /// <param name="sender">not used</param>
+        /// <param name="e">Mouse Position</param>
+        private void Mouse_Move(object sender, MouseMoveEventArgs e)
+        {
+            if (IsVisible)
+            {
+                //TODO: Handle Mouse Movement for Hover Effects etc.
+            }
+        }  
 
         /// <summary>
         /// Registers a new Panel to draw
