@@ -9,6 +9,7 @@ namespace DynaStudios.Blocks
 {
     public class Cube : IDrawable
     {
+        public Direction Direction { get; set; }
         public WorldPosition Position { get; set; }
 
         /// <summary>

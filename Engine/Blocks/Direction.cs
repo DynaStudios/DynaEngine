@@ -5,8 +5,10 @@ using System.Text;
 
 namespace DynaStudios.Blocks
 {
-    public interface IDrawable : IWorldObject
+    public class Direction
     {
-        void Render();
+        public double x;
+        public double y;
+        public double z;
     }
 }
