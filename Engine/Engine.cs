@@ -22,7 +22,7 @@ namespace DynaStudios
         private IDrawable cube3 = new Cube(1, 0, 0);
         private IDrawable cube4 = new Cube(0, 1, 0);
 
-        private GUIController _uiController;
+        public GUIController UiController { get; set; }
 
         public Engine()
             : base(1024, 768, new GraphicsMode(32, 0, 0, 4))
@@ -43,7 +43,8 @@ namespace DynaStudios
             InputDevice inputDevice = new InputDevice(Mouse, Keyboard);
 
             //Init User Interface Controller
-            _uiController = new GUIController(inputDevice);
+            _logger.Debug("Register GUI Controller");
+            UiController = new GUIController(inputDevice);
 
             resize(null, EventArgs.Empty);
         }
@@ -75,7 +76,7 @@ namespace DynaStudios
             cube4.Render();
 
             //Start GUI/HUD Rendering here
-            _uiController.render();
+            UiController.render();
 
             this.SwapBuffers();
         }

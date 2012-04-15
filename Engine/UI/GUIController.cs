@@ -13,6 +13,18 @@ namespace DynaStudios.UI
         public GUIController(InputDevice inputDevice)
         {
             this._inputDevice = inputDevice;
+            this._panels = new List<UIPanel>();
+        }
+
+        /// <summary>
+        /// Registers a new Panel to draw
+        /// </summary>
+        /// <param name="panel"></param>
+        public void registerPanel(UIPanel panel)
+        {
+            //Maybe Panels should register here which Events they are interested in (Mouse, Keyboard)
+
+            _panels.Add(panel);
         }
 
         public void render()
