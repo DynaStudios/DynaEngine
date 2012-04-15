@@ -27,6 +27,11 @@ namespace DynaStudios.UI
             _engine.InputDevice.Keyboard.KeyUp += Keyboard_KeyUp;
         }
 
+        /// <summary>
+        /// Handles User Keyboard KeyUps
+        /// </summary>
+        /// <param name="sender">not used</param>
+        /// <param name="e">Pressed Key</param>
         private void Keyboard_KeyUp(object sender, KeyboardKeyEventArgs e)
         {
             //Check if F7 were pressed to Enable / Disable GUI Rendering
@@ -44,6 +49,8 @@ namespace DynaStudios.UI
                     IsVisible = true;
                 }
             }
+
+            //TODO: Check if any UIControls registered for Keyboard Input. (Example: Chat Input Bar)
         }
 
         /// <summary>
@@ -66,6 +73,7 @@ namespace DynaStudios.UI
 
                 foreach (UIPanel panel in _panels)
                 {
+                    //Render Panel
                     panel.render();
                 }
 
