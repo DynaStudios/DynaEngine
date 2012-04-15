@@ -31,7 +31,7 @@ namespace DynaStudios.UI
         {
             foreach (UIPanel panel in _panels)
             {
-                //Render each User Interface Panel
+                panel.render();
             }
         }
 
