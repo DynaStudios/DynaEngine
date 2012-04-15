@@ -59,6 +59,7 @@ namespace DynaStudios
         {
             Logger.Debug("OnResize called. New Width: " + base.Width + "px | New Height: " + base.Height + "px");
             resize(null, EventArgs.Empty);
+            UiController.resizeGui();
         }
 
         protected override void OnClosed(EventArgs e)

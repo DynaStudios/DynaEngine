@@ -16,19 +16,26 @@ namespace DynaStudios.UI.Controls
         public int Height { get; set; }
         public int Width { get; set; }
 
+        public int StartX { get; set; }
+        public int StartY { get; set; }
+
         public UIHorizontalPosition HorizontalPosition { get; set; }
         public UIVerticalPosition VerticalPosition { get; set; }
 
         public String Text { get; set; }
 
-        private IUIControl _parentControl;
+        public IUIControl Parent { get; set; }
 
-        public UIButton(IUIControl parentControl)
+        public UIButton()
         {
-            this._parentControl = parentControl;
         }
 
         public void render()
+        {
+            
+        }
+
+        public void resize()
         {
             
         }

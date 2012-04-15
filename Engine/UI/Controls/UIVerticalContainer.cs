@@ -14,8 +14,13 @@ namespace DynaStudios.UI.Controls
         public int Height { get; set; }
         public int Width { get; set; }
 
+        public int StartX { get; set; }
+        public int StartY { get; set; }
+
         public UIHorizontalPosition HorizontalPosition { get; set; }
         public UIVerticalPosition VerticalPosition { get; set; }
+
+        public IUIControl Parent { get; set; }
 
         public UIVerticalContainer()
         {
@@ -24,6 +29,7 @@ namespace DynaStudios.UI.Controls
 
         public void add(IUIControl control)
         {
+            control.Parent = this;
             _controls.Add(control);
         }
 
@@ -38,6 +44,23 @@ namespace DynaStudios.UI.Controls
             {
                 control.render();
             }
+        }
+
+        public void resize()
+        {
+            if (_controls.Count != 0)
+            {
+                int childHeight;
+                int childWidth;
+
+                int childStartX;
+
+                foreach (IUIControl control in _controls)
+                {
+
+                }
+            }
+
         }
 
         public void onClicked(MouseButtonEventArgs arg)

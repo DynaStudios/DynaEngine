@@ -15,6 +15,11 @@ namespace DynaStudios.UI.Controls
         void render();
 
         /// <summary>
+        /// Recalculates Width and Height Dimensions
+        /// </summary>
+        void resize();
+
+        /// <summary>
         /// Called when the UIControl got clicked
         /// </summary>
         /// <param name="arg">Mouse Informations</param>

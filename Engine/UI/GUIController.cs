@@ -4,6 +4,7 @@ using DynaStudios.IO;
 using OpenTK.Graphics.OpenGL;
 using System;
 using OpenTK.Input;
+using DynaStudios.UI.Utils;
 
 namespace DynaStudios.UI
 {
@@ -27,7 +28,7 @@ namespace DynaStudios.UI
             _engine.InputDevice.Keyboard.KeyUp += Keyboard_KeyUp;
             _engine.InputDevice.Mouse.ButtonUp += Mouse_ButtonUp;
             _engine.InputDevice.Mouse.Move += Mouse_Move;
-        }      
+        }
 
         /// <summary>
         /// Handles User Keyboard KeyUps
@@ -36,9 +37,10 @@ namespace DynaStudios.UI
         /// <param name="e">Pressed Key</param>
         private void Keyboard_KeyUp(object sender, KeyboardKeyEventArgs e)
         {
+            _engine.Logger.Debug("Received KeyUP Event. Key is: " + e.Key);
+
             #region Handle Internal GUI Controller KeyBindings
             //Check if F7 were pressed to Enable / Disable GUI Rendering
-            _engine.Logger.Debug("Received KeyUP Event. Key is: " + e.Key);
             if (e.Key == Key.F7)
             {
                 if (IsVisible)
@@ -84,7 +86,7 @@ namespace DynaStudios.UI
             {
                 //TODO: Handle Mouse Movement for Hover Effects etc.
             }
-        }  
+        }
 
         /// <summary>
         /// Registers a new Panel to draw
@@ -94,7 +96,39 @@ namespace DynaStudios.UI
         {
             //Maybe Panels should register here which Events they are interested in (Mouse, Keyboard)
 
+            //Calculate Positions for added Panel
+            calculatePosition(panel);
+
             _panels.Add(panel);
+        }
+
+        private void calculatePosition(UIPanel panel)
+        {
+
+            if (panel.Width == 0)
+            {
+                panel.Width = _engine.Width;
+            }
+
+            if (panel.Height == 0)
+            {
+                panel.Height = _engine.Height;
+            }
+
+            panel.StartX = PositionHelper.calculateStartX(panel, _engine.Width);
+            panel.StartY = PositionHelper.calculateStartY(panel, _engine.Height);
+
+            //At the end call the panels own resize method to calculate positions for his Children
+            panel.resize();
+
+        }
+
+        public void resizeGui()
+        {
+            foreach (UIPanel panel in _panels)
+            {
+                calculatePosition(panel);
+            }
         }
 
         public void render()

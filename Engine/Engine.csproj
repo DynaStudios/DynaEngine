@@ -59,6 +59,7 @@
     <Compile Include="UI\Controls\UIHorizontalPosition.cs" />
     <Compile Include="UI\Controls\UIVerticalContainer.cs" />
     <Compile Include="UI\GUIController.cs" />
+    <Compile Include="UI\Utils\PositionHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DynaLogger\DynaLogger.csproj">
