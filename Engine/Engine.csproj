@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Blocks\Cammera.cs" />
+    <Compile Include="Blocks\Camera.cs" />
     <Compile Include="Blocks\Cube.cs" />
     <Compile Include="Blocks\Direction.cs" />
     <Compile Include="Blocks\AbstractDrawable.cs" />
