@@ -14,12 +14,12 @@ using DynaStudios.UI;
 
 namespace DynaStudios
 {
-    class CammeraMan : IWorldObject {
+    class CameraMan : IWorldObject {
         public Direction Direction { get; set; }
         public WorldPosition Position { get; set; }
         private InputDevice input;
 
-        public CammeraMan (InputDevice input) {
+        public CameraMan (InputDevice input) {
             this.input = input;
             Direction = new Direction();
             Position = new WorldPosition();
@@ -69,13 +69,13 @@ namespace DynaStudios
     {
         public Logger Logger;
 
-        private Cammera cammera = new Cammera();
-        public Cammera Cammera {
-            get { return cammera; }
+        private Camera camera = new Camera();
+        public Camera Camera {
+            get { return camera; }
         }
 
         private List<AbstractDrawable> worldObjects = new List<AbstractDrawable>();
-        private CammeraMan cammerMan;
+        private CameraMan camerMan;
 
         /// <summary>
         /// You can add your GUI Elements to the UIController and also let them register to Mouse and Keyboard Events.
@@ -117,9 +117,9 @@ namespace DynaStudios
             InputDevice = new InputDevice(Mouse, Keyboard);
             UiController = new GUIController(this);
 
-            cammerMan = new CammeraMan(InputDevice);
-            cammerMan.Position.z = -3.0;
-            Cammera.WorldObject = cammerMan;
+            camerMan = new CameraMan(InputDevice);
+            camerMan.Position.z = -3.0;
+            Camera.WorldObject = camerMan;
 
             resize(null, EventArgs.Empty);
         }
@@ -147,8 +147,8 @@ namespace DynaStudios
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            //moves the cammera
-            cammera.move();
+            //moves the camera
+            camera.move();
 
             //Render World Objects
             foreach (AbstractDrawable worldObject in worldObjects)
@@ -157,8 +157,8 @@ namespace DynaStudios
                 worldObject.doRender();
             }
 
-            // unmoves the cammera for the next frame
-            cammera.moveBack();
+            // unmoves the camera for the next frame
+            camera.moveBack();
 
             //Start GUI/HUD Rendering here
             UiController.render();

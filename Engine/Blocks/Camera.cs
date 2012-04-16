@@ -3,12 +3,12 @@ using OpenTK.Graphics.OpenGL;
 
 namespace DynaStudios.Blocks
 {
-    public class Cammera
+    public class Camera
     {
         private IWorldObject movedBy;
         public IWorldObject WorldObject { get; set; }
 
-        public Cammera() { }
+        public Camera() { }
 
         public void move()
         {
