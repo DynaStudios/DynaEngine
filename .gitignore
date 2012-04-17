@@ -31,6 +31,8 @@ obj/
 [Rr]elease*/
 Ankh.NoLoad
 
+.vsa.backup
+
 #Tooling
 _ReSharper*/
 *.resharper
