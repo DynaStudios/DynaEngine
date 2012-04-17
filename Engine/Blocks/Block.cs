@@ -7,7 +7,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace DynaStudios.Blocks
 {
-    public class Cube : AbstractDrawable
+    public class Block : AbstractDrawable
     {
         public Color color = Color.AliceBlue;
 
@@ -15,12 +15,12 @@ namespace DynaStudios.Blocks
         public override WorldPosition Position { get; set; }
 
         /// <summary>
-        /// Creates a cube at given world position
+        /// Creates a block at given world position
         /// </summary>
         /// <param name="worldX">World X Coordinate</param>
         /// <param name="worldZ">World Z Coordinate</param>
         /// <param name="worldY">World Y Coordinate</param>
-        public Cube(double worldX, double worldZ, double worldY)
+        public Block(double worldX, double worldZ, double worldY)
         {
             Position = new WorldPosition(worldX, worldY, worldZ);
         }

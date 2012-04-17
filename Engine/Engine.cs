@@ -92,18 +92,18 @@ namespace DynaStudios
             Logger.Register(new ConsoleLogger());
             Logger.Register(new FileSystemLogger());
             Logger.Debug("Init Game.");
-            Cube cube1 = new Cube(0, 0, 0);
-            Cube cube2 = new Cube(0, 0, 2);
-            Cube cube3 = new Cube(2, 0, 0);
-            Cube cube4 = new Cube(0, 2, 0);
-            cube1.color = Color.AliceBlue;
-            cube2.color = Color.White;
-            cube3.color = Color.Red;
-            cube4.color = Color.Brown;
-            worldObjects.Add(cube3);
-            worldObjects.Add(cube1);
-            worldObjects.Add(cube4);
-            worldObjects.Add(cube2);
+            Block block1 = new Block(0, 0, 0);
+            Block block2 = new Block(0, 0, 2);
+            Block block3 = new Block(2, 0, 0);
+            Block block4 = new Block(0, 2, 0);
+            block1.color = Color.AliceBlue;
+            block2.color = Color.White;
+            block3.color = Color.Red;
+            block4.color = Color.Brown;
+            worldObjects.Add(block3);
+            worldObjects.Add(block1);
+            worldObjects.Add(block4);
+            worldObjects.Add(block2);
         }
 
         protected override void OnLoad(EventArgs e)
@@ -153,7 +153,7 @@ namespace DynaStudios
             //Render World Objects
             foreach (AbstractDrawable worldObject in worldObjects)
             {
-                // TODO: only one cube is visible right now but it should be 4!!!
+                // TODO: only one block is visible right now but it should be 4!!!
                 worldObject.doRender();
             }
 
