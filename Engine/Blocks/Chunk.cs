@@ -7,5 +7,15 @@ namespace DynaStudios.Blocks
 {
     public class Chunk
     {
+
+        Chunklet[] chunklets;
+
+        public Chunk()
+        {
+            chunklets = new Chunklet[16];
+        }
+
+        
+
     }
 }

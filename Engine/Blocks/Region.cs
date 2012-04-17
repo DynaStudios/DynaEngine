@@ -8,9 +8,9 @@ namespace DynaStudios.Blocks
     {
         public Region(int x, int y)
         {
-            FileInfo info = new FileInfo (x+"_"+y+".derf");
-            if (info.Exists)
-            Stream inData = 
+//             FileInfo info = new FileInfo (x+"_"+y+".derf");
+//             if (info.Exists)
+//             Stream inData = 
         }
     }
 }

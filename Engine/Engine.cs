@@ -85,6 +85,8 @@ namespace DynaStudios
         public GUIController UiController { get; set; }
         public InputDevice InputDevice { get; set; }
 
+        private Chunklet chunklet1;
+
         public Engine()
             : base(1024, 768, new GraphicsMode(32, 0, 0, 4))
         {
@@ -92,18 +94,22 @@ namespace DynaStudios
             Logger.Register(new ConsoleLogger());
             Logger.Register(new FileSystemLogger());
             Logger.Debug("Init Game.");
-            Block block1 = new Block(0, 0, 0);
-            Block block2 = new Block(0, 0, 2);
-            Block block3 = new Block(2, 0, 0);
-            Block block4 = new Block(0, 2, 0);
-            block1.color = Color.AliceBlue;
-            block2.color = Color.White;
-            block3.color = Color.Red;
-            block4.color = Color.Brown;
-            worldObjects.Add(block3);
-            worldObjects.Add(block1);
-            worldObjects.Add(block4);
-            worldObjects.Add(block2);
+//             Block block1 = new Block(0, 0, 0);
+//             Block block2 = new Block(0, 0, 2);
+//             Block block3 = new Block(2, 0, 0);
+//             Block block4 = new Block(0, 2, 0);
+//             block1.color = Color.AliceBlue;
+//             block2.color = Color.White;
+//             block3.color = Color.Red;
+//             block4.color = Color.Brown;
+//             worldObjects.Add(block3);
+//             worldObjects.Add(block1);
+//             worldObjects.Add(block4);
+//             worldObjects.Add(block2);
+
+            chunklet1 = new Chunklet();
+
+
         }
 
         protected override void OnLoad(EventArgs e)
@@ -157,11 +163,13 @@ namespace DynaStudios
                 worldObject.doRender();
             }
 
+            chunklet1.render(camerMan);
+
             // unmoves the camera for the next frame
             camera.moveBack();
 
             //Start GUI/HUD Rendering here
-            UiController.render();
+            //UiController.render();
 
             this.SwapBuffers();
         }
