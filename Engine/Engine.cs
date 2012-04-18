@@ -11,6 +11,8 @@ using DynaStudios.DynaLogger.Appender;
 using DynaStudios.Blocks;
 using DynaStudios.IO;
 using DynaStudios.UI;
+using DynaStudios.Utils;
+using QuickFont;
 
 namespace DynaStudios
 {
@@ -85,6 +87,8 @@ namespace DynaStudios
         public GUIController UiController { get; set; }
         public InputDevice InputDevice { get; set; }
 
+        public FramerateCalculator FpsCalc;
+
         private Chunklet chunklet1;
 
         public Engine()
@@ -94,6 +98,9 @@ namespace DynaStudios
             Logger.Register(new ConsoleLogger());
             Logger.Register(new FileSystemLogger());
             Logger.Debug("Init Game.");
+
+            FpsCalc = new FramerateCalculator();
+
             Block block1 = new Block(0, 0, 0);
             Block block2 = new Block(0, 0, 2);
             Block block3 = new Block(2, 0, 0);
@@ -173,6 +180,7 @@ namespace DynaStudios
 
             //Start GUI/HUD Rendering here
             UiController.render();
+            FpsCalc.CalculateFramePerSecond();
 
             this.SwapBuffers();
         }
