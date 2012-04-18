@@ -5,6 +5,9 @@ using OpenTK.Graphics.OpenGL;
 using System;
 using OpenTK.Input;
 using DynaStudios.UI.Utils;
+using OpenTK;
+using QuickFont;
+using OpenTK.Graphics;
 
 namespace DynaStudios.UI
 {
@@ -13,6 +16,8 @@ namespace DynaStudios.UI
 
         private List<UIPanel> _panels;
         private Engine _engine;
+
+        private QFont _mainFont;
 
         public bool IsVisible { get; set; }
 
@@ -23,6 +28,13 @@ namespace DynaStudios.UI
 
             //GUI should be visible by default
             IsVisible = true;
+
+            //Init MainFont
+            QFontBuilderConfiguration config = new QFontBuilderConfiguration(false);
+            
+            _mainFont = new QFont("Fonts/visitor2.ttf", 24, config);
+            _mainFont.Options.UseDefaultBlendFunction = false;
+            _mainFont.Options.Colour = Color4.Green;
 
             //Register Keyboard and Mouse Events
             _engine.InputDevice.Keyboard.KeyUp += keyboard_KeyUp;
@@ -52,6 +64,19 @@ namespace DynaStudios.UI
                 {
                     _engine.Logger.Debug("Enable GUI Rendering");
                     IsVisible = true;
+                }
+            }
+            if (e.Key == Key.F8)
+            {
+                if (_engine.VSync == VSyncMode.On)
+                {
+                    _engine.Logger.Debug("Disable VSync");
+                    _engine.VSync = VSyncMode.Off;
+                }
+                else
+                {
+                    _engine.Logger.Debug("Enable VSync");
+                    _engine.VSync = VSyncMode.On;
                 }
             }
             #endregion
@@ -144,6 +169,13 @@ namespace DynaStudios.UI
                     panel.render();
                 }
 
+                //Render FPS
+                QFont.Begin();
+                GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.DstAlpha);
+                _mainFont.Print(_engine.FpsCalc.Framerate.ToString());
+                QFont.End();
+                
+
                 //Enable Depth Rendering again
                 switchBackToFrustrumRendering();
             }
@@ -161,6 +193,7 @@ namespace DynaStudios.UI
             GL.Ortho(0, _engine.Width, 0, _engine.Height, -5, 1);
             GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
+            GL.Enable(EnableCap.Blend);
         }
 
         /// <summary>
@@ -172,6 +205,7 @@ namespace DynaStudios.UI
             GL.MatrixMode(MatrixMode.Projection);
             GL.PopMatrix();
             GL.MatrixMode(MatrixMode.Modelview);
+            GL.Disable(EnableCap.Blend);
         }
 
     }
