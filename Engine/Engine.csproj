@@ -75,6 +75,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Libs\ICSharpCode.SharpZipLib.dll" />
     <Content Include="Libs\OpenTK.dll" />
   </ItemGroup>
   <ItemGroup />
