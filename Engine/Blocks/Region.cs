@@ -238,8 +238,12 @@ namespace DynaStudios.Blocks {
                     // dangerous state that should be avoided
                     return null;
                 }
-                // TODO: complete this
-                return null;
+
+                if (!chunkIsChild(x, y)) {
+                    return null;
+                }
+
+                return _chunks[x % 16, y % 16];
             }
         }
     }
