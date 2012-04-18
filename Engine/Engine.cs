@@ -88,7 +88,7 @@ namespace DynaStudios
         private Chunklet chunklet1;
 
         public Engine()
-            : base(1024, 768)
+            : base(1024, 768, new GraphicsMode(32, 1, 0, 4))
         {
             Logger = new Logger();
             Logger.Register(new ConsoleLogger());
@@ -128,10 +128,9 @@ namespace DynaStudios
 
             resize(null, EventArgs.Empty);
 
+            //Enable OpenGL Modes
             GL.Enable(EnableCap.DepthTest);
-            //GL.ClearDepth(1.0);
-            //GL.DepthFunc(DepthFunction.Lequal);
-            //GL.Disable(EnableCap.DepthTest);
+
             GL.ClearColor(Color.Gray);
 
 
@@ -161,14 +160,9 @@ namespace DynaStudios
             //moves the camera
             camera.move();
 
-            bool Result = GL.IsEnabled(EnableCap.DepthTest);
-            //Logger.Debug("DepthTest is " + Result);
-            //GL.DepthRange(1.0, 0.0);
-
             //Render World Objects
             foreach (AbstractDrawable worldObject in worldObjects)
             {
-                // TODO: only one block is visible right now but it should be 4!!!
                 worldObject.doRender();
             }
 
@@ -178,7 +172,7 @@ namespace DynaStudios
             camera.moveBack();
 
             //Start GUI/HUD Rendering here
-            //UiController.render();
+            UiController.render();
 
             this.SwapBuffers();
         }
@@ -196,7 +190,6 @@ namespace DynaStudios
             Matrix4 perpective = Matrix4.CreatePerspectiveFieldOfView(MathHelper.PiOver4, aspect_ratio, 1, 64);
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadMatrix(ref perpective);
-            //GL.LoadIdentity();
         }
     }
 }
