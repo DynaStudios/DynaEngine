@@ -89,7 +89,7 @@ namespace DynaStudios
 
         public FramerateCalculator FpsCalc;
 
-        private Chunklet chunklet1;
+        //private Chunklet chunklet1;
 
         public Engine()
             : base(1024, 768, new GraphicsMode(32, 1, 0, 4))
@@ -114,7 +114,7 @@ namespace DynaStudios
             worldObjects.Add(block4);
             worldObjects.Add(block2);
 
-            //chunklet1 = new Chunklet();
+            //chunklet1 = new Chunklet(0, 0, 0);
 
 
         }
@@ -173,7 +173,7 @@ namespace DynaStudios
                 worldObject.doRender();
             }
 
-            //chunklet1.render(camerMan);
+//            chunklet1.render(camera);
 
             // unmoves the camera for the next frame
             camera.moveBack();

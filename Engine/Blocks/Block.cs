@@ -37,44 +37,44 @@ namespace DynaStudios.Blocks
             GL.Color3(color);
 
             // FRONT
-            GL.Vertex3(-sizex, -sizey, sizez);
-            GL.Vertex3(sizex, -sizey, sizez);
+            GL.Vertex3(0, 0, sizez);
+            GL.Vertex3(sizex, 0, sizez);
             GL.Vertex3(sizex, sizey, sizez);
-            GL.Vertex3(-sizex, sizey, sizez);
+            GL.Vertex3(0, sizey, sizez);
 
             // BACK
-            GL.Vertex3(-sizex, -sizey, -sizez);
-            GL.Vertex3(-sizex, sizey, -sizez);
-            GL.Vertex3(sizex, sizey, -sizez);
-            GL.Vertex3(sizex, -sizey, -sizez);
+            GL.Vertex3(0, 0, 0);
+            GL.Vertex3(0, sizey, 0);
+            GL.Vertex3(sizex, sizey, 0);
+            GL.Vertex3(sizex, 0, 0);
 
             GL.Color3(color);
 
             // LEFT
-            GL.Vertex3(-sizex, -sizey, sizez);
-            GL.Vertex3(-sizex, sizey, sizez);
-            GL.Vertex3(-sizex, sizey, -sizez);
-            GL.Vertex3(-sizex, -sizey, -sizez);
+            GL.Vertex3(0, 0, sizez);
+            GL.Vertex3(0, sizey, sizez);
+            GL.Vertex3(0, sizey, 0);
+            GL.Vertex3(0, 0, 0);
 
             // RIGHT
-            GL.Vertex3(sizex, -sizey, -sizez);
-            GL.Vertex3(sizex, sizey, -sizez);
+            GL.Vertex3(sizex, 0, 0);
+            GL.Vertex3(sizex, sizey, 0);
             GL.Vertex3(sizex, sizey, sizez);
-            GL.Vertex3(sizex, -sizey, sizez);
+            GL.Vertex3(sizex, 0, sizez);
 
             GL.Color3(color);
 
             // TOP
-            GL.Vertex3(-sizex, sizey, sizez);
+            GL.Vertex3(0, sizey, sizez);
             GL.Vertex3(sizex, sizey, sizez);
-            GL.Vertex3(sizex, sizey, -sizez);
-            GL.Vertex3(-sizex, sizey, -sizez);
+            GL.Vertex3(sizex, sizey, 0);
+            GL.Vertex3(0, sizey, 0);
 
             // BOTTOM
-            GL.Vertex3(-sizex, -sizey, sizez);
-            GL.Vertex3(-sizex, -sizey, -sizez);
-            GL.Vertex3(sizex, -sizey, -sizez);
-            GL.Vertex3(sizex, -sizey, sizez);
+            GL.Vertex3(0, 0, sizez);
+            GL.Vertex3(0, 0, 0);
+            GL.Vertex3(sizex, 0, 0);
+            GL.Vertex3(sizex, 0, sizez);
 
             GL.End();
         }

@@ -5,7 +5,6 @@ namespace DynaStudios.Blocks
 {
     public class Chunklet
     {
-
         private Block[, ,] _blocks;
 
         public int startX;
@@ -18,6 +17,7 @@ namespace DynaStudios.Blocks
             yLevel = y;
             startZ = z;
             _blocks = new Block[16, 16, 16];
+            //generateStupedWorld();
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace DynaStudios.Blocks
                 {
                     for (int z = 0; z < 16; ++z)
                     {
-                        if (rnd.Next(3) == 0)
+                        if (rnd.Next(6) == 0)
                         {
                             Block block = new Block(x, y, z);
                             block.color = colors[rnd.Next(colors.Length)];
@@ -45,16 +45,14 @@ namespace DynaStudios.Blocks
             }
         }
 
-        internal void render(CameraMan camerMan)
+        internal void render(Camera camerMan)
         {
-            
             foreach( Block block in _blocks) {
-
-                block.render();
-
+                if (block != null)
+                {
+                    block.doRender();
+                }
             }
-
-
         }
     }
 }
