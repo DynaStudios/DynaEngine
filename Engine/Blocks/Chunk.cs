@@ -31,6 +31,7 @@ namespace DynaStudios.Blocks {
                 for (int y = 0; y < 16; ++y)
                 {
                     Chunklet chunklet = new Chunklet(x, y, z);
+                    chunklet.load(file);
                     chunklets[y] = chunklet;
                 }
             }
