@@ -10,8 +10,11 @@ namespace DynaStudios.Blocks
         public int startZ;
         public int yLevel;
 
-        public Chunklet()
+        public Chunklet(int x, int y, int z)
         {
+            startX = x;
+            yLevel = y;
+            startZ = z;
             blocks = new int[16, 16, 16];
         }
 

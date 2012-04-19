@@ -20,7 +20,7 @@ namespace DynaStudios.Blocks {
             lock (_queriedChunks) {
                 LinkedListNode<Chunk> chunk = _queriedChunks.First;
                 while (chunk != null) {
-                    if (chunk.Value.X == x && chunk.Value.Y == y) {
+                    if (chunk.Value.X == x && chunk.Value.Z == y) {
                         return true;
                     }
                     chunk = chunk.Next;
@@ -79,7 +79,7 @@ namespace DynaStudios.Blocks {
                 string chunkFileName = string.Format(
                     "{0}_{1}.dscf",
                     getStringForFilesystem(chunk.X),
-                    getStringForFilesystem(chunk.Y));
+                    getStringForFilesystem(chunk.Z));
                 string chunkFullPath = Path.Combine(_dataPath, chunkFileName);
 
                 chunk.load(chunkFullPath);

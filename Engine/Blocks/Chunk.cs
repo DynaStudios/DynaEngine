@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -11,21 +12,28 @@ namespace DynaStudios.Blocks {
             get { return x; }
         }
 
-        private int y;
-        public int Y {
-            get { return y; }
+        private int z;
+        public int Z {
+            get { return z; }
         }
 
-        private Chunklet[] chunklets;
+        private Chunklet[] chunklets = new Chunklet[16];
 
-        public Chunk(int x, int y) {
+        public Chunk(int x, int z) {
             this.x = x;
-            this.y = y;
+            this.z = z;
             chunklets = new Chunklet[16];
         }
 
         public void load(string pathToFile) {
-            // TODO: implement me
+            using (FileStream file = new FileInfo(pathToFile).OpenRead())
+            {
+                for (int y = 0; y < 16; ++y)
+                {
+                    Chunklet chunklet = new Chunklet(x, y, z);
+                    chunklets[y] = chunklet;
+                }
+            }
         }
     }
 }
