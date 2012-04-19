@@ -45,7 +45,10 @@ namespace DynaStudios.Blocks {
 
         private void chunkLoader_ChunkLoaded(Chunk chunk) {
             lock (_chunks) {
-                _chunks[chunk.X % 16, chunk.Z % 16] = chunk;
+                if (chunkIsChild(chunk.X, chunk.Z))
+                {
+                    _chunks[chunk.X % 16, chunk.Z % 16] = chunk;
+                }
             }
         }
 
@@ -108,48 +111,48 @@ namespace DynaStudios.Blocks {
             // TODO: recompress region
         }
 
-        public bool chunkIsChild(int x, int y) {
+        public bool chunkIsChild(int x, int z) {
             return x >= X * 16 && x < X * 17
-                && y >= Z * 16 && y < Z * 17;
+                && z >= Z * 16 && z < Z * 17;
         }
 
-        private void checkForChunk(int x, int y, bool urgent = false) {
-            if (!chunkIsChild(x, y)) {
+        private void checkForChunk(int x, int z, bool urgent = false) {
+            if (!chunkIsChild(x, z)) {
                 return;
             }
 
             lock (_chunks) {
-                if (_chunks[x % 16, y % 16] == null) {
-                    _chunkLoader.request(x, y, urgent);
+                if (_chunks[x % 16, z % 16] == null) {
+                    _chunkLoader.request(x, z, urgent);
                 }
             }
         }
 
-        private void checkPreloadedChunks(int x, int y) {
+        private void checkPreloadedChunks(int x, int z) {
             // HACK: preloads a square but it should be a circle
-            for (int iy = y - PreloadChunks; iy < y + PreloadChunks; ++iy) {
+            for (int iz = z - PreloadChunks; iz < z + PreloadChunks; ++iz) {
                 for (int ix = x - PreloadChunks; ix < x + PreloadChunks; ++ix) {
-                    checkForChunk(ix, iy, ix == x && iy == y);
+                    checkForChunk(ix, iz, ix == x && iz == z);
                 }
             }
         }
 
-        public void setCurrentChunk(int x, int y) {
-            checkPreloadedChunks(x, y);
+        public void setCurrentChunk(int x, int z) {
+            checkPreloadedChunks(x, z);
         }
 
-        public Chunk this[int x,int y] {
+        public Chunk this[int x,int z] {
             get {
                 if (!Decompressed) {
                     // dangerous state that should be avoided
                     return null;
                 }
 
-                if (!chunkIsChild(x, y)) {
+                if (!chunkIsChild(x, z)) {
                     return null;
                 }
                 lock (_chunks) {
-                    return _chunks[x % 16, y % 16];
+                    return _chunks[x % 16, z % 16];
                 }
             }
         }
