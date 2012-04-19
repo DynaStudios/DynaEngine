@@ -5,6 +5,7 @@ using System.Text;
 
 using DynaStudios;
 using DynaStudios.UI.Controls;
+using TestGame.Scenes;
 
 namespace TestGame
 {
@@ -35,6 +36,10 @@ namespace TestGame
 
             //Add Panel to UiController
             UiController.registerPanel(panel);
+
+            //Register Scene
+            Scene scene = new BlockTestScene(this);
+            loadScene(scene);
 
         }
 

@@ -19,7 +19,7 @@ namespace DynaStudios.Blocks
             _y = y;
             _z = z;
             _blocks = new Block[16, 16, 16];
-            //generateStupedWorld();
+            generateStupedWorld();
         }
 
         public void load(Stream stream)
@@ -76,7 +76,7 @@ namespace DynaStudios.Blocks
             }
         }
 
-        internal void render(Camera camerMan)
+        public void render(Camera camerMan)
         {
             foreach( Block block in _blocks) {
                 if (block != null)

@@ -58,6 +58,7 @@
     <Compile Include="Blocks\Direction.cs" />
     <Compile Include="Blocks\AbstractDrawable.cs" />
     <Compile Include="Blocks\Region.cs" />
+    <Compile Include="Scene.cs" />
     <Compile Include="Blocks\WorldPosition.cs" />
     <Compile Include="Blocks\IWorldObject.cs" />
     <Compile Include="Engine.cs" />

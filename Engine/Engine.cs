@@ -12,72 +12,16 @@ using DynaStudios.Blocks;
 using DynaStudios.IO;
 using DynaStudios.UI;
 using DynaStudios.Utils;
-using QuickFont;
 
 namespace DynaStudios
 {
-    class CameraMan : IWorldObject {
-        public Direction Direction { get; set; }
-        public WorldPosition Position { get; set; }
-        private InputDevice input;
-
-        public CameraMan (InputDevice input) {
-            this.input = input;
-            Direction = new Direction();
-            Position = new WorldPosition();
-            input.Keyboard.KeyDown += Keyboard_KeyDown;
-        }
-
-        void Keyboard_KeyDown(object sender, OpenTK.Input.KeyboardKeyEventArgs e)
-        {
-            // TODO: movement must be relative to the direction
-            switch (e.Key)
-            {
-                case (Key.A):
-                    Position.x += 0.5;
-                    break;
-                case (Key.D):
-                    Position.x -= 0.5;
-                    break;
-                case (Key.W):
-                    Position.z += 0.5;
-                    break;
-                case (Key.S):
-                    Position.z -= 0.5;
-                    break;
-                case (Key.Left):
-                    Direction.Y -= 9.0;
-                    break;
-                case (Key.Right):
-                    Direction.Y += 9.0;
-                    break;
-                case (Key.Up):
-                    Direction.X -= 9.0;
-                    break;
-                case (Key.Down):
-                    Direction.X += 9.0;
-                    break;
-                case (Key.Q):
-                    Direction.Rotation -= 9.0;
-                    break;
-                case (Key.E):
-                    Direction.Rotation += 9.0;
-                    break;
-            }
-        }
-    }
 
     public class Engine : GameWindow
     {
         public Logger Logger;
 
-        private Camera camera = new Camera();
-        public Camera Camera {
-            get { return camera; }
-        }
-
-        private List<AbstractDrawable> worldObjects = new List<AbstractDrawable>();
-        private CameraMan camerMan;
+        public List<Scene> LoadedScenes { get; set; }
+        public Scene ActiveScene { get; set; }
 
         /// <summary>
         /// You can add your GUI Elements to the UIController and also let them register to Mouse and Keyboard Events.
@@ -89,7 +33,7 @@ namespace DynaStudios
 
         public FramerateCalculator FpsCalc;
 
-        //private Chunklet chunklet1;
+        //
 
         public Engine()
             : base(1024, 768, new GraphicsMode(32, 1, 0, 4))
@@ -100,21 +44,9 @@ namespace DynaStudios
             Logger.Debug("Init Game.");
 
             FpsCalc = new FramerateCalculator();
+            LoadedScenes = new List<Scene>();
 
-            Block block1 = new Block(0, 0, 0);
-            Block block2 = new Block(0, 0, 2);
-            Block block3 = new Block(2, 0, 0);
-            Block block4 = new Block(0, 2, 0);
-            block1.color = Color.AliceBlue;
-            block2.color = Color.White;
-            block3.color = Color.Red;
-            block4.color = Color.Brown;
-            worldObjects.Add(block3);
-            worldObjects.Add(block1);
-            worldObjects.Add(block4);
-            worldObjects.Add(block2);
-
-            //chunklet1 = new Chunklet(0, 0, 0);
+            //
 
 
         }
@@ -129,9 +61,7 @@ namespace DynaStudios
             InputDevice = new InputDevice(Mouse, Keyboard);
             UiController = new GUIController(this);
 
-            camerMan = new CameraMan(InputDevice);
-            camerMan.Position.z = -3.0;
-            Camera.WorldObject = camerMan;
+            
 
             resize(null, EventArgs.Empty);
 
@@ -164,27 +94,36 @@ namespace DynaStudios
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            //moves the camera
-            camera.move();
-
-            //Render World Objects
-            foreach (AbstractDrawable worldObject in worldObjects)
+            if (ActiveScene != null)
             {
-                worldObject.doRender();
+                ActiveScene.doRender();
             }
 
-//            chunklet1.render(camera);
-
-            // unmoves the camera for the next frame
-            camera.moveBack();
-
             //Start GUI/HUD Rendering here
-            UiController.render();
             FpsCalc.CalculateFramePerSecond();
+            UiController.render();
 
             this.SwapBuffers();
         }
         
+        /// <summary>
+        /// Loads given scene to Engine and actives.
+        /// 
+        /// If any other Scene is loaded it will get unloaded but not removed!
+        /// </summary>
+        /// <param name="scene"></param>
+        public void loadScene(Scene scene)
+        {
+            if (ActiveScene != null)
+            {
+                ActiveScene.unloadScene();
+                ActiveScene = null;
+            }
+            LoadedScenes.Add(scene);
+            scene.loadScene();
+            ActiveScene = scene;
+        }
+
         /// <summary>
         /// Recalculates Viewport
         /// </summary>
