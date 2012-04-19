@@ -59,9 +59,9 @@ namespace TestGame.Scenes
         }
     }
 
-    public class BlockTestScene : Scene
+    public class BlockTestScene : IScene
     {
-
+        public Engine Engine { get; set; }
         private Chunklet chunklet1;
 
         private CameraMan camerMan;
@@ -72,12 +72,13 @@ namespace TestGame.Scenes
             get { return camera; }
         }
 
-        public BlockTestScene(Engine engine) : base(engine)
+        public BlockTestScene(Engine engine)
         {
+            Engine = engine;
             Engine.Logger.Debug("Loaded BlockTestScene");
         }
 
-        public override void loadScene()
+        public void loadScene()
         {
 
             camerMan = new CameraMan(Engine.InputDevice);
@@ -88,7 +89,7 @@ namespace TestGame.Scenes
             
         }
 
-        public override void doRender()
+        public void doRender()
         {
             //moves the camera
             camera.move();
@@ -99,5 +100,6 @@ namespace TestGame.Scenes
             camera.moveBack();
         }
 
+        public void unloadScene() {}
     }
 }

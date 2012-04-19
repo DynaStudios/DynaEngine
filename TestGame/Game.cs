@@ -38,7 +38,7 @@ namespace TestGame
             UiController.registerPanel(panel);
 
             //Register Scene
-            Scene scene = new BlockTestScene(this);
+            IScene scene = new BlockTestScene(this);
             loadScene(scene);
 
         }

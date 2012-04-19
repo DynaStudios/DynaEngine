@@ -18,8 +18,8 @@ namespace DynaStudios
     {
         public Logger Logger;
 
-        public List<Scene> LoadedScenes { get; set; }
-        public Scene ActiveScene { get; set; }
+        public List<IScene> LoadedScenes { get; set; }
+        public IScene ActiveScene { get; set; }
 
         /// <summary>
         /// You can add your GUI Elements to the UIController and also let them register to Mouse and Keyboard Events.
@@ -42,7 +42,7 @@ namespace DynaStudios
             Logger.Debug("Init Game.");
 
             FpsCalc = new FramerateCalculator();
-            LoadedScenes = new List<Scene>();
+            LoadedScenes = new List<IScene>();
 
         }
 
@@ -99,7 +99,7 @@ namespace DynaStudios
         /// If any other Scene is loaded it will get unloaded but not removed!
         /// </summary>
         /// <param name="scene"></param>
-        public void loadScene(Scene scene)
+        public void loadScene(IScene scene)
         {
             if (ActiveScene != null)
             {
