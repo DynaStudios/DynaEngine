@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Drawing;
 using OpenTK;
-using OpenTK.Input;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
 using Logger = DynaStudios.DynaLogger.Logger;
 using DynaStudios.DynaLogger.Appender;
-using DynaStudios.Blocks;
 using DynaStudios.IO;
 using DynaStudios.UI;
 using DynaStudios.Utils;
@@ -46,9 +44,6 @@ namespace DynaStudios
             FpsCalc = new FramerateCalculator();
             LoadedScenes = new List<Scene>();
 
-            //
-
-
         }
 
         protected override void OnLoad(EventArgs e)
@@ -61,15 +56,11 @@ namespace DynaStudios
             InputDevice = new InputDevice(Mouse, Keyboard);
             UiController = new GUIController(this);
 
-            
-
             resize(null, EventArgs.Empty);
 
             //Enable OpenGL Modes
             GL.Enable(EnableCap.DepthTest);
-
             GL.ClearColor(Color.Gray);
-
 
         }
 
@@ -88,10 +79,6 @@ namespace DynaStudios
 
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            //Matrix4 lookat = Matrix4.LookAt(0, 5, 5, 0, 0, 0, 0, 1, 0);
-            //GL.MatrixMode(MatrixMode.Modelview);
-            //GL.LoadMatrix(ref lookat);
-
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             if (ActiveScene != null)
