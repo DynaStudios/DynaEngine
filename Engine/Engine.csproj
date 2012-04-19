@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Blocks\AsyncChunkLoader.cs" />
     <Compile Include="Blocks\Block.cs" />
     <Compile Include="Blocks\Camera.cs" />
     <Compile Include="Blocks\Chunk.cs" />
