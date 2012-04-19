@@ -4,7 +4,7 @@ namespace DynaStudios.Blocks
     public class Chunklet
     {
 
-        int[, ,] blocks;
+        private Block[, ,] _blocks;
 
         public int startX;
         public int startZ;
@@ -12,16 +12,19 @@ namespace DynaStudios.Blocks
 
         public Chunklet()
         {
-            blocks = new int[16, 16, 16];
+            _blocks = new Block[16, 16, 16];
         }
 
 
         internal void render(CameraMan camerMan)
         {
-            bool isHeadingFromWest;
-            bool isHeadingFromNorth;
+            
+            foreach( Block block in _blocks) {
 
-            //if(camerMan.Position.x < )
+                block.render();
+
+            }
+
 
         }
     }
