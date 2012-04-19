@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using DynaStudios;
+﻿using DynaStudios;
 using DynaStudios.Blocks;
 using DynaStudios.IO;
 using OpenTK.Input;
@@ -65,7 +64,6 @@ namespace TestGame.Scenes
 
         private Chunklet chunklet1;
 
-        private List<AbstractDrawable> worldObjects = new List<AbstractDrawable>();
         private CameraMan camerMan;
 
         private Camera camera = new Camera();
