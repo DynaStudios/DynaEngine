@@ -28,9 +28,9 @@ namespace DynaStudios.Blocks
         public override void render()
         {
 
-            const float sizex = 0.5f;
-            const float sizey = 0.5f;
-            const float sizez = 0.5f;
+            const float sizex = 1.0f;
+            const float sizey = 1.0f;
+            const float sizez = 1.0f;
 
             GL.Begin(BeginMode.Quads);
 
