@@ -8,7 +8,7 @@ using DynaStudios.Utils;
 
 namespace DynaStudios.Blocks
 {
-    class Room
+    public class Room
     {
         private List<Block> _blocks = new List<Block>();
         public List<Block> Blocks
