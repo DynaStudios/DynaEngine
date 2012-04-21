@@ -2,8 +2,13 @@
 
 namespace DynaStudios.Utils
 {
-    class StreamTool
+    public class StreamTool
     {
+        private static string _DIR = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        public static string DIR
+        {
+            get { return _DIR; }
+        }
         public static int getInt(Stream stream)
         {
             int ret = 0;
@@ -16,5 +21,7 @@ namespace DynaStudios.Utils
             } while (b > 127);
             return ret;
         }
+
+        
     }
 }

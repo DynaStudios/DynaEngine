@@ -16,7 +16,19 @@ namespace DynaStudios.Blocks
             get { return _blocks; }
         }
 
+        public Room(string filePath, TextureController textureController)
+        {
+            using (FileStream fileStream = new FileInfo(filePath).OpenRead())
+            {
+                init(fileStream, textureController);
+            }
+        }
+
         public Room(Stream dataStream, TextureController textureController)
+        {
+            init(dataStream, textureController);
+        }
+        private void init (Stream dataStream, TextureController textureController)
         {
             Dictionary<int, int> fileToGpuIdMap = loadTextures(dataStream, textureController);
             readBlocks(dataStream, fileToGpuIdMap);

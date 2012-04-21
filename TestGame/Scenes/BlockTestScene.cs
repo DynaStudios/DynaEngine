@@ -1,7 +1,10 @@
-﻿using DynaStudios;
+﻿using System.IO;
+
+using OpenTK.Input;
+
+using DynaStudios;
 using DynaStudios.Blocks;
 using DynaStudios.IO;
-using OpenTK.Input;
 
 
 namespace TestGame.Scenes
@@ -63,6 +66,7 @@ namespace TestGame.Scenes
     {
         public Engine Engine { get; set; }
         private Chunklet chunklet1;
+        private Room _room;
 
         private CameraMan camerMan;
 
@@ -80,12 +84,14 @@ namespace TestGame.Scenes
             Engine.Camera.WorldObject = camerMan;
 
             chunklet1 = new Chunklet(0, 0, 0);
-            
+
+            _room = new Room(Path.Combine(DynaStudios.Utils.StreamTool.DIR, "Maps", "FirstTest.map"), Engine.TextureManager);
         }
 
         public void doRender()
         {
-            chunklet1.render();
+            //chunklet1.render();
+            _room.render();
         }
 
         public void unloadScene() {}
