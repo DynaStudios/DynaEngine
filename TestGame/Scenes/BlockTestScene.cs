@@ -85,7 +85,7 @@ namespace TestGame.Scenes
 
             chunklet1 = new Chunklet(0, 0, 0);
 
-            _room = new Room(Path.Combine(DynaStudios.Utils.StreamTool.DIR, "Maps", "FirstTest.map"), Engine.TextureManager);
+            _room = new Room(Path.Combine(DynaStudios.Utils.StreamTool.DIR, "Maps", "map.xml"), Engine.TextureManager);
         }
 
         public void doRender()

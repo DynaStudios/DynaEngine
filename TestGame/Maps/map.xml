@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+  <block>
+    <texture>Images\Game\dyna_splash.png</texture>
+    <position x="0" y="0" z="0" />
+  </block>
+  <block>
+    <texture>Images\Game\dyna_splash.png</texture>
+    <position x="2" y="0" z="0" />
+  </block>
+  <block>
+    <texture>Images\Game\dyna_splash.png</texture>
+    <position x="3" y="0" z="0" />
+  </block>
+  <block>
+    <texture>Images\Game\dyna_splash.png</texture>
+    <position x="0" y="2" z="0" />
+  </block>
+  <block>
+    <texture>Images\Game\dyna_splash.png</texture>
+    <position x="0" y="0" z="2" />
+  </block>
+  <block>
+    <texture>Images\Game\dyna_splash.png</texture>
+    <position x="2" y="2" z="2" />
+  </block>
+</root>
