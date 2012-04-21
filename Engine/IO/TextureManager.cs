@@ -29,12 +29,21 @@ namespace DynaStudios.IO
         /// <returns>Texture ID. (0 == Error)</returns>
         public int getTexture(string textureName)
         {
-            Bitmap pngImage = new Bitmap(textureName);
+
+            String folderPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+            Bitmap pngImage = new Bitmap(folderPath + @"\" + textureName);
             pngImage.SetAlpha(255);
+
+            if (pngImage == null)
+            {
+                throw new Exception("Texture File were not found!");
+            }
 
             if (!_loadedTextures.ContainsKey(textureName)) {
                 int textureId = TextureManager.CreateTextureFromBitmap(pngImage);
                 _loadedTextures.Add(textureName, textureId);
+                _engine.Logger.Debug("Loaded " + textureName + " to TextureManager");
             }
             else
             {
