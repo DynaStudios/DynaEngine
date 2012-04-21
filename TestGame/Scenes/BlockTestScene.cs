@@ -66,12 +66,6 @@ namespace TestGame.Scenes
 
         private CameraMan camerMan;
 
-        private Camera camera = new Camera();
-        public Camera Camera
-        {
-            get { return camera; }
-        }
-
         public BlockTestScene(Engine engine)
         {
             Engine = engine;
@@ -83,7 +77,7 @@ namespace TestGame.Scenes
 
             camerMan = new CameraMan(Engine.InputDevice);
             camerMan.Position.z = -3.0;
-            Camera.WorldObject = camerMan;
+            Engine.Camera.WorldObject = camerMan;
 
             chunklet1 = new Chunklet(0, 0, 0);
             
@@ -91,13 +85,7 @@ namespace TestGame.Scenes
 
         public void doRender()
         {
-            //moves the camera
-            camera.move();
-
-            chunklet1.render(camera);
-
-            // unmoves the camera for the next frame
-            camera.moveBack();
+            chunklet1.render();
         }
 
         public void unloadScene() {}

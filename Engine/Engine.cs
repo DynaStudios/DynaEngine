@@ -10,16 +10,22 @@ using DynaStudios.DynaLogger.Appender;
 using DynaStudios.IO;
 using DynaStudios.UI;
 using DynaStudios.Utils;
+using DynaStudios.Blocks;
 
 namespace DynaStudios
 {
-
     public class Engine : GameWindow
     {
         public Logger Logger;
 
         public List<IScene> LoadedScenes { get; set; }
         public IScene ActiveScene { get; set; }
+
+        private Camera _camera = new Camera();
+        public Camera Camera
+        {
+            get { return _camera; }
+        }
 
         /// <summary>
         /// You can add your GUI Elements to the UIController and also let them register to Mouse and Keyboard Events.
@@ -28,14 +34,14 @@ namespace DynaStudios
         /// </summary>
         public GUIController UiController { get; set; }
         public InputDevice InputDevice { get; set; }
+        public string DataPath { get; set; }
 
         public FramerateCalculator FpsCalc;
 
-        //
-
-        public Engine()
+        public Engine(string dataPath)
             : base(1024, 768, new GraphicsMode(32, 1, 0, 4))
         {
+            DataPath = dataPath;
             Logger = new Logger();
             Logger.Register(new ConsoleLogger());
             Logger.Register(new FileSystemLogger());
@@ -61,7 +67,6 @@ namespace DynaStudios
             //Enable OpenGL Modes
             GL.Enable(EnableCap.DepthTest);
             GL.ClearColor(Color.Gray);
-
         }
 
         protected override void OnResize(EventArgs e)
@@ -83,7 +88,13 @@ namespace DynaStudios
 
             if (ActiveScene != null)
             {
+                //moves the camera
+                _camera.move();
+
                 ActiveScene.doRender();
+
+                // unmoves the camera for the next frame
+                _camera.moveBack();
             }
 
             //Start GUI/HUD Rendering here

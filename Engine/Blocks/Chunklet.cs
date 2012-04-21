@@ -76,7 +76,7 @@ namespace DynaStudios.Blocks
             }
         }
 
-        public void render(Camera camerMan)
+        public void render()
         {
             foreach( Block block in _blocks) {
                 if (block != null)

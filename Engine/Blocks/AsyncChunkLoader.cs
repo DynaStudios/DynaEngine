@@ -1,8 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 
 namespace DynaStudios.Blocks {
+    class IntHolder
+    {
+        public int value = 0;
+    }
+
     public class AsyncChunkLoader {
         public delegate void ChunkLoadedDelegate(Chunk chunk);
         public event ChunkLoadedDelegate ChunkLoaded;
@@ -10,6 +16,7 @@ namespace DynaStudios.Blocks {
         private LinkedList<Chunk> _queriedChunks = new LinkedList<Chunk>();
         private string _dataPath;
         private bool _keepAlive = true;
+        private IntHolder _regions = new IntHolder();
 
         public AsyncChunkLoader(string dataPath) {
             _dataPath = dataPath;
@@ -94,6 +101,26 @@ namespace DynaStudios.Blocks {
             _keepAlive = false;
             lock (_queriedChunks) {
                 Monitor.Pulse(_queriedChunks);
+            }
+        }
+
+        public void addRegion()
+        {
+            lock (_regions)
+            {
+                ++_regions.value;
+            }
+        }
+
+        public void removeRegion()
+        {
+            lock (_regions)
+            {
+                --_regions.value;
+                if (_regions.value == 0)
+                {
+                    stop();
+                }
             }
         }
     }

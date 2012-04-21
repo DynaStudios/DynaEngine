@@ -32,14 +32,36 @@ namespace DynaStudios.Blocks {
             get { return preloadChunks; }
         }
 
-        private AsyncChunkLoader _chunkLoader;
+        private AsyncChunkLoader _chunkLoader = null;
+        public AsyncChunkLoader ChunkLoader
+        {
+            get { return _chunkLoader; }
+        }
+
         private Chunk[,] _chunks = new Chunk[16, 16];
 
-        public Region(string dataPath, int x, int z) {
+        public Region(string dataPath, int x, int z, AsyncChunkLoader loader)
+        {
+            init(dataPath, x, z, loader);
+        }
+
+        public Region(string dataPath, int x, int z)
+        {
+            init(dataPath, x, z, new AsyncChunkLoader(_dataPath));
+        }
+
+        ~Region()
+        {
+            _chunkLoader.removeRegion();
+        }
+
+        private void init(string dataPath, int x, int z, AsyncChunkLoader loader)
+        {
             _dataPath = dataPath;
             _x = x;
             _z = z;
-            _chunkLoader = new AsyncChunkLoader(_dataPath);
+            loader.addRegion();
+            _chunkLoader = loader;
             _chunkLoader.ChunkLoaded += chunkLoader_ChunkLoaded;
         }
 

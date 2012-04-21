@@ -11,7 +11,8 @@ namespace TestGame
 {
     public class Game : Engine
     {
-        public Game() : base()
+        public Game()
+            : base(System.Reflection.Assembly.GetExecutingAssembly().Location + "/Maps")
         {
 
         }
