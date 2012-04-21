@@ -5,6 +5,7 @@ using Img = System.Drawing.Imaging;
 using OpenTK.Graphics.OpenGL;
 using System.Collections.Generic;
 using System;
+using System.IO;
 
 namespace DynaStudios.IO
 {
