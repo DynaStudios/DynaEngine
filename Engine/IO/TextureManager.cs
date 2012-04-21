@@ -1,11 +1,11 @@
 ﻿using OpenTK.Graphics;
 using System.Diagnostics;
-using System.Drawing;
 using Img = System.Drawing.Imaging;
 using OpenTK.Graphics.OpenGL;
 using System.Collections.Generic;
 using System;
 using System.IO;
+using System.Drawing;
 
 namespace DynaStudios.IO
 {
@@ -34,6 +34,7 @@ namespace DynaStudios.IO
             String folderPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
             Bitmap pngImage = new Bitmap(folderPath + @"\" + textureName);
+   
             pngImage.SetAlpha(255);
 
             if (pngImage == null)
