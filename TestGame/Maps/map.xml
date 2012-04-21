@@ -24,4 +24,9 @@
     <texture>Images\Game\dyna_splash.png</texture>
     <position x="2" y="2" z="2" />
   </block>
+  <bigBlock>
+    <texture>Images\Game\dyna_splash.png</texture>
+    <start x="2" y="10" z="2" />
+    <size x="5" y="5" z="3" />
+  </bigBlock>
 </root>

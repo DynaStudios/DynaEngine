@@ -30,6 +30,13 @@ namespace DynaStudios.Blocks
         }
 
         private void xmlInit (XmlDocument doc, TextureController textureController) {
+            loadBlocks(doc, textureController);
+            loadBigBlocks(doc, textureController);
+            
+        }
+
+        private void loadBlocks(XmlDocument doc, TextureController textureController)
+        {
             XmlNodeList nodes = doc.GetElementsByTagName("block");
             foreach (XmlNode node in nodes)
             {
@@ -41,9 +48,42 @@ namespace DynaStudios.Blocks
                 int y = int.Parse(positionElement.GetAttribute("y"));
                 int z = int.Parse(positionElement.GetAttribute("z"));
 
-                int textureId  = textureController.getTexture(textureElement.InnerText);
+                int textureId = textureController.getTexture(textureElement.InnerText);
 
                 _blocks.Add(new Block(x, y, z, textureId));
+            }
+        }
+
+        private void loadBigBlocks(XmlDocument doc, TextureController textureController)
+        {
+            XmlNodeList nodes = doc.GetElementsByTagName("bigBlock");
+            foreach (XmlNode node in nodes)
+            {
+                XmlElement blockElement = (XmlElement) node;
+                XmlElement startPositionElement = (XmlElement) blockElement.GetElementsByTagName("start")[0];
+                XmlElement sizeElement = (XmlElement) blockElement.GetElementsByTagName("size")[0];
+                XmlElement textureElement = (XmlElement) blockElement.GetElementsByTagName("texture")[0];
+
+                int startX = int.Parse(startPositionElement.GetAttribute("x"));
+                int startY = int.Parse(startPositionElement.GetAttribute("y"));
+                int startZ = int.Parse(startPositionElement.GetAttribute("z"));
+
+                int sizeX = int.Parse(sizeElement.GetAttribute("x"));
+                int sizeY = int.Parse(sizeElement.GetAttribute("y"));
+                int sizeZ = int.Parse(sizeElement.GetAttribute("z"));
+
+                int textureId = textureController.getTexture(textureElement.InnerText);
+
+                for (int x = startX; x < startX + sizeX; ++x)
+                {
+                    for (int y = startY; y < startY + sizeY; ++y)
+                    {
+                        for (int z = startZ; z < startZ + sizeZ; ++z)
+                        {
+                            _blocks.Add(new Block(x, y, z, textureId));
+                        }
+                    }
+                }
             }
         }
 
