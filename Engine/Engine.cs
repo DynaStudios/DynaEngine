@@ -34,6 +34,7 @@ namespace DynaStudios
         /// </summary>
         public GUIController UiController { get; set; }
         public InputDevice InputDevice { get; set; }
+        public TextureController TextureManager { get; set; }
         public string DataPath { get; set; }
 
         public FramerateCalculator FpsCalc;
@@ -61,6 +62,9 @@ namespace DynaStudios
             Logger.Debug("Register GUI Controller");
             InputDevice = new InputDevice(Mouse, Keyboard);
             UiController = new GUIController(this);
+
+            //Texture Manager
+            TextureManager = new TextureController(this);
 
             resize(null, EventArgs.Empty);
 
