@@ -27,25 +27,27 @@ namespace DynaStudios.IO
         /// Returns Texture ID
         /// </summary>
         /// <param name="textureName">Path to texture file (only .png yet!)</param>
-        /// <returns>Texture ID. (0 == Error)</returns>
+        /// <returns>Texture ID</returns>
         public int getTexture(string textureName)
         {
 
             String folderPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
-            Bitmap pngImage = new Bitmap(folderPath + @"\" + textureName);
+            //Bitmap pngImage = new Bitmap(folderPath + @"\" + textureName);
    
-            pngImage.SetAlpha(255);
+            //pngImage.SetAlpha(255);
 
-            if (pngImage == null)
-            {
-                throw new Exception("Texture File were not found!");
-            }
+//             if (pngImage == null)
+//             {
+//                 throw new Exception("Texture File were not found!");
+//             }
 
             if (!_loadedTextures.ContainsKey(textureName)) {
-                int textureId = TextureManager.CreateTextureFromBitmap(pngImage);
+                int textureId = TextureManager.CreateTextureFromFile(folderPath + @"\" + textureName);
                 _loadedTextures.Add(textureName, textureId);
                 _engine.Logger.Debug("Loaded " + textureName + " to TextureManager");
+
+                return textureId;
             }
             else
             {
