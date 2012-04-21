@@ -55,6 +55,11 @@ namespace DynaStudios
 
         }
 
+        public void forceResize()
+        {
+            resize(null, EventArgs.Empty);
+        }
+
         protected override void OnLoad(EventArgs e)
         {
             Logger.Debug("Called OnLoad();");
