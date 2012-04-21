@@ -44,7 +44,7 @@ namespace DynaStudios.Blocks
                         {
                             return;
                         }
-                        Block block = new Block(x + offsetX, y + offsetY, offsetZ + z);
+                        Block block = new Block(x + offsetX, y + offsetY, offsetZ + z, 0);
                         block.color = colors[data % colors.Length];
                         _blocks[x, y, z] = block;
                     }
@@ -67,7 +67,7 @@ namespace DynaStudios.Blocks
                     {
                         if (rnd.Next(6) == 0)
                         {
-                            Block block = new Block(x, y, z);
+                            Block block = new Block(x, y, z, 0);
                             block.color = colors[rnd.Next(colors.Length)];
                             _blocks[x, y, z] = block;
                         }

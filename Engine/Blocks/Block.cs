@@ -11,6 +11,7 @@ namespace DynaStudios.Blocks
     {
         public Color color = Color.AliceBlue;
 
+        private int _textureId;
         public override Direction Direction { get; set; }
         public override WorldPosition Position { get; set; }
 
@@ -20,8 +21,9 @@ namespace DynaStudios.Blocks
         /// <param name="worldX">World X Coordinate</param>
         /// <param name="worldZ">World Z Coordinate</param>
         /// <param name="worldY">World Y Coordinate</param>
-        public Block(double worldX, double worldZ, double worldY)
+        public Block(double worldX, double worldZ, double worldY, int textureId)
         {
+            _textureId = textureId;
             Position = new WorldPosition(worldX, worldY, worldZ);
         }
 
