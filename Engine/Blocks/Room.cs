@@ -4,6 +4,8 @@ using System.IO;
 using System.Text;
 using System.Xml;
 
+using OpenTK;
+
 using DynaStudios.IO;
 using DynaStudios.Utils;
 
@@ -30,23 +32,39 @@ namespace DynaStudios.Blocks
         }
 
         private void xmlInit (XmlDocument doc, TextureController textureController) {
-            loadBlocks(doc, textureController);
-            loadBigBlocks(doc, textureController);
+            XmlNodeList objectNodes = doc.GetElementsByTagName("object");
+            foreach (XmlNode objectNode in objectNodes)
+            {
+                XmlElement objectElement = (XmlElement) objectNode;
+
+                loadObject(objectElement, textureController);
+            }
             
         }
 
-        private void loadBlocks(XmlDocument doc, TextureController textureController)
+        private void loadObject(XmlElement objectElement, TextureController textureController)
         {
-            XmlNodeList nodes = doc.GetElementsByTagName("block");
+            Vector3 offset = new Vector3();
+            offset.X = int.Parse(objectElement.GetAttribute("x"));
+            offset.Y = int.Parse(objectElement.GetAttribute("y"));
+            offset.Z = int.Parse(objectElement.GetAttribute("z"));
+
+            loadBlocks(offset, objectElement, textureController);
+            loadBigBlocks(offset, objectElement, textureController);
+        }
+
+        private void loadBlocks(Vector3 offset, XmlElement objectElement, TextureController textureController)
+        {
+            XmlNodeList nodes = objectElement.GetElementsByTagName("block");
             foreach (XmlNode node in nodes)
             {
                 XmlElement blockElement = (XmlElement) node;
                 XmlElement positionElement = (XmlElement) blockElement.GetElementsByTagName("position")[0];
                 XmlElement textureElement = (XmlElement) blockElement.GetElementsByTagName("texture")[0];
 
-                int x = int.Parse(positionElement.GetAttribute("x"));
-                int y = int.Parse(positionElement.GetAttribute("y"));
-                int z = int.Parse(positionElement.GetAttribute("z"));
+                int x = (int) offset.X + int.Parse(positionElement.GetAttribute("x"));
+                int y = (int) offset.Y + int.Parse(positionElement.GetAttribute("y"));
+                int z = (int) offset.Z + int.Parse(positionElement.GetAttribute("z"));
 
                 int textureId = textureController.getTexture(textureElement.InnerText);
 
@@ -54,9 +72,9 @@ namespace DynaStudios.Blocks
             }
         }
 
-        private void loadBigBlocks(XmlDocument doc, TextureController textureController)
+        private void loadBigBlocks(Vector3 offset, XmlElement objectElement, TextureController textureController)
         {
-            XmlNodeList nodes = doc.GetElementsByTagName("bigBlock");
+            XmlNodeList nodes = objectElement.GetElementsByTagName("bigBlock");
             foreach (XmlNode node in nodes)
             {
                 XmlElement blockElement = (XmlElement) node;
@@ -64,9 +82,9 @@ namespace DynaStudios.Blocks
                 XmlElement sizeElement = (XmlElement) blockElement.GetElementsByTagName("size")[0];
                 XmlElement textureElement = (XmlElement) blockElement.GetElementsByTagName("texture")[0];
 
-                int startX = int.Parse(startPositionElement.GetAttribute("x"));
-                int startY = int.Parse(startPositionElement.GetAttribute("y"));
-                int startZ = int.Parse(startPositionElement.GetAttribute("z"));
+                int startX = (int) offset.X + int.Parse(startPositionElement.GetAttribute("x"));
+                int startY = (int) offset.Y + int.Parse(startPositionElement.GetAttribute("y"));
+                int startZ = (int) offset.Z + int.Parse(startPositionElement.GetAttribute("z"));
 
                 int sizeX = int.Parse(sizeElement.GetAttribute("x"));
                 int sizeY = int.Parse(sizeElement.GetAttribute("y"));
@@ -87,55 +105,12 @@ namespace DynaStudios.Blocks
             }
         }
 
-        public Room(Stream dataStream, TextureController textureController)
-        {
-            init(dataStream, textureController);
-        }
-        private void init (Stream dataStream, TextureController textureController)
-        {
-            Dictionary<int, int> fileToGpuIdMap = loadTextures(dataStream, textureController);
-            readBlocks(dataStream, fileToGpuIdMap);
-        }
-
         public void render()
         {
             int size = _blocks.Count;
             for (int i = 0; i < size; ++i)
             {
                 _blocks[i].doRender();
-            }
-        }
-
-        private Dictionary<int, int> loadTextures(Stream dataStream, TextureController textureController)
-        {
-            Dictionary<int, int> fileToGpuIdMap = new Dictionary<int, int>();
-            int count = StreamTool.getInt(dataStream);
-            for (int i = 0; i < count; ++i)
-            {
-                string path = getPath(dataStream);
-                int textureId = textureController.getTexture(path);
-                fileToGpuIdMap[i] = textureId;
-            }
-            return fileToGpuIdMap;
-        }
-
-        private string getPath(Stream stream) {
-            int size = StreamTool.getInt(stream);
-            byte[] rawPathBytes = new byte[size];
-            stream.Read(rawPathBytes, 0, size);
-            return Encoding.UTF8.GetString(rawPathBytes);
-        }
-
-        private void readBlocks(Stream dataStream, Dictionary<int, int> fileToGpuIdMap)
-        {
-            int count = StreamTool.getInt(dataStream);
-            for (int i = 0; i < count; ++i)
-            {
-                int x = StreamTool.getInt(dataStream);
-                int y = StreamTool.getInt(dataStream);
-                int z = StreamTool.getInt(dataStream);
-                int texturID = StreamTool.getInt(dataStream);
-                _blocks.Add(new Block(x, y, z, fileToGpuIdMap[texturID]));
             }
         }
     }

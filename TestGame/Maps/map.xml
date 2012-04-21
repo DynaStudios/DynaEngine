@@ -1,32 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <root>
-  <block>
-    <texture>Images\Game\dyna_splash.png</texture>
-    <position x="0" y="0" z="0" />
-  </block>
-  <block>
-    <texture>Images\Game\dyna_splash.png</texture>
-    <position x="2" y="0" z="0" />
-  </block>
-  <block>
-    <texture>Images\Game\dyna_splash.png</texture>
-    <position x="3" y="0" z="0" />
-  </block>
-  <block>
-    <texture>Images\Game\dyna_splash.png</texture>
-    <position x="0" y="2" z="0" />
-  </block>
-  <block>
-    <texture>Images\Game\dyna_splash.png</texture>
-    <position x="0" y="0" z="2" />
-  </block>
-  <block>
-    <texture>Images\Game\dyna_splash.png</texture>
-    <position x="2" y="2" z="2" />
-  </block>
-  <bigBlock>
-    <texture>Images\Game\dyna_splash.png</texture>
-    <start x="2" y="10" z="2" />
-    <size x="5" y="5" z="3" />
-  </bigBlock>
+  <object x="0" y="0" z="0">
+    <block>
+      <texture>Images\Game\dyna_splash.png</texture>
+      <position x="0" y="0" z="0" />
+    </block>
+    <block>
+      <texture>Images\Game\dyna_splash.png</texture>
+      <position x="2" y="0" z="0" />
+    </block>
+  </object>
+  <object x="0" y="0" z="0">
+    <block>
+      <texture>Images\Game\dyna_splash.png</texture>
+      <position x="3" y="0" z="0" />
+    </block>
+    <block>
+      <texture>Images\Game\dyna_splash.png</texture>
+      <position x="0" y="2" z="0" />
+    </block>
+    <block>
+      <texture>Images\Game\dyna_splash.png</texture>
+      <position x="0" y="0" z="2" />
+    </block>
+  </object>
+  <object x="10" y="0" z="0">
+    <block>
+      <texture>Images\Game\dyna_splash.png</texture>
+      <position x="2" y="2" z="2" />
+    </block>
+    <bigBlock>
+      <texture>Images\Game\dyna_splash.png</texture>
+      <start x="2" y="10" z="2" />
+      <size x="5" y="5" z="3" />
+    </bigBlock>
+  </object>
 </root>
