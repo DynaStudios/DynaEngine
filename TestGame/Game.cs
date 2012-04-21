@@ -40,7 +40,8 @@ namespace TestGame
 
             //Register Scene
             IScene scene = new BlockTestScene(this);
-            loadScene(scene);
+            addScene("blockTest", scene);
+            switchScene("blockTest");
 
         }
 

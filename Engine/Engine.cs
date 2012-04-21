@@ -18,8 +18,10 @@ namespace DynaStudios
     {
         public Logger Logger;
 
-        public List<IScene> LoadedScenes { get; set; }
+        public Dictionary<string, IScene> LoadedScenes { get; set; }
         public IScene ActiveScene { get; set; }
+        private bool _sceneSwitchPending = false;
+        private string _sceneSwitchName;
 
         private Camera _camera = new Camera();
         public Camera Camera
@@ -49,7 +51,7 @@ namespace DynaStudios
             Logger.Debug("Init Game.");
 
             FpsCalc = new FramerateCalculator();
-            LoadedScenes = new List<IScene>();
+            LoadedScenes = new Dictionary<string, IScene>();
 
         }
 
@@ -90,6 +92,11 @@ namespace DynaStudios
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
+            if (_sceneSwitchPending)
+            {
+                loadScene(LoadedScenes[_sceneSwitchName]);
+            }
+
             if (ActiveScene != null)
             {
                 //moves the camera
@@ -107,23 +114,41 @@ namespace DynaStudios
 
             this.SwapBuffers();
         }
-        
+
+        public void addScene(string name, IScene scene)
+        {
+            LoadedScenes.Add(name, scene);
+        }
+
+        public void switchScene(string sceneName)
+        {
+            _sceneSwitchPending = true;
+            _sceneSwitchName = sceneName;
+        }
+
         /// <summary>
         /// Loads given scene to Engine and actives.
         /// 
         /// If any other Scene is loaded it will get unloaded but not removed!
         /// </summary>
         /// <param name="scene"></param>
-        public void loadScene(IScene scene)
+        private void loadScene(IScene scene)
         {
             if (ActiveScene != null)
             {
-                ActiveScene.unloadScene();
+                unloadScene(ActiveScene);
                 ActiveScene = null;
             }
-            LoadedScenes.Add(scene);
             scene.loadScene();
             ActiveScene = scene;
+
+            _sceneSwitchName = null;
+            _sceneSwitchPending = false;
+        }
+
+        private void unloadScene(IScene scene)
+        {
+            ActiveScene.unloadScene();
         }
 
         /// <summary>
