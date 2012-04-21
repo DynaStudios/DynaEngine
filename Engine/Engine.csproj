@@ -58,6 +58,7 @@
     <Compile Include="Blocks\Direction.cs" />
     <Compile Include="Blocks\AbstractDrawable.cs" />
     <Compile Include="Blocks\Region.cs" />
+    <Compile Include="Blocks\Room.cs" />
     <Compile Include="Blocks\WorldPosition.cs" />
     <Compile Include="Blocks\IWorldObject.cs" />
     <Compile Include="Engine.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="UI\GUIController.cs" />
     <Compile Include="UI\Utils\PositionHelper.cs" />
     <Compile Include="Utils\FramerateCalculator.cs" />
+    <Compile Include="Utils\StreamTool.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DynaLogger\DynaLogger.csproj">
@@ -91,6 +93,9 @@
     <None Include="Fonts\visitor2.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="NewFolder1\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
