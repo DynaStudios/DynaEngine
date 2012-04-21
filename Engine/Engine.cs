@@ -110,7 +110,7 @@ namespace DynaStudios
 
             //Start GUI/HUD Rendering here
             FpsCalc.CalculateFramePerSecond();
-            UiController.render();
+            //UiController.render();
 
             this.SwapBuffers();
         }
