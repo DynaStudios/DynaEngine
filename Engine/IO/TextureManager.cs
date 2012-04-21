@@ -4,6 +4,8 @@ using System.Drawing;
 using Img = System.Drawing.Imaging;
 using OpenTK.Graphics.OpenGL;
 using System.Collections.Generic;
+using System;
+using System.IO;
 
 namespace DynaStudios.IO
 {
@@ -21,8 +23,33 @@ namespace DynaStudios.IO
             _engine.Logger.Debug("Loaded TextureManager");
         }
 
+        /// <summary>
+        /// Returns Texture ID
+        /// </summary>
+        /// <param name="textureName">Path to texture file (only .png yet!)</param>
+        /// <returns>Texture ID. (0 == Error)</returns>
         public int getTexture(string textureName)
         {
+
+            String folderPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+
+            Bitmap pngImage = new Bitmap(folderPath + @"\" + textureName);
+            pngImage.SetAlpha(255);
+
+            if (pngImage == null)
+            {
+                throw new Exception("Texture File were not found!");
+            }
+
+            if (!_loadedTextures.ContainsKey(textureName)) {
+                int textureId = TextureManager.CreateTextureFromBitmap(pngImage);
+                _loadedTextures.Add(textureName, textureId);
+                _engine.Logger.Debug("Loaded " + textureName + " to TextureManager");
+            }
+            else
+            {
+                return _loadedTextures[textureName];
+            }
             return 0;
         }
 
@@ -148,6 +175,32 @@ namespace DynaStudios.IO
               format,
               PixelType.UnsignedByte,
               bytes);
+        }
+
+        public static void SetAlpha(this Bitmap bmp, byte alpha)
+        {
+            if (bmp == null) throw new ArgumentNullException("bmp");
+
+            var data = bmp.LockBits(
+                new Rectangle(0, 0, bmp.Width, bmp.Height),
+                System.Drawing.Imaging.ImageLockMode.ReadWrite,
+                System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            var line = data.Scan0;
+            var eof = line + data.Height * data.Stride;
+            while (line != eof)
+            {
+                var pixelAlpha = line + 3;
+                var eol = pixelAlpha + data.Width * 4;
+                while (pixelAlpha != eol)
+                {
+                    System.Runtime.InteropServices.Marshal.WriteByte(
+                        pixelAlpha, alpha);
+                    pixelAlpha += 4;
+                }
+                line += data.Stride;
+            }
+            bmp.UnlockBits(data);
         }
 
     }
