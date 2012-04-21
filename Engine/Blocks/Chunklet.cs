@@ -6,7 +6,6 @@ namespace DynaStudios.Blocks
 {
     public class Chunklet
     {
-        private static Color[] colors = new Color[] { Color.Black, Color.White, Color.Red, Color.Green, Color.Blue, Color.Yellow };
         private Block[, ,] _blocks;
 
         public int _x;
@@ -45,7 +44,6 @@ namespace DynaStudios.Blocks
                             return;
                         }
                         Block block = new Block(x + offsetX, y + offsetY, offsetZ + z, 0);
-                        block.color = colors[data % colors.Length];
                         _blocks[x, y, z] = block;
                     }
                 }
@@ -68,7 +66,6 @@ namespace DynaStudios.Blocks
                         if (rnd.Next(6) == 0)
                         {
                             Block block = new Block(x, y, z, 0);
-                            block.color = colors[rnd.Next(colors.Length)];
                             _blocks[x, y, z] = block;
                         }
                     }
