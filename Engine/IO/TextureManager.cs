@@ -43,7 +43,7 @@ namespace DynaStudios.IO
 //             }
 
             if (!_loadedTextures.ContainsKey(textureName)) {
-                int textureId = TextureManager.CreateTextureFromFile(folderPath + @"\" + textureName);
+                int textureId = TextureManager.CreateTextureFromFile(Path.Combine(folderPath, textureName));
                 _loadedTextures.Add(textureName, textureId);
                 _engine.Logger.Debug("Loaded " + textureName + " to TextureManager");
 

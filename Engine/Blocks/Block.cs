@@ -9,8 +9,6 @@ namespace DynaStudios.Blocks
 {
     public class Block : AbstractDrawable
     {
-        public Color color = Color.AliceBlue;
-
         private int _textureId;
         public override Direction Direction { get; set; }
         public override WorldPosition Position { get; set; }
@@ -34,49 +32,44 @@ namespace DynaStudios.Blocks
             const float sizey = 1.0f;
             const float sizez = 1.0f;
 
+            GL.BindTexture(TextureTarget.Texture2D, _textureId);
             GL.Begin(BeginMode.Quads);
-
-            GL.Color3(color);
-
+            
             // FRONT
-            GL.Vertex3(0, 0, sizez);
-            GL.Vertex3(sizex, 0, sizez);
-            GL.Vertex3(sizex, sizey, sizez);
-            GL.Vertex3(0, sizey, sizez);
+            GL.TexCoord2(0, 1); GL.Vertex3(0, 0, sizez);
+            GL.TexCoord2(1, 1); GL.Vertex3(sizex, 0, sizez);
+            GL.TexCoord2(1, 0); GL.Vertex3(sizex, sizey, sizez);
+            GL.TexCoord2(0, 0); GL.Vertex3(0, sizey, sizez);
 
             // BACK
-            GL.Vertex3(0, 0, 0);
-            GL.Vertex3(0, sizey, 0);
-            GL.Vertex3(sizex, sizey, 0);
-            GL.Vertex3(sizex, 0, 0);
-
-            GL.Color3(color);
+            GL.TexCoord2(0, 1); GL.Vertex3(sizex, 0, 0);
+            GL.TexCoord2(1, 1); GL.Vertex3(0, 0, 0);
+            GL.TexCoord2(1, 0); GL.Vertex3(0, sizey, 0);
+            GL.TexCoord2(0, 0); GL.Vertex3(sizex, sizey, 0);
 
             // LEFT
-            GL.Vertex3(0, 0, sizez);
-            GL.Vertex3(0, sizey, sizez);
-            GL.Vertex3(0, sizey, 0);
-            GL.Vertex3(0, 0, 0);
+            GL.TexCoord2(0, 1); GL.Vertex3(0, 0, sizez);
+            GL.TexCoord2(1, 1); GL.Vertex3(0, sizey, sizez);
+            GL.TexCoord2(1, 0); GL.Vertex3(0, sizey, 0);
+            GL.TexCoord2(0, 0); GL.Vertex3(0, 0, 0);
 
             // RIGHT
-            GL.Vertex3(sizex, 0, 0);
-            GL.Vertex3(sizex, sizey, 0);
-            GL.Vertex3(sizex, sizey, sizez);
-            GL.Vertex3(sizex, 0, sizez);
-
-            GL.Color3(color);
+            GL.TexCoord2(0, 1); GL.Vertex3(sizex, 0, 0);
+            GL.TexCoord2(1, 1); GL.Vertex3(sizex, sizey, 0);
+            GL.TexCoord2(1, 0); GL.Vertex3(sizex, sizey, sizez);
+            GL.TexCoord2(0, 0); GL.Vertex3(sizex, 0, sizez);
 
             // TOP
-            GL.Vertex3(0, sizey, sizez);
-            GL.Vertex3(sizex, sizey, sizez);
-            GL.Vertex3(sizex, sizey, 0);
-            GL.Vertex3(0, sizey, 0);
+            GL.TexCoord2(0, 1); GL.Vertex3(0, sizey, sizez);
+            GL.TexCoord2(1, 1); GL.Vertex3(sizex, sizey, sizez);
+            GL.TexCoord2(1, 0); GL.Vertex3(sizex, sizey, 0);
+            GL.TexCoord2(0, 0); GL.Vertex3(0, sizey, 0);
 
             // BOTTOM
-            GL.Vertex3(0, 0, sizez);
-            GL.Vertex3(0, 0, 0);
-            GL.Vertex3(sizex, 0, 0);
-            GL.Vertex3(sizex, 0, sizez);
+            GL.TexCoord2(0, 1); GL.Vertex3(0, 0, sizez);
+            GL.TexCoord2(1, 1); GL.Vertex3(0, 0, 0);
+            GL.TexCoord2(1, 0); GL.Vertex3(sizex, 0, 0);
+            GL.TexCoord2(0, 0); GL.Vertex3(sizex, 0, sizez);
 
             GL.End();
         }
