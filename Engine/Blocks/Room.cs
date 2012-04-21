@@ -22,6 +22,15 @@ namespace DynaStudios.Blocks
             readBlocks(dataStream, fileToGpuIdMap);
         }
 
+        public void render()
+        {
+            int size = _blocks.Count;
+            for (int i = 0; i < size; ++i)
+            {
+                _blocks[i].doRender();
+            }
+        }
+
         private Dictionary<int, int> loadTextures(Stream dataStream, TextureController textureController)
         {
             Dictionary<int, int> fileToGpuIdMap = new Dictionary<int, int>();
