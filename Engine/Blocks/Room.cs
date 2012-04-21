@@ -9,29 +9,6 @@ using DynaStudios.Utils;
 
 namespace DynaStudios.Blocks
 {
-    class XmlTextureParser
-    {
-        private Dictionary<string, int> _texturesMap = new Dictionary<string, int>();
-        private TextureController _textureController;
-
-        public XmlTextureParser(TextureController textureController)
-        {
-            _textureController = textureController;
-        }
-
-        public int getTextureIdFromXmlElement(XmlElement texElement)
-        {
-            string texturePath = texElement.InnerText;
-            if (_texturesMap.ContainsKey(texturePath))
-            {
-                return _texturesMap[texturePath];
-            }
-
-            int textureId = _textureController.getTexture(texturePath);
-            _texturesMap[texturePath] = textureId;
-            return textureId;
-        }
-    }
     public class Room
     {
         private List<Block> _blocks = new List<Block>();
@@ -53,7 +30,6 @@ namespace DynaStudios.Blocks
         }
 
         private void xmlInit (XmlDocument doc, TextureController textureController) {
-            XmlTextureParser xmlTextureParser = new XmlTextureParser(textureController);
             XmlNodeList nodes = doc.GetElementsByTagName("block");
             foreach (XmlNode node in nodes)
             {
@@ -65,7 +41,7 @@ namespace DynaStudios.Blocks
                 int y = int.Parse(positionElement.GetAttribute("y"));
                 int z = int.Parse(positionElement.GetAttribute("z"));
 
-                int textureId  = xmlTextureParser.getTextureIdFromXmlElement(textureElement);
+                int textureId  = textureController.getTexture(textureElement.InnerText);
 
                 _blocks.Add(new Block(x, y, z, textureId));
             }
