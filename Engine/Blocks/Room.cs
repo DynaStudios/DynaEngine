@@ -104,6 +104,111 @@ namespace DynaStudios.Blocks
                 }
             }
         }
+		public double collisionX (double posx, double posy, double posz, double dist)
+		{
+			// a neighbouring block (only then only 1, if floory==0.5&&floorz==0.5, else 1 or none of 2 or 4) can limit the collision distance,
+			// everything else is not 
+			double floory=posy-(int)posy;
+			double floorz=posz-(int)posz;
+			//negative or positve direction? -> signum, i.e. 1 or -1
+			int dirsig;
+			//the distance to the neighbouring block
+			double xrest;
+			if (dist>0.0) {
+				dirsig=1;
+				xrest=(int)posx+1-posx;
+			} else if (dist<0.0) {
+				dirsig=-1;
+				xrest=posx-(int)posx;
+			}
+			else /* if dist==0.0 */ return 0.0;
+			if (floory<0.5)
+			{
+				if (floorz<0.5)
+				{
+					if ( _blocks[(int)posx+dirsig,(int)posy-1,(int)posz-1]!=null || _blocks[(int)posx+dirsig,(int)posy,(int)posz-1]!=null ||
+					     _blocks[(int)posx+dirsig,(int)posy-1,(int)posz] != null || _blocks[(int)posx+dirsig,(int)posy,(int)posz] != null )
+					{
+						if (xrest>dist) return dist;
+						else            return xrest;
+					}
+				}
+				else if (floorz>0.5)
+				{
+					if ( _blocks[(int)posx+dirsig,(int)posy-1,(int)posz] != null || _blocks[(int)posx+dirsig,(int)posy,(int)posz] != null ||
+					     _blocks[(int)posx+dirsig,(int)posy-1,(int)posz+1]!=null || _blocks[(int)posx+dirsig,(int)posy,(int)posz+1]!=null )
+					{
+						if (xrest>dist) return dist;
+						else            return xrest;
+					}
+				}
+				else /*if floorz==0.5*/
+				{
+					if (_blocks[(int)posx+dirsig,(int)posy-1,(int)posz] != null || _blocks[(int)posx+dirsig,(int)posy,(int)posz] != null )
+					{
+						if (xrest>dist) return dist;
+						else            return xrest;
+					}
+				}
+			}
+			else if (floory>0.5)
+			{
+				if (floorz<0.5)
+				{
+					if ( _blocks[(int)posx+dirsig,(int)posy,(int)posz-1]!=null || _blocks[(int)posx+dirsig,(int)posy+1,(int)posz-1]!=null ||
+					     _blocks[(int)posx+dirsig,(int)posy,(int)posz] != null || _blocks[(int)posx+dirsig,(int)posy+1,(int)posz] != null )
+					{
+						if (xrest>dist) return dist;
+						else            return xrest;
+					}
+				}
+				else if (floorz>0.5)
+				{
+					if ( _blocks[(int)posx+dirsig,(int)posy,(int)posz] != null || _blocks[(int)posx+dirsig,(int)posy+1,(int)posz] != null ||
+					     _blocks[(int)posx+dirsig,(int)posy,(int)posz+1]!=null || _blocks[(int)posx+dirsig,(int)posy+1,(int)posz+1]!=null )
+					{
+						if (xrest>dist) return dist;
+						else            return xrest;
+					}
+				}
+				else /*if floorz==0.5*/
+				{
+					if (_blocks[(int)posx+dirsig,(int)posy,(int)posz] != null || _blocks[(int)posx+dirsig,(int)posy+1,(int)posz] != null )
+				{
+						if (xrest>dist) return dist;
+						else            return xrest;
+					}
+				}
+			}
+			else /*if floory==0.5*/
+			{
+				if (floorz<0.5)
+				{
+					if ( _blocks[(int)posx+dirsig,(int)posy,(int)posz-1]!=null || _blocks[(int)posx+dirsig,(int)posy,(int)posz] != null )
+					{
+						if (xrest>dist) return dist;
+						else            return xrest;
+					}
+				}
+				else if (floorz>0.5)
+				{
+					if ( _blocks[(int)posx+dirsig,(int)posy,(int)posz] != null || _blocks[(int)posx+dirsig,(int)posy,(int)posz+1]!=null )
+					{
+						if (xrest>dist) return dist;
+						else            return xrest;
+					}
+				}
+				else /*if floorz==0.5*/
+				{
+					if (_blocks[(int)posx+dirsig,(int)posy,(int)posz] != null )
+					{
+						if (xrest>dist) return dist;
+						else            return xrest;
+					}
+				}
+			}
+			return 0.0; // why? oO
+		}
 
         public void render()
         {
