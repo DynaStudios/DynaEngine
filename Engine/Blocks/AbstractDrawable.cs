@@ -21,13 +21,13 @@ namespace DynaStudios.Blocks
             var z = Position.z;
 
             GL.Translate(x, y, z);
-            GL.Rotate(-Direction.Y, 0.0f, 1.0f, 0.0f);
-            GL.Rotate(-Direction.Rotation, 0.0f, 0.0f, 1.0f);
-            GL.Rotate(-Direction.X, 1.0f, 0.0f, 0.0f);
-            render();
-            GL.Rotate(Direction.X, 1.0f, 0.0f, 0.0f);
-            GL.Rotate(Direction.Rotation, 0.0f, 0.0f, 1.0f);
             GL.Rotate(Direction.Y, 0.0f, 1.0f, 0.0f);
+            GL.Rotate(Direction.Rotation, 0.0f, 0.0f, 1.0f);
+            GL.Rotate(Direction.X, 1.0f, 0.0f, 0.0f);
+            render();
+            GL.Rotate(-Direction.X, 1.0f, 0.0f, 0.0f);
+            GL.Rotate(-Direction.Rotation, 0.0f, 0.0f, 1.0f);
+            GL.Rotate(-Direction.Y, 0.0f, 1.0f, 0.0f);
             GL.Translate(-x, -y, -z);
         }
         public abstract void render();
