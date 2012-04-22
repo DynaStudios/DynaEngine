@@ -8,21 +8,21 @@ namespace DynaStudios.Utils
 {
     public class FramerateCalculator
     {
-        //Public Vars
-        public int Framerate { get; set; }
+        private long _currentTime;
+        private int _frameCount;
+        private long _lastTime;
 
         //Private Vars
         private Stopwatch _watch;
-
-        private int _frameCount;
-        private long _currentTime;
-        private long _lastTime;
 
         public FramerateCalculator()
         {
             _watch = new Stopwatch();
             _watch.Start();
         }
+
+        //Public Vars
+        public int Framerate { get; set; }
 
         public void CalculateFramePerSecond()
         {

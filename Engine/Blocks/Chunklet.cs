@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
 
 namespace DynaStudios.Blocks
@@ -75,7 +74,8 @@ namespace DynaStudios.Blocks
 
         public void render()
         {
-            foreach( Block block in _blocks) {
+            foreach (Block block in _blocks)
+            {
                 if (block != null)
                 {
                     block.doRender();
