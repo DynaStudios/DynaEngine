@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using OpenTK;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
-
-using Logger = DynaStudios.DynaLogger.Logger;
+using DynaStudios.Blocks;
 using DynaStudios.DynaLogger.Appender;
 using DynaStudios.IO;
 using DynaStudios.UI;
 using DynaStudios.Utils;
-using DynaStudios.Blocks;
+using OpenTK;
+using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
+using Logger = DynaStudios.DynaLogger.Logger;
 
 namespace DynaStudios
 {
@@ -19,11 +18,14 @@ namespace DynaStudios
         public Logger Logger;
 
         public Dictionary<string, IScene> LoadedScenes { get; set; }
+
         public IScene ActiveScene { get; set; }
+
         private bool _sceneSwitchPending = false;
         private string _sceneSwitchName;
 
         private Camera _camera = new Camera();
+
         public Camera Camera
         {
             get { return _camera; }
@@ -31,12 +33,15 @@ namespace DynaStudios
 
         /// <summary>
         /// You can add your GUI Elements to the UIController and also let them register to Mouse and Keyboard Events.
-        /// 
+        ///
         /// Add new UIPanels using UIController.register(UIPanel yourPanel);
         /// </summary>
-        public GUIController UiController { get; set; }
+        public GuiController UiController { get; set; }
+
         public InputDevice InputDevice { get; set; }
+
         public TextureController TextureManager { get; set; }
+
         //public SoundManager SoundManager { get; set; }
         public string DataPath { get; set; }
 
@@ -53,7 +58,6 @@ namespace DynaStudios
 
             FpsCalc = new FramerateCalculator();
             LoadedScenes = new Dictionary<string, IScene>();
-
         }
 
         public void forceResize()
@@ -69,7 +73,7 @@ namespace DynaStudios
             //Init User Interface Controller
             Logger.Debug("Register GUI Controller");
             InputDevice = new InputDevice(Mouse, Keyboard);
-            UiController = new GUIController(this);
+            UiController = new GuiController(this);
 
             //Texture Manager
             TextureManager = new TextureController(this);
@@ -86,7 +90,7 @@ namespace DynaStudios
         {
             Logger.Debug("OnResize called. New Width: " + base.Width + "px | New Height: " + base.Height + "px");
             resize(null, EventArgs.Empty);
-            UiController.resizeGui();
+            UiController.ResizeGui();
         }
 
         protected override void OnClosed(EventArgs e)
@@ -135,7 +139,7 @@ namespace DynaStudios
 
         /// <summary>
         /// Loads given scene to Engine and actives.
-        /// 
+        ///
         /// If any other Scene is loaded it will get unloaded but not removed!
         /// </summary>
         /// <param name="scene"></param>
@@ -163,7 +167,7 @@ namespace DynaStudios
         /// </summary>
         /// <param name="sender">Not used.</param>
         /// <param name="e">Not used.</param>
-        void resize(object sender, EventArgs e)
+        private void resize(object sender, EventArgs e)
         {
             GL.Viewport(0, 0, base.Width, base.Height);
 

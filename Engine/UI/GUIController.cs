@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using DynaStudios.UI.Controls;
 using DynaStudios.UI.Utils;
 using OpenTK;
@@ -9,17 +10,16 @@ using QuickFont;
 
 namespace DynaStudios.UI
 {
-    public class GUIController
+    public class GuiController
     {
+        private readonly Engine _engine;
+        private readonly QFont _mainFont;
+        private readonly List<UIPanel> _panels;
 
-        private Engine _engine;
-        private QFont _mainFont;
-        private List<UIPanel> _panels;
-
-        public GUIController(Engine engine)
+        public GuiController(Engine engine)
         {
-            this._engine = engine;
-            this._panels = new List<UIPanel>();
+            _engine = engine;
+            _panels = new List<UIPanel>();
 
             //GUI should be visible by default
             IsVisible = true;
@@ -27,14 +27,11 @@ namespace DynaStudios.UI
             //Init MainFont
             QFontBuilderConfiguration config = new QFontBuilderConfiguration(false);
 
-            _mainFont = new QFont("Fonts/visitor2.ttf", 24, config);
-            _mainFont.Options.UseDefaultBlendFunction = false;
-            _mainFont.Options.Colour = Color4.Green;
-
+            _mainFont = new QFont("Fonts/visitor2.ttf", 24, config) { Options = { UseDefaultBlendFunction = false, Colour = Color4.Green } };
             //Register Keyboard and Mouse Events
-            _engine.InputDevice.Keyboard.KeyUp += keyboard_KeyUp;
-            _engine.InputDevice.Mouse.ButtonUp += mouse_ButtonUp;
-            _engine.InputDevice.Mouse.Move += mouse_Move;
+            _engine.InputDevice.Keyboard.KeyUp += KeyboardKeyUp;
+            _engine.InputDevice.Mouse.ButtonUp += MouseButtonUp;
+            _engine.InputDevice.Mouse.Move += MouseMove;
         }
 
         public bool IsVisible { get; set; }
@@ -43,52 +40,50 @@ namespace DynaStudios.UI
         /// Registers a new Panel to draw
         /// </summary>
         /// <param name="panel"></param>
-        public void registerPanel(UIPanel panel)
+        public void RegisterPanel(UIPanel panel)
         {
             //Maybe Panels should register here which Events they are interested in (Mouse, Keyboard)
 
             //Calculate Positions for added Panel
-            calculatePosition(panel);
+            CalculatePosition(panel);
 
             _panels.Add(panel);
         }
 
-        public void render()
+        public void Render()
         {
             if (IsVisible)
             {
                 //Disable Depth Rendering to draw 2D UIs
-                switchToOrthoRendering();
+                SwitchToOrthoRendering();
 
                 foreach (UIPanel panel in _panels)
                 {
                     //Render Panel
-                    panel.render();
+                    panel.Render();
                 }
 
                 //Render FPS
                 QFont.Begin();
                 GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.DstAlpha);
-                _mainFont.Print(_engine.FpsCalc.Framerate.ToString());
+                _mainFont.Print(_engine.FpsCalc.Framerate.ToString(CultureInfo.InvariantCulture));
                 QFont.End();
-
 
                 //Enable Depth Rendering again
                 switchBackToFrustrumRendering();
             }
         }
 
-        public void resizeGui()
+        public void ResizeGui()
         {
             foreach (UIPanel panel in _panels)
             {
-                calculatePosition(panel);
+                CalculatePosition(panel);
             }
         }
 
-        private void calculatePosition(UIPanel panel)
+        private void CalculatePosition(UIPanel panel)
         {
-
             if (panel.Width == 0)
             {
                 panel.Width = _engine.Width;
@@ -99,12 +94,11 @@ namespace DynaStudios.UI
                 panel.Height = _engine.Height;
             }
 
-            panel.StartX = PositionHelper.calculateStartX(panel, _engine.Width);
-            panel.StartY = PositionHelper.calculateStartY(panel, _engine.Height);
+            panel.StartX = PositionHelper.CalculateStartX(panel, _engine.Width);
+            panel.StartY = PositionHelper.CalculateStartY(panel, _engine.Height);
 
             //At the end call the panels own resize method to calculate positions for his Children
-            panel.resize();
-
+            panel.Resize();
         }
 
         /// <summary>
@@ -112,11 +106,12 @@ namespace DynaStudios.UI
         /// </summary>
         /// <param name="sender">not used</param>
         /// <param name="e">Pressed Key</param>
-        private void keyboard_KeyUp(object sender, KeyboardKeyEventArgs e)
+        private void KeyboardKeyUp(object sender, KeyboardKeyEventArgs e)
         {
             _engine.Logger.Debug("Received KeyUP Event. Key is: " + e.Key);
 
             #region Handle Internal GUI Controller KeyBindings
+
             //Check if F7 were pressed to Enable / Disable GUI Rendering
             if (e.Key == Key.F7)
             {
@@ -144,7 +139,8 @@ namespace DynaStudios.UI
                     _engine.VSync = VSyncMode.On;
                 }
             }
-            #endregion
+
+            #endregion Handle Internal GUI Controller KeyBindings
 
             if (IsVisible)
             {
@@ -157,7 +153,7 @@ namespace DynaStudios.UI
         /// </summary>
         /// <param name="sender">not used</param>
         /// <param name="e">Pressed MouseButton</param>
-        private void mouse_ButtonUp(object sender, MouseButtonEventArgs e)
+        private void MouseButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (IsVisible)
             {
@@ -170,7 +166,7 @@ namespace DynaStudios.UI
         /// </summary>
         /// <param name="sender">not used</param>
         /// <param name="e">Mouse Position</param>
-        private void mouse_Move(object sender, MouseMoveEventArgs e)
+        private void MouseMove(object sender, MouseMoveEventArgs e)
         {
             if (IsVisible)
             {
@@ -193,7 +189,7 @@ namespace DynaStudios.UI
         /// <summary>
         /// Disable Depth Rendering to draw 2D UIs
         /// </summary>
-        private void switchToOrthoRendering()
+        private void SwitchToOrthoRendering()
         {
             GL.Disable(EnableCap.DepthTest);
             GL.MatrixMode(MatrixMode.Projection);

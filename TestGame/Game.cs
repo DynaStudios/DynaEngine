@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using DynaStudios;
 using DynaStudios.UI.Controls;
 using TestGame.Scenes;
@@ -14,7 +10,6 @@ namespace TestGame
         public Game()
             : base(System.Reflection.Assembly.GetExecutingAssembly().Location + "/Maps")
         {
-
         }
 
         protected override void OnLoad(EventArgs e)
@@ -23,26 +18,23 @@ namespace TestGame
 
             Logger.Debug("Create GUI Elements");
             //Create Test User Interface
-            UIPanel panel = new UIPanel() { VerticalPosition = UIVerticalPosition.Bottom, Height = 400 };
-
+            UIPanel panel = new UIPanel { VerticalPosition = UIVerticalPosition.Bottom, Height = 400 };
             //Create Container for 2 TestButtons
-            UIVerticalContainer vContainer = new UIVerticalContainer() { HorizontalPosition = UIHorizontalPosition.Left, VerticalPosition = UIVerticalPosition.Top };
-            vContainer.add(new UIButton() { Text = "Hallo Welt", HorizontalPosition = UIHorizontalPosition.Center });
-
-            UIButton exitButton = new UIButton() { Text = "Exit Game", HorizontalPosition = UIHorizontalPosition.Center };
-            exitButton.OnClicked += new ClickedEventHandler(OnExitGameClick);
+            UIVerticalContainer vContainer = new UIVerticalContainer { HorizontalPosition = UIHorizontalPosition.Left, VerticalPosition = UIVerticalPosition.Top };
+            vContainer.add(new UiButton { Text = "Hallo Welt", HorizontalPosition = UIHorizontalPosition.Center });
+            UiButton exitButton = new UiButton { Text = "Exit Game", HorizontalPosition = UIHorizontalPosition.Center };
+            exitButton.Clicked += OnExitGameClick;
             vContainer.add(exitButton);
 
             panel.setContainingPanel(vContainer);
 
             //Add Panel to UiController
-            UiController.registerPanel(panel);
+            UiController.RegisterPanel(panel);
 
             //Register Scene
             IScene scene = new BlockTestScene(this);
             addScene("blockTest", scene);
             switchScene("blockTest");
-
         }
 
         /// <summary>
@@ -54,7 +46,7 @@ namespace TestGame
             Close();
         }
 
-        static void Main(string[] args)
+        private static void Main()
         {
             Game game = new Game();
             game.Run();

@@ -1,65 +1,62 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using OpenTK.Input;
 
 namespace DynaStudios.UI.Controls
 {
     public delegate void ClickedEventHandler();
 
-    public class UIButton : IUIControl
+    public class UiButton : IUiControl
     {
+        public String Text { get; set; }
 
-        public event ClickedEventHandler OnClicked;
+        #region IUIControl Members
 
         public int Height { get; set; }
+
         public int Width { get; set; }
 
         public int StartX { get; set; }
+
         public int StartY { get; set; }
 
         public UIHorizontalPosition HorizontalPosition { get; set; }
+
         public UIVerticalPosition VerticalPosition { get; set; }
 
-        public String Text { get; set; }
+        public IUiControl Parent { get; set; }
 
-        public IUIControl Parent { get; set; }
-
-        public UIButton()
+        public void Render()
         {
         }
 
-        public void render()
+        public void Resize()
         {
-            
         }
 
-        public void resize()
+        public void OnClicked(MouseButtonEventArgs arg)
         {
-            
         }
 
-        public void onClicked(MouseButtonEventArgs arg)
+        public void OnKeyPressed(KeyboardKeyEventArgs arg)
         {
-            if (OnClicked != null)
-                OnClicked();
         }
 
-        public void onKeyPressed(KeyboardKeyEventArgs arg)
+        public void OnHoverEnter()
         {
-            
         }
 
-        public void onHoverEnter()
+        public void OnHoverExit()
         {
-            
         }
 
-        public void onHoverExit()
-        {
-            
-        }
+        #endregion IUIControl Members
 
+        public event ClickedEventHandler Clicked;
+
+        public void OnClicked()
+        {
+            ClickedEventHandler handler = Clicked;
+            if (handler != null) handler();
+        }
     }
 }

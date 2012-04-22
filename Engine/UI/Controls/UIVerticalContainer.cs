@@ -6,47 +6,49 @@ using OpenTK.Input;
 
 namespace DynaStudios.UI.Controls
 {
-    public class UIVerticalContainer : IUIControl
+    public class UIVerticalContainer : IUiControl
     {
-
-        private List<IUIControl> _controls;
+        private List<IUiControl> _controls;
 
         public int Height { get; set; }
+
         public int Width { get; set; }
 
         public int StartX { get; set; }
+
         public int StartY { get; set; }
 
         public UIHorizontalPosition HorizontalPosition { get; set; }
+
         public UIVerticalPosition VerticalPosition { get; set; }
 
-        public IUIControl Parent { get; set; }
+        public IUiControl Parent { get; set; }
 
         public UIVerticalContainer()
         {
-            _controls = new List<IUIControl>();
+            _controls = new List<IUiControl>();
         }
 
-        public void add(IUIControl control)
+        public void add(IUiControl control)
         {
             control.Parent = this;
             _controls.Add(control);
         }
 
-        public void remove(IUIControl control)
+        public void remove(IUiControl control)
         {
             _controls.Remove(control);
         }
 
-        public void render()
+        public void Render()
         {
-            foreach (IUIControl control in _controls)
+            foreach (IUiControl control in _controls)
             {
-                control.render();
+                control.Render();
             }
         }
 
-        public void resize()
+        public void Resize()
         {
             if (_controls.Count != 0)
             {
@@ -55,30 +57,28 @@ namespace DynaStudios.UI.Controls
 
                 int childStartX;
 
-                foreach (IUIControl control in _controls)
+                foreach (IUiControl control in _controls)
                 {
-
                 }
             }
-
         }
 
-        public void onClicked(MouseButtonEventArgs arg)
+        public void OnClicked(MouseButtonEventArgs arg)
         {
             //Spread some Click love to the right UIControl :)
         }
 
-        public void onKeyPressed(KeyboardKeyEventArgs arg)
+        public void OnKeyPressed(KeyboardKeyEventArgs arg)
         {
             //OMG a Key got pressed! But not yet handled :P
         }
 
-        public void onHoverEnter()
+        public void OnHoverEnter()
         {
             //Hey! You there! You got hovered. bwahahaha
         }
 
-        public void onHoverExit()
+        public void OnHoverExit()
         {
             //kk... Bye!
         }
