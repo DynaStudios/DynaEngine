@@ -59,6 +59,7 @@
     <Compile Include="Blocks\AbstractDrawable.cs" />
     <Compile Include="Blocks\Region.cs" />
     <Compile Include="Blocks\Room.cs" />
+    <Compile Include="Blocks\WavefrontObject.cs" />
     <Compile Include="Blocks\WorldPosition.cs" />
     <Compile Include="Blocks\IWorldObject.cs" />
     <Compile Include="Engine.cs" />

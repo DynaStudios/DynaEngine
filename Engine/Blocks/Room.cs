@@ -13,25 +13,25 @@ namespace DynaStudios.Blocks
 {
     public class Room
     {
-        private List<Block> _blocks = new List<Block>();
-        public List<Block> Blocks
+        private Block[, ,] _blocks;
+        public Block[, ,] Blocks
         {
             get { return _blocks; }
         }
 
-        public Room(XmlDocument doc, TextureController textureController)
+        public Room(int sizeX, int sizeY, int sizeZ)
         {
-            xmlInit(doc, textureController);
+            _blocks = new Block[sizeX, sizeY, sizeZ];
         }
 
-        public Room(string filePath, TextureController textureController)
+        public void loadXml(string filePath, TextureController textureController)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(filePath);
-            xmlInit(doc, textureController);
+            loadXml(doc, textureController);
         }
 
-        private void xmlInit (XmlDocument doc, TextureController textureController) {
+        public void loadXml (XmlDocument doc, TextureController textureController) {
             XmlNodeList objectNodes = doc.GetElementsByTagName("object");
             foreach (XmlNode objectNode in objectNodes)
             {
@@ -68,7 +68,7 @@ namespace DynaStudios.Blocks
 
                 int textureId = textureController.getTexture(textureElement.InnerText);
 
-                _blocks.Add(new Block(x, y, z, textureId));
+                _blocks[x,y,z] = new Block(x, y, z, textureId);
             }
         }
 
@@ -98,7 +98,7 @@ namespace DynaStudios.Blocks
                     {
                         for (int z = startZ; z < startZ + sizeZ; ++z)
                         {
-                            _blocks.Add(new Block(x, y, z, textureId));
+                            _blocks[x,y,z] = new Block(x, y, z, textureId);
                         }
                     }
                 }
@@ -107,10 +107,13 @@ namespace DynaStudios.Blocks
 
         public void render()
         {
-            int size = _blocks.Count;
-            for (int i = 0; i < size; ++i)
+
+            foreach (Block block in _blocks)
             {
-                _blocks[i].doRender();
+                if (block != null)
+                {
+                    block.doRender();
+                }
             }
         }
     }
