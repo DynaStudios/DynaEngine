@@ -15,6 +15,7 @@ namespace DynaStudios.Blocks
             if (WorldObject != null)
             {
                 movedBy = WorldObject;
+                // HACK: GL.LoadIdentity should be called here
 
                 Direction direction = WorldObject.Direction;
                 GL.Rotate(direction.X, 1.0f, 0.0f, 0.0f);

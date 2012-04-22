@@ -10,6 +10,10 @@ namespace DynaStudios.Blocks
     public class Block : AbstractDrawable
     {
         private int _textureId;
+        public int TextureId
+        {
+            get { return _textureId; }
+        }
         public override Direction Direction { get; set; }
         public override WorldPosition Position { get; set; }
 
@@ -19,7 +23,7 @@ namespace DynaStudios.Blocks
         /// <param name="worldX">World X Coordinate</param>
         /// <param name="worldZ">World Z Coordinate</param>
         /// <param name="worldY">World Y Coordinate</param>
-        public Block(double worldX, double worldZ, double worldY, int textureId)
+        public Block(double worldX, double worldY, double worldZ, int textureId)
         {
             _textureId = textureId;
             Position = new WorldPosition(worldX, worldY, worldZ);
