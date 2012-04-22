@@ -20,7 +20,7 @@ namespace DynaStudios.Blocks
             var y = Position.y;
             var z = Position.z;
 
-            GL.Translate(-x, -y, -z);
+            GL.Translate(x, y, z);
             //GL.Rotate(-Direction.y, 0.0f, 1.0f, 0.0f);
             //GL.Rotate(-Direction.x, 1.0f, 0.0f, 0.0f);
             //GL.Rotate(-Direction.rotation, 0.0f, 0.0f, 1.0f);
@@ -28,7 +28,7 @@ namespace DynaStudios.Blocks
             //GL.Rotate(Direction.rotation, 0.0f, 0.0f, 1.0f);
             //GL.Rotate(Direction.x, 1.0f, 0.0f, 0.0f);
             //GL.Rotate(Direction.y, 0.0f, 1.0f, 0.0f);
-            GL.Translate(x, y, z);
+            GL.Translate(-x, -y, -z);
         }
         public abstract void render();
     }
