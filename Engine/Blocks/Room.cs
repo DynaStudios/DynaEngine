@@ -107,19 +107,19 @@ namespace DynaStudios.Blocks
 		public double collisionX (double posx, double posy, double posz, double dist)
 		{
 			// a neighbouring block (only then only 1, if floory==0.5&&floorz==0.5, else 1 or none of 2 or 4) can limit the collision distance,
-			// everything else is not 
+			// everything else is not considered
 			double floory=posy-(int)posy;
 			double floorz=posz-(int)posz;
 			//negative or positve direction? -> signum, i.e. 1 or -1
 			int dirsig;
-			//the distance to the neighbouring block
-			double xrest;
+			//the distance to the neighbouring blocks, air or solid
+			double rest;
 			if (dist>0.0) {
 				dirsig=1;
-				xrest=(int)posx+1-posx;
+				rest=(int)posx+1-posx;
 			} else if (dist<0.0) {
 				dirsig=-1;
-				xrest=posx-(int)posx;
+				rest=posx-(int)posx;
 			}
 			else /* if dist==0.0 */ return 0.0;
 			if (floory<0.5)
@@ -129,26 +129,29 @@ namespace DynaStudios.Blocks
 					if ( _blocks[(int)posx+dirsig,(int)posy-1,(int)posz-1]!=null || _blocks[(int)posx+dirsig,(int)posy,(int)posz-1]!=null ||
 					     _blocks[(int)posx+dirsig,(int)posy-1,(int)posz] != null || _blocks[(int)posx+dirsig,(int)posy,(int)posz] != null )
 					{
-						if (xrest>dist) return dist;
-						else            return xrest;
+						if (rest>dist) return dist;
+						else           return rest;
 					}
+					else return dist;
 				}
 				else if (floorz>0.5)
 				{
 					if ( _blocks[(int)posx+dirsig,(int)posy-1,(int)posz] != null || _blocks[(int)posx+dirsig,(int)posy,(int)posz] != null ||
 					     _blocks[(int)posx+dirsig,(int)posy-1,(int)posz+1]!=null || _blocks[(int)posx+dirsig,(int)posy,(int)posz+1]!=null )
 					{
-						if (xrest>dist) return dist;
-						else            return xrest;
+						if (rest>dist) return dist;
+						else           return rest;
 					}
+					else return dist;
 				}
 				else /*if floorz==0.5*/
 				{
 					if (_blocks[(int)posx+dirsig,(int)posy-1,(int)posz] != null || _blocks[(int)posx+dirsig,(int)posy,(int)posz] != null )
 					{
-						if (xrest>dist) return dist;
-						else            return xrest;
+						if (rest>dist) return dist;
+						else           return rest;
 					}
+					else return dist;
 				}
 			}
 			else if (floory>0.5)
@@ -158,26 +161,29 @@ namespace DynaStudios.Blocks
 					if ( _blocks[(int)posx+dirsig,(int)posy,(int)posz-1]!=null || _blocks[(int)posx+dirsig,(int)posy+1,(int)posz-1]!=null ||
 					     _blocks[(int)posx+dirsig,(int)posy,(int)posz] != null || _blocks[(int)posx+dirsig,(int)posy+1,(int)posz] != null )
 					{
-						if (xrest>dist) return dist;
-						else            return xrest;
+						if (rest>dist) return dist;
+						else           return rest;
 					}
+					else return dist;
 				}
 				else if (floorz>0.5)
 				{
 					if ( _blocks[(int)posx+dirsig,(int)posy,(int)posz] != null || _blocks[(int)posx+dirsig,(int)posy+1,(int)posz] != null ||
 					     _blocks[(int)posx+dirsig,(int)posy,(int)posz+1]!=null || _blocks[(int)posx+dirsig,(int)posy+1,(int)posz+1]!=null )
 					{
-						if (xrest>dist) return dist;
-						else            return xrest;
+						if (rest>dist) return dist;
+						else           return rest;
 					}
+					else return dist;
 				}
 				else /*if floorz==0.5*/
 				{
 					if (_blocks[(int)posx+dirsig,(int)posy,(int)posz] != null || _blocks[(int)posx+dirsig,(int)posy+1,(int)posz] != null )
 				{
-						if (xrest>dist) return dist;
-						else            return xrest;
+						if (rest>dist) return dist;
+						else           return rest;
 					}
+					else return dist;
 				}
 			}
 			else /*if floory==0.5*/
@@ -186,28 +192,256 @@ namespace DynaStudios.Blocks
 				{
 					if ( _blocks[(int)posx+dirsig,(int)posy,(int)posz-1]!=null || _blocks[(int)posx+dirsig,(int)posy,(int)posz] != null )
 					{
-						if (xrest>dist) return dist;
-						else            return xrest;
+						if (rest>dist) return dist;
+						else           return rest;
 					}
+					else return dist;
 				}
 				else if (floorz>0.5)
 				{
 					if ( _blocks[(int)posx+dirsig,(int)posy,(int)posz] != null || _blocks[(int)posx+dirsig,(int)posy,(int)posz+1]!=null )
 					{
-						if (xrest>dist) return dist;
-						else            return xrest;
+						if (rest>dist) return dist;
+						else            return rest;
 					}
+					else return dist;
 				}
 				else /*if floorz==0.5*/
 				{
 					if (_blocks[(int)posx+dirsig,(int)posy,(int)posz] != null )
 					{
-						if (xrest>dist) return dist;
-						else            return xrest;
+						if (rest>dist) return dist;
+						else           return rest;
 					}
+					else return dist;
 				}
 			}
-			return 0.0; // why? oO
+		}
+		public double collisionY (double posx, double posy, double posz, double dist)
+		{
+			// a neighbouring block can limit the collision distance,
+			// everything else is not considered
+			double floorx=posx-(int)posx;
+			double floorz=posz-(int)posz;
+			//negative or positve direction? -> signum, i.e. 1 or -1
+			int dirsig;
+			//the distance to the neighbouring blocks, air or solid
+			double rest;
+			if (dist>0.0) {
+				dirsig=1;
+				rest=(int)posy+1-posy;
+			} else if (dist<0.0) {
+				dirsig=-1;
+				rest=posy-(int)posy;
+			}
+			else /* if dist==0.0 */ return 0.0;
+			if (floorx<0.5)
+			{
+				if (floorz<0.5)
+				{
+					if ( _blocks[(int)posx-1,(int)posy+dirsig,(int)posz-1]!=null  || _blocks[(int)posx,(int)posy+dirsig,(int)posz-1]!=null ||
+					     _blocks[(int)posx-1,(int)posy+dirsig,(int)posz]  != null || _blocks[(int)posx,(int)posy+dirsig,(int)posz] != null )
+					{
+						if (rest>dist) return dist;
+						else           return rest;
+					}
+					else return dist;
+				}
+				else if (floorz>0.5)
+				{
+					if ( _blocks[(int)posx-1,(int)posy+dirsig,(int)posz] != null || _blocks[(int)posx-1,(int)posy+dirsig,(int)posz] != null ||
+					     _blocks[(int)posx-1,(int)posy+dirsig,(int)posz+1]!=null || _blocks[(int)posx-1,(int)posy+dirsig,(int)posz+1]!=null )
+					{
+						if (rest>dist) return dist;
+						else           return rest;
+					}
+					else return dist;
+				}
+				else /*if floorz==0.5*/
+				{
+					if (_blocks[(int)posx-1,(int)posy+dirsig,(int)posz] != null || _blocks[(int)posx-1,(int)posy+dirsig,(int)posz] != null )
+					{
+						if (rest>dist) return dist;
+						else           return rest;
+					}
+					else return dist;
+				}
+			}
+			else if (floorx>0.5)
+			{
+				if (floorz<0.5)
+				{
+					if ( _blocks[(int)posx+1,(int)posy+dirsig,(int)posz-1]!=null || _blocks[(int)posx+1,(int)posy+dirsig,(int)posz-1]!=null ||
+					     _blocks[(int)posx+1,(int)posy+dirsig,(int)posz] != null || _blocks[(int)posx+1,(int)posy+dirsig,(int)posz] != null )
+					{
+						if (rest>dist) return dist;
+						else           return rest;
+					}
+					else return dist;
+				}
+				else if (floorz>0.5)
+				{
+					if ( _blocks[(int)posx+1,(int)posy+dirsig,(int)posz] != null || _blocks[(int)posx+1,(int)posy+dirsig,(int)posz] != null ||
+					     _blocks[(int)posx+1,(int)posy+dirsig,(int)posz+1]!=null || _blocks[(int)posx+1,(int)posy+dirsig,(int)posz+1]!=null )
+					{
+						if (rest>dist) return dist;
+						else           return rest;
+					}
+					else return dist;
+				}
+				else /*if floorz==0.5*/
+				{
+					if (_blocks[(int)posx+1,(int)posy+dirsig,(int)posz] != null || _blocks[(int)posx+1,(int)posy+dirsig,(int)posz] != null )
+				{
+						if (rest>dist) return dist;
+						else           return rest;
+					}
+					else return dist;
+				}
+			}
+			else /*if floorx==0.5*/
+			{
+				if (floorz<0.5)
+				{
+					if ( _blocks[(int)posx,(int)posy+dirsig,(int)posz-1]!=null || _blocks[(int)posx,(int)posy+dirsig,(int)posz] != null )
+					{
+						if (rest>dist) return dist;
+						else           return rest;
+					}
+					else return dist;
+				}
+				else if (floorz>0.5)
+				{
+					if ( _blocks[(int)posx,(int)posy+dirsig,(int)posz] != null || _blocks[(int)posx,(int)posy+dirsig,(int)posz+1]!=null )
+					{
+						if (rest>dist) return dist;
+						else           return rest;
+					}
+					else return dist;
+				}
+				else /*if floorz==0.5*/
+				{
+					if (_blocks[(int)posx,(int)posy+dirsig,(int)posz] != null )
+					{
+						if (rest>dist) return dist;
+						else           return rest;
+					}
+					else return dist;
+				}
+			}
+		}
+		public double collisionZ (double posx, double posy, double posz, double dist)
+		{
+			// a neighbouring block can limit the collision distance,
+			// everything else is not considered
+			double floorx=posx-(int)posx;
+			double floory=posy-(int)posy;
+			//negative or positve direction? -> signum, i.e. 1 or -1
+			int dirsig;
+			//the distance to the neighbouring blocks, air or solid
+			double rest;
+			if (dist>0.0) {
+				dirsig=1;
+				rest=(int)posy+1-posy;
+			} else if (dist<0.0) {
+				dirsig=-1;
+				rest=posy-(int)posy;
+			}
+			else /* if dist==0.0 */ return 0.0;
+			if (floorx<0.5)
+			{
+				if (floory<0.5)
+				{
+					if ( _blocks[(int)posx-1,(int)posy-1,(int)posz+dirsig]!=null || _blocks[(int)posx,(int)posy-1,(int)posz+dirsig]!=null ||
+					     _blocks[(int)posx-1,(int)posy,(int)posz+dirsig] != null || _blocks[(int)posx,(int)posy,(int)posz+dirsig]  != null )
+					{
+						if (rest>dist) return dist;
+						else           return rest;
+					}
+					else return dist;
+				}
+				else if (floory>0.5)
+				{
+					if ( _blocks[(int)posx-1,(int)posy+1,(int)posz+dirsig]!= null || _blocks[(int)posx,(int)posy+1,(int)posz+dirsig] != null ||
+					     _blocks[(int)posx-1,(int)posy,(int)posz+dirsig]!=null    || _blocks[(int)posx,(int)posy,(int)posz+dirsig]!=null )
+					{
+						if (rest>dist) return dist;
+						else           return rest;
+					}
+					else return dist;
+				}
+				else /*if floorz==0.5*/
+				{
+					if (_blocks[(int)posx-1,(int)posy,(int)posz+dirsig] != null || _blocks[(int)posx,(int)posy,(int)posz+dirsig] != null )
+					{
+						if (rest>dist) return dist;
+						else           return rest;
+					}
+					else return dist;
+				}
+			}
+			else if (floorx>0.5)
+			{
+				if (floory<0.5)
+				{
+					if ( _blocks[(int)posx+1,(int)posy-1,(int)posz+dirsig]!=null || _blocks[(int)posx,(int)posy-1,(int)posz+dirsig]!=null ||
+					     _blocks[(int)posx+1,(int)posy,(int)posz+dirsig]  !=null || _blocks[(int)posx,(int)posy,(int)posz+dirsig]  !=null )
+					{
+						if (rest>dist) return dist;
+						else           return rest;
+					}
+					else return dist;
+				}
+				else if (floory>0.5)
+				{
+					if ( _blocks[(int)posx+1,(int)posy+1,(int)posz+dirsig]!=null || _blocks[(int)posx,(int)posy+1,(int)posz+dirsig]!=null ||
+					     _blocks[(int)posx+1,(int)posy,(int)posz+dirsig]  !=null || _blocks[(int)posx,(int)posy,(int)posz+dirsig]  !=null )
+					{
+						if (rest>dist) return dist;
+						else           return rest;
+					}
+					else return dist;
+				}
+				else /*if floory==0.5*/
+				{
+					if (_blocks[(int)posx+1,(int)posy,(int)posz+dirsig] != null || _blocks[(int)posx,(int)posy,(int)posz+dirsig] != null )
+				{
+						if (rest>dist) return dist;
+						else           return rest;
+					}
+					else return dist;
+				}
+			}
+			else /*if floorx==0.5*/
+			{
+				if (floory<0.5)
+				{
+					if ( _blocks[(int)posx,(int)posy-1,(int)posz+dirsig]!=null || _blocks[(int)posx,(int)posy,(int)posz+dirsig] != null )
+					{
+						if (rest>dist) return dist;
+						else           return rest;
+					}
+					else return dist;
+				}
+				else if (floory>0.5)
+				{
+					if ( _blocks[(int)posx,(int)posy+1,(int)posz+dirsig] != null || _blocks[(int)posx,(int)posy,(int)posz+dirsig]!=null )
+					{
+						if (rest>dist) return dist;
+						else            return rest;
+					}
+					else return dist;
+				}
+				else /*if floorz==0.5*/
+				{
+					if (_blocks[(int)posx,(int)posy,(int)posz+dirsig] != null )
+					{
+						if (rest>dist) return dist;
+						else           return rest;
+					}
+					else return dist;
+				}
+			}
 		}
 
         public void render()
