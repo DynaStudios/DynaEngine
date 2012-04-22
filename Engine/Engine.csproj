@@ -32,6 +32,10 @@
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>Libs\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
+    <Reference Include="irrKlang.NET4, Version=1.0.3861.18767, Culture=neutral, PublicKeyToken=a854741bd80517c7, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\irrKlang.NET4.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libs\OpenTK.dll</HintPath>
@@ -63,6 +67,7 @@
     <Compile Include="Blocks\IWorldObject.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="IO\InputDevice.cs" />
+    <Compile Include="IO\SoundManager.cs" />
     <Compile Include="IO\TextureManager.cs" />
     <Compile Include="IScene.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -86,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Libs\ICSharpCode.SharpZipLib.dll" />
+    <Content Include="Libs\irrKlang.NET4.dll" />
     <Content Include="Libs\OpenTK.dll" />
     <Content Include="Libs\QuickFont.dll" />
   </ItemGroup>

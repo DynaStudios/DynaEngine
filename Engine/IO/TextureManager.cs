@@ -56,6 +56,15 @@ namespace DynaStudios.IO
             return 0;
         }
 
+        public void unloadTexture(string texturePath)
+        {
+            if (_loadedTextures.ContainsKey(texturePath))
+            {
+                GL.DeleteTexture(_loadedTextures[texturePath]);
+                _loadedTextures.Remove(texturePath);
+            }
+        }
+
     }
 
     public static class TextureManager
