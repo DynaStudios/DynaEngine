@@ -37,7 +37,7 @@ namespace DynaStudios
         public GUIController UiController { get; set; }
         public InputDevice InputDevice { get; set; }
         public TextureController TextureManager { get; set; }
-        public SoundManager SoundManager { get; set; }
+        //public SoundManager SoundManager { get; set; }
         public string DataPath { get; set; }
 
         public FramerateCalculator FpsCalc;
@@ -73,7 +73,7 @@ namespace DynaStudios
 
             //Texture Manager
             TextureManager = new TextureController(this);
-            SoundManager = new SoundManager(this);
+            //SoundManager = new SoundManager(this);
 
             resize(null, EventArgs.Empty);
 
