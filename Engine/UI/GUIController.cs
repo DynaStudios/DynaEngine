@@ -1,25 +1,20 @@
 ﻿using System.Collections.Generic;
 using DynaStudios.UI.Controls;
-using DynaStudios.IO;
-using OpenTK.Graphics.OpenGL;
-using System;
-using OpenTK.Input;
 using DynaStudios.UI.Utils;
 using OpenTK;
-using QuickFont;
 using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
+using OpenTK.Input;
+using QuickFont;
 
 namespace DynaStudios.UI
 {
     public class GUIController
     {
 
-        private List<UIPanel> _panels;
         private Engine _engine;
-
         private QFont _mainFont;
-
-        public bool IsVisible { get; set; }
+        private List<UIPanel> _panels;
 
         public GUIController(Engine engine)
         {
@@ -31,7 +26,7 @@ namespace DynaStudios.UI
 
             //Init MainFont
             QFontBuilderConfiguration config = new QFontBuilderConfiguration(false);
-            
+
             _mainFont = new QFont("Fonts/visitor2.ttf", 24, config);
             _mainFont.Options.UseDefaultBlendFunction = false;
             _mainFont.Options.Colour = Color4.Green;
@@ -40,6 +35,76 @@ namespace DynaStudios.UI
             _engine.InputDevice.Keyboard.KeyUp += keyboard_KeyUp;
             _engine.InputDevice.Mouse.ButtonUp += mouse_ButtonUp;
             _engine.InputDevice.Mouse.Move += mouse_Move;
+        }
+
+        public bool IsVisible { get; set; }
+
+        /// <summary>
+        /// Registers a new Panel to draw
+        /// </summary>
+        /// <param name="panel"></param>
+        public void registerPanel(UIPanel panel)
+        {
+            //Maybe Panels should register here which Events they are interested in (Mouse, Keyboard)
+
+            //Calculate Positions for added Panel
+            calculatePosition(panel);
+
+            _panels.Add(panel);
+        }
+
+        public void render()
+        {
+            if (IsVisible)
+            {
+                //Disable Depth Rendering to draw 2D UIs
+                switchToOrthoRendering();
+
+                foreach (UIPanel panel in _panels)
+                {
+                    //Render Panel
+                    panel.render();
+                }
+
+                //Render FPS
+                QFont.Begin();
+                GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.DstAlpha);
+                _mainFont.Print(_engine.FpsCalc.Framerate.ToString());
+                QFont.End();
+
+
+                //Enable Depth Rendering again
+                switchBackToFrustrumRendering();
+            }
+        }
+
+        public void resizeGui()
+        {
+            foreach (UIPanel panel in _panels)
+            {
+                calculatePosition(panel);
+            }
+        }
+
+        private void calculatePosition(UIPanel panel)
+        {
+
+            if (panel.Width == 0)
+            {
+                panel.Width = _engine.Width;
+            }
+
+            if (panel.Height == 0)
+            {
+                panel.Height = _engine.Height;
+            }
+
+            panel.StartX = PositionHelper.calculateStartX(panel, _engine.Width);
+            panel.StartY = PositionHelper.calculateStartY(panel, _engine.Height);
+
+            //At the end call the panels own resize method to calculate positions for his Children
+            panel.resize();
+
         }
 
         /// <summary>
@@ -114,71 +179,15 @@ namespace DynaStudios.UI
         }
 
         /// <summary>
-        /// Registers a new Panel to draw
+        /// Enable Depth Rendering again
         /// </summary>
-        /// <param name="panel"></param>
-        public void registerPanel(UIPanel panel)
+        private void switchBackToFrustrumRendering()
         {
-            //Maybe Panels should register here which Events they are interested in (Mouse, Keyboard)
-
-            //Calculate Positions for added Panel
-            calculatePosition(panel);
-
-            _panels.Add(panel);
-        }
-
-        private void calculatePosition(UIPanel panel)
-        {
-
-            if (panel.Width == 0)
-            {
-                panel.Width = _engine.Width;
-            }
-
-            if (panel.Height == 0)
-            {
-                panel.Height = _engine.Height;
-            }
-
-            panel.StartX = PositionHelper.calculateStartX(panel, _engine.Width);
-            panel.StartY = PositionHelper.calculateStartY(panel, _engine.Height);
-
-            //At the end call the panels own resize method to calculate positions for his Children
-            panel.resize();
-
-        }
-
-        public void resizeGui()
-        {
-            foreach (UIPanel panel in _panels)
-            {
-                calculatePosition(panel);
-            }
-        }
-
-        public void render()
-        {
-            if (IsVisible)
-            {
-                //Disable Depth Rendering to draw 2D UIs
-                switchToOrthoRendering();
-
-                foreach (UIPanel panel in _panels)
-                {
-                    //Render Panel
-                    panel.render();
-                }
-
-                //Render FPS
-                QFont.Begin();
-                GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.DstAlpha);
-                _mainFont.Print(_engine.FpsCalc.Framerate.ToString());
-                QFont.End();
-                
-
-                //Enable Depth Rendering again
-                switchBackToFrustrumRendering();
-            }
+            GL.Enable(EnableCap.DepthTest);
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.PopMatrix();
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.Disable(EnableCap.Blend);
         }
 
         /// <summary>
@@ -195,18 +204,5 @@ namespace DynaStudios.UI
             GL.LoadIdentity();
             GL.Enable(EnableCap.Blend);
         }
-
-        /// <summary>
-        /// Enable Depth Rendering again
-        /// </summary>
-        private void switchBackToFrustrumRendering()
-        {
-            GL.Enable(EnableCap.DepthTest);
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.PopMatrix();
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.Disable(EnableCap.Blend);
-        }
-
     }
 }
