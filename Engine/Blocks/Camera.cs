@@ -7,10 +7,10 @@ namespace DynaStudios.Blocks
     {
         private IWorldObject movedBy;
 
-        public Camera() { }
-
         public IWorldObject WorldObject { get; set; }
-
+        
+        public Camera() { }
+        
         public void move()
         {
             if (WorldObject != null)
