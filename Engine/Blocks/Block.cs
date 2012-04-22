@@ -10,6 +10,10 @@ namespace DynaStudios.Blocks
     public class Block : AbstractDrawable
     {
         private int _textureId;
+        public int TextureId
+        {
+            get { return _textureId; }
+        }
         public override Direction Direction { get; set; }
         public override WorldPosition Position { get; set; }
 

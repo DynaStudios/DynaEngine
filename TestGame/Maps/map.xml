@@ -1,38 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <root>
-  <object x="0" y="0" z="0">
-    <block>
-      <texture>Images\Game\dyna_splash.png</texture>
-      <position x="0" y="0" z="0" />
-    </block>
-    <block>
-      <texture>Images\Game\dyna_splash.png</texture>
-      <position x="2" y="0" z="0" />
-    </block>
-  </object>
-  <object x="0" y="0" z="0">
-    <block>
-      <texture>Images\Game\dyna_splash.png</texture>
-      <position x="3" y="0" z="0" />
-    </block>
+  <model name="T">
     <block>
       <texture>Images\Game\dyna_splash.png</texture>
       <position x="0" y="2" z="0" />
     </block>
     <block>
       <texture>Images\Game\dyna_splash.png</texture>
-      <position x="0" y="0" z="2" />
+      <position x="1" y="2" z="0" />
     </block>
-  </object>
-  <object x="10" y="0" z="0">
     <block>
       <texture>Images\Game\dyna_splash.png</texture>
-      <position x="2" y="2" z="2" />
+      <position x="2" y="2" z="0" />
     </block>
-    <bigBlock>
+    <block>
       <texture>Images\Game\dyna_splash.png</texture>
-      <start x="2" y="10" z="2" />
-      <size x="5" y="5" z="3" />
-    </bigBlock>
-  </object>
+      <position x="1" y="1" z="0" />
+    </block>
+    <block>
+      <texture>Images\Game\dyna_splash.png</texture>
+      <position x="1" y="0" z="0" />
+    </block>
+  </model>
+  <model name="I">
+    <block>
+      <texture>Images\Game\dyna_splash.png</texture>
+      <position x="0" y="2" z="0" />
+    </block>
+    <block>
+      <texture>Images\Game\dyna_splash.png</texture>
+      <position x="0" y="1" z="0" />
+    </block>
+    <block>
+      <texture>Images\Game\dyna_splash.png</texture>
+      <position x="0" y="0" z="0" />
+    </block>
+  </model>
+  <object name="T" x="0" y="0" z="0"/>
+  <object name="T" x="10" y="0" z="0"/>
+  <object name="T" x="20" y="0" z="0"/>
+  <object name="I" x="5" y="10" z="0"/>
+  <object name="I" x="15" y="10" z="0"/>
+  <object name="I" x="30" y="10" z="0"/>
 </root>
