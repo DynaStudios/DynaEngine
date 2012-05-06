@@ -22,6 +22,13 @@ namespace DynaStudios.Utils
             return ret;
         }
 
-        
+        public static string getStringForFilesystem(int nummber)
+        {
+            if (nummber < 0)
+            {
+                return "m" + (-nummber).ToString();
+            }
+            return nummber.ToString();
+        }
     }
 }

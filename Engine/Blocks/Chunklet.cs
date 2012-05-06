@@ -17,7 +17,7 @@ namespace DynaStudios.Blocks
             _y = y;
             _z = z;
             _blocks = new Block[16, 16, 16];
-            generateStupedWorld();
+            //generateStupedWorld();
         }
 
         public void load(Stream stream)

@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,6 +29,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.SharpZipLib">
@@ -49,7 +51,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Blocks\AsyncChunkLoader.cs" />
     <Compile Include="Blocks\Block.cs" />
     <Compile Include="Blocks\Camera.cs" />
     <Compile Include="Blocks\Chunk.cs" />
@@ -62,6 +63,8 @@
     <Compile Include="Blocks\WorldPosition.cs" />
     <Compile Include="Blocks\IWorldObject.cs" />
     <Compile Include="Engine.cs" />
+    <Compile Include="IO\AsyncFileLoader.cs" />
+    <Compile Include="IO\ILoadableFile.cs" />
     <Compile Include="IO\InputDevice.cs" />
     <Compile Include="IO\TextureManager.cs" />
     <Compile Include="IScene.cs" />
@@ -85,10 +88,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Libs\ICSharpCode.SharpZipLib.dll" />
+    <Content Include="Libs\ICSharpCode.SharpZipLib.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</Content>
     <Content Include="Libs\irrKlang.NET4.dll" />
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</Content>
     <Content Include="Libs\OpenTK.dll" />
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</Content>
     <Content Include="Libs\QuickFont.dll" />
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="Fonts\visitor2.ttf">

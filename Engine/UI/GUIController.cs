@@ -139,6 +139,10 @@ namespace DynaStudios.UI
                     _engine.VSync = VSyncMode.On;
                 }
             }
+            if (e.Key == Key.Escape)
+            {
+                _engine.Close();
+            }
 
             #endregion Handle Internal GUI Controller KeyBindings
 
