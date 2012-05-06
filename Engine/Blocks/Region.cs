@@ -7,6 +7,9 @@ using System.Threading;
 using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
 
+using DynaStudios.IO;
+using DynaStudios.Utils;
+
 namespace DynaStudios.Blocks {
 
     public class Region {
@@ -32,48 +35,54 @@ namespace DynaStudios.Blocks {
             get { return preloadChunks; }
         }
 
-        private AsyncChunkLoader _chunkLoader = null;
-        public AsyncChunkLoader ChunkLoader
+        private AsyncFileLoader _fileLoader = null;
+        public AsyncFileLoader FileLoader
         {
-            get { return _chunkLoader; }
+            get { return _fileLoader; }
         }
 
         private Chunk[,] _chunks = new Chunk[16, 16];
 
-        public Region(string dataPath, int x, int z, AsyncChunkLoader loader)
+        public Region(string dataPath, int x, int z, AsyncFileLoader loader)
         {
             init(dataPath, x, z, loader);
         }
 
         public Region(string dataPath, int x, int z)
         {
-            init(dataPath, x, z, new AsyncChunkLoader(_dataPath));
+            init(dataPath, x, z, new AsyncFileLoader(dataPath));
         }
 
         ~Region()
         {
-            _chunkLoader.removeRegion();
+            _fileLoader.removeRegion();
         }
 
-        private void init(string dataPath, int x, int z, AsyncChunkLoader loader)
+        private void init(string dataPath, int x, int z, AsyncFileLoader loader)
         {
             _dataPath = dataPath;
             _x = x;
             _z = z;
             loader.addRegion();
-            _chunkLoader = loader;
-            _chunkLoader.ChunkLoaded += chunkLoader_ChunkLoaded;
+            _fileLoader = loader;
+            _fileLoader.FilesLoaded += chunkLoader_ChunkLoaded;
         }
 
-        private void chunkLoader_ChunkLoaded(Chunk chunk) {
-            lock (_chunks) {
-                if (chunkIsChild(chunk.X, chunk.Z))
+        private void chunkLoader_ChunkLoaded(ILoadableFile file) {
+            if (file is Chunk)
+            {
+                Chunk chunk = (Chunk) file;
+                lock (_chunks)
                 {
-                    _chunks[chunk.X % 16, chunk.Z % 16] = chunk;
+                    if (chunkIsChild(chunk.X, chunk.Z))
+                    {
+                        _chunks[chunk.X % 16, chunk.Z % 16] = chunk;
+                    }
                 }
             }
         }
 
+        // TODO: should be done by using ILoadableFile and AsyncFileLoader
         private void asyncDecompressRegion(ThreadPriority priority = ThreadPriority.BelowNormal) {
             Thread thread = new Thread(decompressRegion);
             thread.Priority = priority;
@@ -86,34 +95,24 @@ namespace DynaStudios.Blocks {
             thread.Start(getFileName());
         }
 
-        private string getStringForFilesystem(int nummber) {
-            if (nummber < 0) {
-                return "m" + (-nummber);
-            }
-            return "" + nummber;
-        }
-
         private string getFileName() {
             StringBuilder fileName = new StringBuilder();
-            fileName.Append(getStringForFilesystem(_x));
+            fileName.Append(StreamTool.getStringForFilesystem(_x));
             fileName.Append("_");
-            fileName.Append(getStringForFilesystem(_z));
-            fileName.Append(".derf");
-            return fileName.ToString();
-        }
-
-        private void decompressRegion(object o) {
-            decompressRegion(o.ToString());
+            fileName.Append(StreamTool.getStringForFilesystem(_z));
+            fileName.Append(".der");
+            return Path.Combine(_dataPath, fileName.ToString());
         }
 
         private void compressRegion(object o) {
             compressRegion(o.ToString());
         }
 
-        private void decompressRegion(string fileName) {
-            FileInfo info = new FileInfo(fileName);
+        private void decompressRegion(object fileName)
+        {
+            FileInfo info = new FileInfo(fileName.ToString());
             if (!info.Exists) {
-                throw new FileNotFoundException("mimimimi");
+                throw new FileNotFoundException(fileName.ToString());
             }
             using (FileStream inData = info.OpenRead()) {
                 ZipInputStream zipInputStream = new ZipInputStream(inData);
@@ -138,14 +137,25 @@ namespace DynaStudios.Blocks {
                 && z >= Z * 16 && z < Z * 17;
         }
 
+        private string getChunkFileName(int x, int z)
+        {
+            StringBuilder fileName = new StringBuilder();
+            fileName.Append(StreamTool.getStringForFilesystem(x));
+            fileName.Append("_");
+            fileName.Append(StreamTool.getStringForFilesystem(z));
+            fileName.Append(".dec");
+            return Path.Combine(_dataPath, fileName.ToString());
+        }
+
         private void checkForChunk(int x, int z, bool urgent = false) {
             if (!chunkIsChild(x, z)) {
                 return;
             }
 
+            string fileName = getChunkFileName(x, z);
             lock (_chunks) {
                 if (_chunks[x % 16, z % 16] == null) {
-                    _chunkLoader.request(x, z, urgent);
+                    _fileLoader.request(new Chunk(fileName , x, z), urgent);
                 }
             }
         }

@@ -15,7 +15,6 @@ namespace DynaStudios.Blocks
 
         public void doRender()
         {
-
             var x = Position.x;
             var y = Position.y;
             var z = Position.z;
