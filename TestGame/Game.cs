@@ -33,8 +33,12 @@ namespace TestGame
 
             //Register Scene
             IScene scene = new BlockTestScene(this);
+            IScene physicsScene = new PhysicTestScene(this);
+
+            addScene("physicsTest", physicsScene);
             addScene("blockTest", scene);
-            switchScene("blockTest");
+
+            switchScene("physicsTest");
         }
 
         /// <summary>

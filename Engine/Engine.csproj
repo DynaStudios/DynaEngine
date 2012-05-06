@@ -69,6 +69,7 @@
     <Compile Include="IO\InputDevice.cs" />
     <Compile Include="IO\TextureManager.cs" />
     <Compile Include="IScene.cs" />
+    <Compile Include="Physics\MeshFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\Controls\UIVerticalPosition.cs" />
     <Compile Include="UI\Controls\IUIControl.cs" />
@@ -100,9 +101,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Physics\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
