@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
 
-namespace DynaStudios.Blocks
+using DynaStudios.Blocks;
+
+namespace DynaStudios.Chunks
 {
     public class Chunklet
     {

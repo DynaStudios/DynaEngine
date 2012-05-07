@@ -6,6 +6,7 @@ using DynaStudios;
 using DynaStudios.Blocks;
 using DynaStudios.IO;
 
+using DynaStudios.Chunks;
 
 namespace TestGame.Scenes
 {

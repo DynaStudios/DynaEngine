@@ -10,28 +10,35 @@ using ICSharpCode.SharpZipLib.Zip;
 using DynaStudios.IO;
 using DynaStudios.Utils;
 
-namespace DynaStudios.Blocks {
+namespace DynaStudios.Chunks
+{
 
-    public class Region {
+    public class Region
+    {
         private string _dataPath;
         private int _x;
-        public int X {
+        public int X
+        {
             get { return _x; }
         }
         private int _z;
-        public int Z {
+        public int Z
+        {
             get { return _z; }
         }
         private bool decompressed = false;
-        public bool Decompressed {
+        public bool Decompressed
+        {
             get { return decompressed; }
         }
         private bool compressed = false;
-        public bool Compressed {
+        public bool Compressed
+        {
             get { return compressed; }
         }
         private int preloadChunks = 1;
-        public int PreloadChunks {
+        public int PreloadChunks
+        {
             get { return preloadChunks; }
         }
 
@@ -68,7 +75,8 @@ namespace DynaStudios.Blocks {
             _fileLoader.FilesLoaded += chunkLoader_ChunkLoaded;
         }
 
-        private void chunkLoader_ChunkLoaded(ILoadableFile file) {
+        private void chunkLoader_ChunkLoaded(ILoadableFile file)
+        {
             if (file is Chunk)
             {
                 Chunk chunk = (Chunk) file;
@@ -83,19 +91,22 @@ namespace DynaStudios.Blocks {
         }
 
         // TODO: should be done by using ILoadableFile and AsyncFileLoader
-        private void asyncDecompressRegion(ThreadPriority priority = ThreadPriority.BelowNormal) {
+        private void asyncDecompressRegion(ThreadPriority priority = ThreadPriority.BelowNormal)
+        {
             Thread thread = new Thread(decompressRegion);
             thread.Priority = priority;
             thread.Start(getFileName());
         }
 
-        private void asynCompressRegion(ThreadPriority priority = ThreadPriority.BelowNormal) {
+        private void asynCompressRegion(ThreadPriority priority = ThreadPriority.BelowNormal)
+        {
             Thread thread = new Thread(compressRegion);
             thread.Priority = priority;
             thread.Start(getFileName());
         }
 
-        private string getFileName() {
+        private string getFileName()
+        {
             StringBuilder fileName = new StringBuilder();
             fileName.Append(StreamTool.getStringForFilesystem(_x));
             fileName.Append("_");
@@ -104,23 +115,28 @@ namespace DynaStudios.Blocks {
             return Path.Combine(_dataPath, fileName.ToString());
         }
 
-        private void compressRegion(object o) {
+        private void compressRegion(object o)
+        {
             compressRegion(o.ToString());
         }
 
         private void decompressRegion(object fileName)
         {
             FileInfo info = new FileInfo(fileName.ToString());
-            if (!info.Exists) {
+            if (!info.Exists)
+            {
                 throw new FileNotFoundException(fileName.ToString());
             }
-            using (FileStream inData = info.OpenRead()) {
+            using (FileStream inData = info.OpenRead())
+            {
                 ZipInputStream zipInputStream = new ZipInputStream(inData);
                 ZipEntry entry = zipInputStream.GetNextEntry();
                 byte[] buffer = new byte[4096];
-                while (entry != null) {
+                while (entry != null)
+                {
                     string outFileName = Path.Combine(_dataPath, entry.Name);
-                    using (FileStream outFile = new FileInfo(outFileName).OpenWrite()) {
+                    using (FileStream outFile = new FileInfo(outFileName).OpenWrite())
+                    {
                         StreamUtils.Copy(zipInputStream, outFile, buffer);
                     }
                 }
@@ -128,11 +144,13 @@ namespace DynaStudios.Blocks {
             decompressed = true;
         }
 
-        private void compressRegion(string fileName) {
+        private void compressRegion(string fileName)
+        {
             // TODO: recompress region
         }
 
-        public bool chunkIsChild(int x, int z) {
+        public bool chunkIsChild(int x, int z)
+        {
             return x >= X * 16 && x < X * 17
                 && z >= Z * 16 && z < Z * 17;
         }
@@ -147,43 +165,56 @@ namespace DynaStudios.Blocks {
             return Path.Combine(_dataPath, fileName.ToString());
         }
 
-        private void checkForChunk(int x, int z, bool urgent = false) {
-            if (!chunkIsChild(x, z)) {
+        private void checkForChunk(int x, int z, bool urgent = false)
+        {
+            if (!chunkIsChild(x, z))
+            {
                 return;
             }
 
             string fileName = getChunkFileName(x, z);
-            lock (_chunks) {
-                if (_chunks[x % 16, z % 16] == null) {
-                    _fileLoader.request(new Chunk(fileName , x, z), urgent);
+            lock (_chunks)
+            {
+                if (_chunks[x % 16, z % 16] == null)
+                {
+                    _fileLoader.request(new Chunk(fileName, x, z), urgent);
                 }
             }
         }
 
-        private void checkPreloadedChunks(int x, int z) {
+        private void checkPreloadedChunks(int x, int z)
+        {
             // HACK: preloads a square but it should be a circle
-            for (int iz = z - PreloadChunks; iz < z + PreloadChunks; ++iz) {
-                for (int ix = x - PreloadChunks; ix < x + PreloadChunks; ++ix) {
+            for (int iz = z - PreloadChunks; iz < z + PreloadChunks; ++iz)
+            {
+                for (int ix = x - PreloadChunks; ix < x + PreloadChunks; ++ix)
+                {
                     checkForChunk(ix, iz, ix == x && iz == z);
                 }
             }
         }
 
-        public void setCurrentChunk(int x, int z) {
+        public void setCurrentChunk(int x, int z)
+        {
             checkPreloadedChunks(x, z);
         }
 
-        public Chunk this[int x,int z] {
-            get {
-                if (!Decompressed) {
+        public Chunk this[int x, int z]
+        {
+            get
+            {
+                if (!Decompressed)
+                {
                     // dangerous state that should be avoided
                     return null;
                 }
 
-                if (!chunkIsChild(x, z)) {
+                if (!chunkIsChild(x, z))
+                {
                     return null;
                 }
-                lock (_chunks) {
+                lock (_chunks)
+                {
                     return _chunks[x % 16, z % 16];
                 }
             }

@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 
-using DynaStudios.IO;
-
-namespace DynaStudios.Blocks {
+namespace DynaStudios.IO {
     class IntHolder
     {
         public int value = 0;

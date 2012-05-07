@@ -7,7 +7,7 @@ using System.Text;
 using DynaStudios.IO;
 using DynaStudios.Utils;
 
-namespace DynaStudios.Blocks
+namespace DynaStudios.Chunks
 {
 
     public class Chunk : ILoadableFile
