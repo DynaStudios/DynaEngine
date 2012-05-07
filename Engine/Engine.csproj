@@ -91,13 +91,13 @@
     <Content Include="Libs\ICSharpCode.SharpZipLib.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	</Content>
-    <Content Include="Libs\irrKlang.NET4.dll" />
+    <Content Include="Libs\irrKlang.NET4.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	</Content>
-    <Content Include="Libs\OpenTK.dll" />
+    <Content Include="Libs\OpenTK.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	</Content>
-    <Content Include="Libs\QuickFont.dll" />
+    <Content Include="Libs\QuickFont.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	</Content>
   </ItemGroup>
