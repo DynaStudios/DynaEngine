@@ -32,9 +32,12 @@ namespace TestGame
             UiController.RegisterPanel(panel);
 
             //Register Scene
-            IScene scene = new BlockTestScene(this);
-            addScene("blockTest", scene);
-            switchScene("blockTest");
+            //IScene scene = new BlockTestScene(this);
+            //addScene("blockTest", scene);
+            //switchScene("blockTest");
+            IScene scene = new StupedWorldScene(this);
+            addScene("StupedWorldScene", scene);
+            switchScene("StupedWorldScene");
         }
 
         /// <summary>

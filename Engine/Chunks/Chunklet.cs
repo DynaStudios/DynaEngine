@@ -55,7 +55,7 @@ namespace DynaStudios.Chunks
         /// for testing purpose only
         /// include it in the constructor to generate a randomly filled chunk
         /// </summary>
-        private void generateStupedWorld()
+        public void generateStupedWorld()
         {
             Random rnd = new Random();
             for (int x = 0; x < 16; ++x)

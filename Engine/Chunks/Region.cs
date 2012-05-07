@@ -7,6 +7,7 @@ using System.Threading;
 using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
 
+using DynaStudios.Blocks;
 using DynaStudios.IO;
 using DynaStudios.Utils;
 
@@ -72,10 +73,10 @@ namespace DynaStudios.Chunks
             _z = z;
             loader.addRegion();
             _fileLoader = loader;
-            _fileLoader.FilesLoaded += chunkLoader_ChunkLoaded;
+            _fileLoader.FilesLoaded += fileLoader_FilesLoaded;
         }
 
-        private void chunkLoader_ChunkLoaded(ILoadableFile file)
+        private void fileLoader_FilesLoaded(ILoadableFile file)
         {
             if (file is Chunk)
             {
@@ -149,6 +150,26 @@ namespace DynaStudios.Chunks
             // TODO: recompress region
         }
 
+        public void generateStupedWorld()
+        {
+            for (int x = 0; x < 16; ++x)
+            {
+                for (int z = 0; z < 16; ++z)
+                {
+                    int absolutX = X * 16 + x;
+                    int absolutZ = Z * 16 + z;
+                    StringBuilder builder = new StringBuilder();
+                    builder.Append(StreamTool.getStringForFilesystem(absolutX));
+                    builder.Append("_");
+                    builder.Append(StreamTool.getStringForFilesystem(absolutZ));
+                    builder.Append(".dec");
+                    Chunk chunk = new Chunk(builder.ToString(), x, z);
+                    _chunks[x, z] = chunk;
+                    chunk.generateStupedWorld();
+                }
+            }
+        }
+
         public bool chunkIsChild(int x, int z)
         {
             return x >= X * 16 && x < X * 17
@@ -197,6 +218,35 @@ namespace DynaStudios.Chunks
         public void setCurrentChunk(int x, int z)
         {
             checkPreloadedChunks(x, z);
+        }
+
+        public void render(WorldPosition position)
+        {
+            int positionX = (int) (position.x + 0.5);
+            int positionZ = (int) (position.z + 0.5);
+            for (int xOffset = -1; xOffset <= 1; ++xOffset)
+            {
+                for (int zOffset = -1; zOffset <= 1; ++zOffset)
+                {
+                    int x = positionX + xOffset;
+                    int z = positionZ + zOffset;
+                    if (chunkIsChild(x, z))
+                    {
+                        _chunks[x + xOffset, z + zOffset].render();
+                    }
+                }
+            }
+        }
+
+        public Chunk this[WorldPosition position]
+        {
+            get
+            {
+                int x = (int) (position.x + 0.5);
+                int z = (int) (position.z + 0.5);
+
+                return this[x, z];
+            }
         }
 
         public Chunk this[int x, int z]

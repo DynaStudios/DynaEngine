@@ -25,14 +25,14 @@ namespace DynaStudios.Chunks
             get { return z; }
         }
 
-        private Chunklet[] chunklets = new Chunklet[16];
+        private Chunklet[] _chunklets = new Chunklet[16];
 
         public Chunk(string fileName, int x, int z)
         {
             this.x = x;
             this.z = z;
             _fileName = fileName;
-            chunklets = new Chunklet[16];
+            _chunklets = new Chunklet[16];
         }
 
         public void load()
@@ -43,8 +43,26 @@ namespace DynaStudios.Chunks
                 {
                     Chunklet chunklet = new Chunklet(x, y, z);
                     chunklet.load(file);
-                    chunklets[y] = chunklet;
+                    _chunklets[y] = chunklet;
                 }
+            }
+        }
+
+        public void render()
+        {
+            for (int i = 0; i < 16; ++i)
+            {
+                _chunklets[i].render();
+            }
+        }
+
+        public void generateStupedWorld()
+        {
+            for (int y = 0; y < 16; ++y)
+            {
+                Chunklet chunklet = new Chunklet(x, y, z);
+                chunklet.generateStupedWorld();
+                _chunklets[y] = chunklet;
             }
         }
 
