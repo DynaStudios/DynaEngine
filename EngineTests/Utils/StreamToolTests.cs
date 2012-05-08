@@ -4,50 +4,33 @@ using NUnit.Framework;
 
 namespace DynaStudios.Utils
 {
+    [TestFixture(0, new byte[] { 0 })]
+    [TestFixture(3, new byte[] { 3 })]
+    [TestFixture(3000, new byte[] { 151, 56 })]
+    [TestFixture(30000, new byte[] { 129, 234, 48 })]
     public class StreamToolTests
     {
+        private int _integer;
+        private byte[] _bytes;
+
+        public StreamToolTests(int integer, byte[] bytes)
+        {
+            _integer = integer;
+            _bytes = bytes;
+        }
+
         [Test]
         public void intToBytesTest()
         {
-            byte[] bytesFromStreamTool = StreamTool.intToBytes(0);
-            byte[] bytesExpected = new byte[] { 0 };
-            Assert.That(bytesFromStreamTool, Is.EquivalentTo(bytesExpected));
-
-            bytesFromStreamTool = StreamTool.intToBytes(3);
-            bytesExpected = new byte[] { 3 };
-            Assert.That(bytesFromStreamTool, Is.EquivalentTo(bytesExpected));
-
-            bytesFromStreamTool = StreamTool.intToBytes(3000);
-            bytesExpected = new byte[] { 151, 56 };
-            Assert.That(bytesFromStreamTool, Is.EquivalentTo(bytesExpected));
-
-            bytesFromStreamTool = StreamTool.intToBytes(30000);
-            bytesExpected = new byte[] { 129, 234, 48 };
-            Assert.That(bytesFromStreamTool, Is.EquivalentTo(bytesExpected));
+            byte[] bytesFromStreamTool = StreamTool.intToBytes(_integer);
+            Assert.That(bytesFromStreamTool, Is.EquivalentTo(_bytes));
         }
 
         [Test]
         public void getInt() {
-            // added an not to read byte (value 123) to all test to ensure getInt stops where it is supposed to stop
-            MemoryStream src = new MemoryStream(new byte[] {0, 123});
-            int expected = 0;
+            MemoryStream src = new MemoryStream(_bytes);
             int intFromStream = StreamTool.getInt(src);
-            Assert.That(intFromStream, Is.EqualTo(expected));
-
-            src = new MemoryStream(new byte[] { 3, 123});
-            expected = 3;
-            intFromStream = StreamTool.getInt(src);
-            Assert.That(intFromStream, Is.EqualTo(expected));
-
-            src = new MemoryStream(new byte[] { 151, 56, 123 });
-            expected = 3000;
-            intFromStream = StreamTool.getInt(src);
-            Assert.That(intFromStream, Is.EqualTo(expected));
-
-            src = new MemoryStream(new byte[] { 129, 234, 48, 123 });
-            expected = 30000;
-            intFromStream = StreamTool.getInt(src);
-            Assert.That(intFromStream, Is.EqualTo(expected));
+            Assert.That(intFromStream, Is.EqualTo(_integer));
         }
     }
 }
