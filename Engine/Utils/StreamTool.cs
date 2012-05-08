@@ -11,7 +11,6 @@ namespace DynaStudios.Utils
             get { return _DIR; }
         }
 		
-		// HACK: testme
         public static int getInt(Stream stream)
         {
             int ret = 0;
@@ -25,7 +24,6 @@ namespace DynaStudios.Utils
             return ret;
         }
 		
-		// HACK: bugy
 		public static byte[] intToBytes(int nummber)
 		{
 			if (nummber == 0)
