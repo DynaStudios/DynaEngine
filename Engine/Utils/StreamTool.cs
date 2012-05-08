@@ -26,7 +26,7 @@ namespace DynaStudios.Utils
         }
 		
 		// HACK: bugy
-		public static byte[] getBytes(int nummber)
+		public static byte[] intToBytes(int nummber)
 		{
 			if (nummber == 0)
 			{
@@ -46,7 +46,7 @@ namespace DynaStudios.Utils
 				bytes.Add(b);
 				tmpNumber = tmpNumber / 128;
 				first = false;
-			} while (b>=128);
+			} while (tmpNumber > 0);
 			//return bytes.ToArray();
 			byte[] ret = bytes.ToArray();
 			System.Array.Reverse(ret);
