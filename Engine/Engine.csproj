@@ -44,9 +44,6 @@
     <Reference Include="OpenTK">
       <HintPath>Libs\OpenTK.dll</HintPath>
     </Reference>
-    <Reference Include="QuickFont">
-      <HintPath>Libs\QuickFont.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Blocks\AsyncChunkLoader.cs" />
@@ -88,7 +85,6 @@
     <Content Include="Libs\ICSharpCode.SharpZipLib.dll" />
     <Content Include="Libs\irrKlang.NET4.dll" />
     <Content Include="Libs\OpenTK.dll" />
-    <Content Include="Libs\QuickFont.dll" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Fonts\visitor2.ttf">

@@ -83,6 +83,7 @@ namespace DynaStudios
 
             //Enable OpenGL Modes
             GL.Enable(EnableCap.DepthTest);
+            GL.Enable(EnableCap.Texture2D);
             GL.ClearColor(Color.Gray);
         }
 

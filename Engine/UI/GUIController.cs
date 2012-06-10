@@ -6,14 +6,12 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
-using QuickFont;
 
 namespace DynaStudios.UI
 {
     public class GuiController
     {
         private readonly Engine _engine;
-        private readonly QFont _mainFont;
         private readonly List<UIPanel> _panels;
 
         public GuiController(Engine engine)
@@ -24,10 +22,6 @@ namespace DynaStudios.UI
             //GUI should be visible by default
             IsVisible = true;
 
-            //Init MainFont
-            QFontBuilderConfiguration config = new QFontBuilderConfiguration(false);
-
-            _mainFont = new QFont("Fonts/visitor2.ttf", 24, config) { Options = { UseDefaultBlendFunction = false, Colour = Color4.Green } };
             //Register Keyboard and Mouse Events
             _engine.InputDevice.Keyboard.KeyUp += KeyboardKeyUp;
             _engine.InputDevice.Mouse.ButtonUp += MouseButtonUp;
@@ -62,12 +56,6 @@ namespace DynaStudios.UI
                     //Render Panel
                     panel.Render();
                 }
-
-                //Render FPS
-                QFont.Begin();
-                GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.DstAlpha);
-                _mainFont.Print(_engine.FpsCalc.Framerate.ToString(CultureInfo.InvariantCulture));
-                QFont.End();
 
                 //Enable Depth Rendering again
                 switchBackToFrustrumRendering();
